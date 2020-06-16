@@ -1,0 +1,376 @@
+{% load static %}
+{% load widget_tweaks %}
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='FlowMeter' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاهAED
+      </h1>
+
+
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+
+            {% render_field form.device style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+
+
+<input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+
+
+      <div style="font-weight: bold;font-size: 18pt; text-align: center;">
+        گزارش آزمون فلومتر اکسیژن
+      </div>
+      <table style="margin: auto; width: 100%; text-align: center;direction: ltr;" class="tb-1 time">
+        <tbody>
+          <tr>
+            <td colspan="6"><span>جدول اندازه گيري فلومتر</span></td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">Rej</td>
+            <td class="time">OK</td>
+            <td><span>
+                خطای
+                <br>
+                <span class="time">(10%)</span>
+                مجاز
+                <br>
+                <span class="time">(LPM)</span>
+              </span></td>
+            <td><span>
+                اختلاف
+                <br>
+                <span class="time">(LPM)</span>
+              </span></td>
+            <td><span>مقدار مرجع کاليبراتور
+                <br>
+                <span class="time">(LPM)</span>
+              </span></td>
+            <td><span>
+                مقدار تنظيمي برروي فلومتر
+              </span></td>
+          </tr>
+          <div class="time2">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e1_rlpm}}</td>
+              <td>0.5</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e2_rlpm}}</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e3_rlpm}}</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e4_rlpm}}</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e5_rlpm}}</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{form.s1_e6_rlpm}}</td>
+              <td>15</td>
+            </tr>
+          </div>
+        </tbody>
+      </table>
+
+      <!--</div>-->
+      {#/////////////////////////////////////////////#}
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='FlowMeter' %}">
+            ذخیره نهایی
+          </button>
+
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li> پروب spo2دستگاه دردسترس نبوده و انجام آزمون با پروب دستگاه مشابه دیگر</li>
+              <li> عدم نمایش پیغام هشدار باتری بعد از قطع منبع تغذیه</li>
+              <li>عدم امکان اندازه گيري ضربان هاي کمتر از50 </li>
+              <li>عدم امکان اندازه گيري ضربان هاي کمتر از 70</li>
+              عدم شمول :
+
+              <li>خرابی پروپ SPO2</li>
+              <li>عدم امکان تست به علت اشکال درسوکت spo2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+
+<script>
+
+  $("#id_s1_e1_rlpm")
+    .focusout(function () {
+      var val = ($("#id_s1_e1_rlpm").val() - 0.5);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+      if ((val > (0.5 * 0.1)) && ($("#id_s1_e1_rlpm").val().length != 0)) {
+        $("#id_s1_e1_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e1_rlpm").css("color", "white");
+      }
+      else if ((val <= (0.5 * 0.1)) || ($("#id_s1_e1_rlpm").val().length == 0)) {
+        $("#id_s1_e1_rlpm").css("background-color", "white");
+        $("#id_s1_e1_rlpm").css("color", "black");
+      }
+    });
+
+  $("#id_s1_e2_rlpm")
+    .focusout(function () {
+
+      var val = ($("#id_s1_e2_rlpm").val() - 2);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+
+
+      if ((val > (2 * 0.1)) && ($("#id_s1_e2_rlpm").val().length != 0)) {
+        $("#id_s1_e2_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e2_rlpm").css("color", "white");
+      }
+      else if ((val <= (2 * 0.1)) || ($("#id_s1_e2_rlpm").val().length == 0)) {
+        $("#id_s1_e2_rlpm").css("background-color", "white");
+        $("#id_s1_e2_rlpm").css("color", "black");
+      }
+    });
+  $("#id_s1_e3_rlpm")
+    .focusout(function () {
+
+      var val = ($("#id_s1_e3_rlpm").val() - 4);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+
+      if ((val > (4 * 0.1)) && ($("#id_s1_e3_rlpm").val().length != 0)) {
+        $("#id_s1_e3_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e3_rlpm").css("color", "white");
+      }
+      else if ((val <= (4 * 0.1)) || ($("#id_s1_e3_rlpm").val().length == 0)) {
+        $("#id_s1_e3_rlpm").css("background-color", "white");
+        $("#id_s1_e3_rlpm").css("color", "black");
+      }
+    });
+  $("#id_s1_e4_rlpm")
+    .focusout(function () {
+      var val = ($("#id_s1_e4_rlpm").val() - 7);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+
+      if ((val > (7 * 0.1)) && ($("#id_s1_e4_rlpm").val().length != 0)) {
+        $("#id_s1_e4_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e4_rlpm").css("color", "white");
+      }
+      else if ((val <= (7 * 0.1)) || ($("#id_s1_e4_rlpm").val().length == 0)) {
+        $("#id_s1_e4_rlpm").css("background-color", "white");
+        $("#id_s1_e4_rlpm").css("color", "black");
+      }
+    });
+  $("#id_s1_e5_rlpm")
+    .focusout(function () {
+      var val = ($("#id_s1_e5_rlpm").val() - 10);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+
+      if ((val > (10 * 0.1)) && ($("#id_s1_e5_rlpm").val().length != 0)) {
+        $("#id_s1_e5_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e5_rlpm").css("color", "white");
+      }
+      else if ((val <= (10 * 0.1)) || ($("#id_s1_e5_rlpm").val().length == 0)) {
+        $("#id_s1_e5_rlpm").css("background-color", "white");
+        $("#id_s1_e5_rlpm").css("color", "black");
+      }
+    });
+  $("#id_s1_e6_rlpm")
+    .focusout(function () {
+      var val = ($("#id_s1_e6_rlpm").val() - 15);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+      if ((val > (15 * 0.1)) && ($("#id_s1_e6_rlpm").val().length != 0)) {
+        $("#id_s1_e6_rlpm").css("background-color", "#f24858");
+        $("#id_s1_e6_rlpm").css("color", "white");
+      }
+      else if ((val <= (15 * 0.1)) || ($("#id_s1_e6_rlpm").val().length == 0)) {
+        $("#id_s1_e6_rlpm").css("background-color", "white");
+        $("#id_s1_e6_rlpm").css("color", "black");
+      }
+    });
+
+</script>

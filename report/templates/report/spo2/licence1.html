@@ -1,0 +1,1744 @@
+{% extends 'base-spo2.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+  @font-face {
+    font-family: "B Zar";
+    src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
+      url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
+      url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Titr";
+    src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
+      url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
+      url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Lotus";
+    src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
+      url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
+      url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Nazanin";
+    src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
+      url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+      url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
+  }
+
+  .time {
+    font-family: "Times New Roman";
+  }
+
+  .tb-4 td {
+    padding: 0.05cm 0.1cm;
+
+  }
+
+  .no-border {
+    padding-top: 0.1cm;
+    padding-bottom: 0.1cm;
+  }
+</style>
+
+<body style="text-align: right;font-size: 16pt;">
+
+
+  <div class="cover main" style="font-family:'B Lotus';">
+    <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
+
+      <br>
+      <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+        گواهينامه کنترل کيفي دستگاه پالس اکسی متری
+      </h1>
+
+      <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-4">
+        <tr>
+          <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+          </td>
+          <td class="no-border"><span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+
+        </tr>
+        <tr>
+          <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }}
+            </span>تاريخ کنترل کيفي: </td>
+          <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+
+        </tr>
+
+        <tr>
+          <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
+          <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+
+        </tr>
+        <tr>
+          <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
+          <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
+        </tr>
+        <tr>
+          <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
+          <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td>
+        </tr>
+        <tr>
+          <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
+          <td class="no-border"><span class="time">
+              {% if form.device.property_number != None %}
+              {{form.device.property_number}}
+              {% endif %}
+            </span>کداموال :</td>
+        </tr>
+
+        <tr>
+          <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
+          <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+            کنترل کيفي: </td>
+
+        </tr>
+
+        <tr>
+          <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+
+        </tr>
+
+      </table>
+      <div style="height:3.85cm;">
+        <div>موارد عدم شمول:</div>
+        <span>
+          {{ form.totalcomment }}
+        </span>
+
+      </div>
+
+      <ul style="direction: rtl;">
+        <li>مطابق استاندارد ISO 9919 از تسترهای پالس اکسيمتر نميتوان برای تعيين صحت دستگاه پالس اکسيمتر استفاده
+          کردو تنها برای تعيين اينکه آيا مانيتور پالس اکسيمتر تحت آزمون با مشخصات عملکردی سازنده تطابق دارد يا
+          خير بدون تعيين اينکه آيا طراحی اصلی صحيح بوده يا نه می توان از آن استفاده کرد.</li>
+        <li>همچنين با اين تسترها تنها برخي از مشخصات پروبها ونه همه آنهاتحت آزمون قرار مي گيردکه آيا با مشخصات
+          عملکردی سازنده تطابق دارد يا خيروهرگز نميتوان باآنها صحيح بودن طراحی اصلی را موردبررسی قرارداد.</li>
+      </ul>
+      <span style="font-weight: bold;">تجهيزات آزمون:</span>
+      <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-4">
+        <tr>
+          <td>تاريخ انقضاء</td>
+          <td>تاريخ کاليبراسيون</td>
+          <td>شماره سریال</td>
+          <td>مدل</td>
+          <td>نام تجهيز</td>
+        </tr>
+        <tr class="time">
+          <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
+          <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+          <td>{{ form.cal_dev1.serial }}</td>
+          <td>{{ form.cal_dev1.name }}</td>
+          <td>{{ form.cal_dev1.type.name }}</td>
+        </tr>
+        <tr class="time">
+          <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
+          <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
+          <td>{{ form.cal_dev2.serial }}</td>
+          <td>{{ form.cal_dev2.name }}</td>
+          <td>{{ form.cal_dev2.type.name }}</td>
+        </tr>
+        <tr class="time">
+          <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
+          <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
+          <td>{{ form.cal_dev3.serial }}</td>
+          <td>{{ form.cal_dev3.name }}</td>
+          <td>{{ form.cal_dev3.type.name }}</td>
+        </tr>
+        <tr class="time">
+          <td>{{ form.cal_dev_4_xd.year }}/{{ form.cal_dev_4_xd.month }}/{{ form.cal_dev_4_xd.day }}</td>
+          <td>{{ form.cal_dev_4_cd.year }}/{{ form.cal_dev_4_cd.month }}/{{ form.cal_dev_4_cd.day }}</td>
+          <td>{{ form.cal_dev4.serial }}</td>
+          <td>{{ form.cal_dev4.name }}</td>
+          <td>{{ form.cal_dev4.type.name }}</td>
+        </tr>
+
+      </table>
+
+
+      <div style="font-weight: bold;">
+        <span class="time">2005</span>
+        <span> نسخه</span>
+        <span class="time">ISO9919 </span>
+        <span>استاندارد</span>
+        <span class="time">50.1.4</span>
+        <span>مراجع: بند</span>
+      </div>
+      <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+        طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+        ملي يا بين المللي قابل رديابي است.</div>
+      <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+      <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+        است.</div>
+      <table style="margin: auto;text-align: center;font-weight: bold;">
+        <tr>
+          <td style="width: 9cm;">مهر آزمايشگاه</td>
+          <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+        </tr>
+        <tr>
+          <img src="{% static 'img/spo2/stamp.jpg' %}" style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
+
+          <td style="height: 3cm;">
+            <!-- <div class="stmp"></div> -->
+            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
+          </td>
+          <td style="height: 3cm;position: relative;">
+            <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+            <!-- <div class="signature"></div> -->
+            <img style="width: 6cm; height:4cm; margin-right: 2cm;"
+              src="https://{{ domain_name }}/static/img/signature.png">
+          </td>
+        </tr>
+
+      </table>
+      <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51023</div>
+    </div>
+  </div>
+
+
+  <div class="page-1 page1" style="font-family:'B Nazanin';">
+    <div style="text-align: center;width: 100%;height: 5cm;">
+      <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+        <span>
+          <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+          شماره گزارش:
+        </span><br>
+        <span>
+          <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+          تاريخ صدور:
+
+        </span><br>
+        <span>
+          <span class="time">F51042</span>
+          شماره مدرک:
+
+        </span>
+      </span>
+      <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+        گزارش آزمون کنترل کیفی
+        <br>
+        دستگاه پالس اکسيمتری
+      </span>
+    </div>
+    <!-- <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;">
+                <span class="time">:(20-5</span>
+                نسخه
+                <span class="time">ISO9919</span>
+                استاندارد
+                <span class="time">50.1.4</span>
+                (بند
+                <span class="time">Pulse Rate</span>
+                و
+                <span class="time">SPO2</span>
+                1- عملکرد
+            </div>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <tbody>
+                    <tr>
+                        <td rowspan="2">DESCRIPTION OF TEST</td>
+                        <td colspan="2">SETTING</td>
+                        <td colspan="2">READING</td>
+                        <td rowspan="2" style="width: 5cm;">(PR<sub>setting</sub>-PR<sub>reading</sub>)<sup>2</sup></td>
+                    </tr>
+                    <tr>
+                        <td>SPO2</td>
+                        <td>PR</td>
+                        <td>SPO2</td>
+                        <td>PR</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">SPO2%</td>
+                        <td>96%</td>
+                        <td>75</td>
+                        <td>{{ form.s1_e1_spo2}}</td>
+                        <td>{{ form.s1_e1_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>86%</td>
+                        <td>75</td>
+                        <td>{{ form.s1_e2_spo2}}</td>
+                        <td>{{ form.s1_e2_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>76%</td>
+                        <td>75</td>
+                        <td>{{ form.s1_e3_spo2}}</td>
+                        <td>{{ form.s1_e3_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">PULSE RATE</td>
+                        <td>96%</td>
+                        <td>35</td>
+                        <td>{{ form.s1_e4_spo2}}</td>
+                        <td>{{ form.s1_e4_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>96%</td>
+                        <td>100</td>
+                        <td>{{ form.s1_e5_spo2}}</td>
+                        <td>{{ form.s1_e5_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>96%</td>
+                        <td>200</td>
+                        <td>{{ form.s1_e6_spo2}}</td>
+                        <td>{{ form.s1_e6_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>96%</td>
+                        <td>240</td>
+                        <td>{{ form.s1_e7_spo2}}</td>
+                        <td>{{ form.s1_e7_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>PATIENT CONDITIONS</td>
+                        <td colspan="5">-</td>
+                    </tr>
+                    <tr>
+                        <td>Normal</td>
+                        <td>98%</td>
+                        <td>55</td>
+                        <td>{{ form.s1_e8_spo2}}</td>
+                        <td>{{ form.s1_e8_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Weak pulse</td>
+                        <td>90%</td>
+                        <td>95</td>
+                        <td>{{ form.s1_e9_spo2}}</td>
+                        <td>{{ form.s1_e9_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Bradycardia</td>
+                        <td>88%</td>
+                        <td>45</td>
+                        <td>{{ form.s1_e10_spo2}}</td>
+                        <td>{{ form.s1_e10_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Hypoxic</td>
+                        <td>70%</td>
+                        <td>95</td>
+                        <td>{{ form.s1_e11_spo2}}</td>
+                        <td>{{ form.s1_e11_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Neonate</td>
+                        <td>90%</td>
+                        <td>180</td>
+                        <td>{{ form.s1_e12_spo2}}</td>
+                        <td>{{ form.s1_e12_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Tachycardia</td>
+                        <td>85%</td>
+                        <td>130</td>
+                        <td>{{ form.s1_e13_spo2}}</td>
+                        <td>{{ form.s1_e13_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Geriatric</td>
+                        <td>92%</td>
+                        <td>95</td>
+                        <td>{{ form.s1_e14_spo2}}</td>
+                        <td>{{ form.s1_e14_pr}}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="formol"></div>
+                        </td>
+                        <td colspan="5">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+            <div style="font-weight: bold;">
+                <span class="time">:(ISO9919</span>
+                استاندارد
+                <span class="time">50.103</span>
+                2-حساسيت به آرتيفکت ها(بند
+            </div>
+            <div>
+                <span class="time">Low Perfusion</span>
+                2-1-حالت
+            </div>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+
+                <tbody>
+                    <tr>
+                        <td rowspan="3">WEAK PULSE</td>
+                        <td colspan="2" rowspan="2">SETTING</td>
+                        <td colspan="2" rowspan="2">Reading @ low perfusion</td>
+                        <td colspan="2" rowspan="2">ERROR</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td>SPO2</td>
+                        <td>PR</td>
+                        <td>SPO2</td>
+                        <td>PR</td>
+                        <td>SPO2</td>
+                        <td>PR</td>
+                    </tr>
+                    <tr>
+                        <td>Pulse Strength = 3</td>
+                        <td>94%</td>
+                        <td>45</td>
+                        <td>{{ form.s2_e1_spo2}}</td>
+                        <td>{{ form.s2_e1_pr}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Pulse Strength = 0.4</td>
+                        <td>94%</td>
+                        <td>45</td>
+                        <td>{{ form.s2_e2_spo2}}</td>
+                        <td>{{ form.s2_e2_pr}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Pulse Strength = 0.2</td>
+                        <td>94%</td>
+                        <td>45</td>
+                        <td>{{ form.s2_e3_spo2}}</td>
+                        <td>{{ form.s2_e3_pr}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Pulse Strength = 0.1</td>
+                        <td>94%</td>
+                        <td>45</td>
+                        <td>{{ form.s2_e4_spo2}}</td>
+                        <td>{{ form.s2_e4_pr}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div>
+                <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 4</div>
+
+            </div>
+        </div> -->
+    <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+      <div style="font-weight: bold;">
+        <span class="time">:(ISO 80601-2-61:2011</span>
+        استاندارد
+        <span class="time">201.12.1.101.1</span>
+        <span>(بند </span>
+        <span class="time">SpO<sub>2</sub></span>
+        1.درستی
+
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+        <thead>
+          <tr>
+            <th rowspan="2" class="myClass">DESCRIPTION OF TEST </th>
+            <script> document.getElementsByClassName("myClass");</script>
+            <th colspan="2">SETTING</th>
+            <th colspan="2">READING</th>
+            <th rowspan="2" style="font-size:12pt;">(SpO<sub>2 setting</sub>-SpO<sub>2 reading</sub>) <sup>2</sup></th>
+          </tr>
+
+          <tr>
+
+            <th>SpO<sub>2</sub> (%)</th>
+            <th>PR (BPM)</th>
+            <th>SpO<sub>2</sub> (%)</th>
+            <th>PR (BPM)</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="11">SpO<sub>2</sub>% ACCURACY</td>
+            <td>70</td>
+            <td>75</td>
+            <td>{{form.s2_e1_spo2}}</td>
+            <td>{{form.s2_e1_pr}}</td>
+            <td>{{ data.0 }}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>75</td>
+            <td>75</td>
+            <td>{{form.s2_e2_spo2}}</td>
+            <td>{{form.s2_e2_pr}}</td>
+            <td>{{ data.1 }}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>80</td>
+            <td>75</td>
+            <td>{{form.s2_e3_spo2}}</td>
+            <td>{{form.s2_e3_pr}}</td>
+            <td>{{ data.2 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>85</td>
+            <td>75</td>
+            <td>{{form.s2_e4_spo2}}</td>
+            <td>{{form.s2_e4_pr}}</td>
+            <td>{{ data.3 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>88</td>
+            <td>75</td>
+            <td>{{form.s2_e5_spo2}}</td>
+            <td>{{form.s2_e5_pr}}</td>
+            <td>{{ data.4 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;">SpO<sub>2</sub>% ACCURACY</td> -->
+            <td>90</td>
+            <td>75</td>
+            <td>{{form.s2_e6_spo2}}</td>
+            <td>{{form.s2_e6_pr}}</td>
+            <td>{{ data.5 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>92</td>
+            <td>75</td>
+            <td>{{form.s2_e7_spo2}}</td>
+            <td>{{form.s2_e7_pr}}</td>
+            <td>{{ data.6 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>94</td>
+            <td>75</td>
+            <td>{{form.s2_e8_spo2}}</td>
+            <td>{{form.s2_e8_pr}}</td>
+            <td>{{ data.7 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>96</td>
+            <td>75</td>
+            <td>{{form.s2_e9_spo2}}</td>
+            <td>{{form.s2_e9_pr}}</td>
+            <td>{{ data.8 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>98</td>
+            <td>75</td>
+            <td>{{form.s2_e10_spo2}}</td>
+            <td>{{form.s2_e10_pr}}</td>
+            <td>{{ data.9 }}</td>
+
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>100</td>
+            <td>75</td>
+            <td>{{form.s2_e11_spo2}}</td>
+            <td>{{form.s2_e11_pr}}</td>
+            <td>{{ data.10 }}</td>
+
+          </tr>
+          <tr>
+            <td colspan="5">
+              <div class="formol"></div>
+            </td>
+            <td>{{ data.11 }}</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 3</div>
+
+    </div>
+  </div>
+
+  <div class="page-2 page1" style="font-family:'B Nazanin';">
+    <div style="text-align: center;width: 100%;height: 5cm;">
+      <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+        <span>
+          <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+          شماره گزارش:
+        </span><br>
+        <span>
+          <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+          تاريخ صدور:
+
+        </span><br>
+        <span>
+          <span class="time">F51042</span>
+          شماره مدرک:
+
+        </span>
+      </span>
+      <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+        گزارش آزمون کنترل کیفی
+        <br>
+        دستگاه پالس اکسيمتری
+      </span>
+    </div>
+    <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+      <div style="font-weight: bold;">
+        <span class="time">:(ISO 80601-2-61:2011</span>
+        استاندارد
+        <span class="time">201.12.1.104</span>
+        2.درستی نرخ پالس/ ضربان(بند
+
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-2 time">
+
+        <tr style="font-family:'B Nazanin'">
+          <th colspan="3">رنج تعیین شده نرخ پالس در دفترچه راهنمای دستگاه</th>
+          <th colspan="3">صحت نرخ پالس تعیین شده در دفترچه راهنمای دستگاه</th>
+        </tr>
+
+        <tr class="time">
+          <td colspan="3">20-250 BPM</td>
+          <td colspan="3">At 20 bpm to 250 bpm : ± 3 bpm</td>
+        </tr>
+
+        <tr class="time">
+          <th rowspan="2">DESCRIPTION OF TEST</th>
+          <th colspan="2">SETTING</th>
+          <th colspan="2">READING</th>
+          <th rowspan="2" style="font-size:12pt;">(PR<sub>setting</sub>-PR<sub>reading</sub>)<sup>2</sup></th>
+        </tr>
+
+        <tr class="time">
+          <th>SpO <sub>2</sub>(%)</th>
+          <th>PR(BMP)</th>
+          <th>SpO <sub>2</sub>(%)</th>
+          <th>PR(BMP)</th>
+
+        </tr>
+
+        <tr>
+          <td class="time" rowspan="5">Pulse rateACCURACY</td>
+          <td class="time">96</td>
+          <td class="time">35</td>
+          <td>{{form.s3_e1_spo2}}</td>
+          <td>{{form.s3_e1_pr}}</td>
+          <td>{{ data.12 }}</td>
+        </tr>
+
+        <tr>
+          <td class="time">96</td>
+          <td class="time">60</td>
+          <td>{{form.s3_e2_spo2}}</td>
+          <td>{{form.s3_e2_pr}}</td>
+          <td>{{ data.13 }}</td>
+        </tr>
+
+        <tr>
+          <td class="time">96</td>
+          <td class="time">100</td>
+          <td>{{form.s3_e3_spo2}}</td>
+          <td>{{form.s3_e3_pr}}</td>
+          <td>{{ data.14 }}</td>
+        </tr>
+
+        <tr>
+          <td class="time">96</td>
+          <td class="time">200</td>
+          <td>{{form.s3_e4_spo2}}</td>
+          <td>{{form.s3_e4_pr}}</td>
+          <td>{{ data.15 }}</td>
+        </tr>
+
+        <tr>
+          <td class="time">96</td>
+          <td class="time">240</td>
+          <td>{{form.s3_e5_spo2}}</td>
+          <td>{{form.s3_e5_pr}}</td>
+          <td>{{ data.16 }}</td>
+        </tr>
+        <tr>
+          <td colspan="5">
+
+            <div class="formol"></div>
+
+          </td>
+          <td>{{ data.17 }}</td>
+        </tr>
+      </table>
+
+
+      <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 3</div>
+    </div>
+  </div>
+
+  <div class="page-3 page1" style="font-family:'B Nazanin';">
+    <div style="text-align: center;width: 100%;height: 5cm;">
+      <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+        <span>
+          <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+          شماره گزارش:
+        </span><br>
+        <span>
+          <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+          تاريخ صدور:
+
+        </span><br>
+        <span>
+          <span class="time">F51042</span>
+          شماره مدرک:
+
+        </span>
+      </span>
+      <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+        گزارش آزمون کنترل کیفی
+        <br>
+        دستگاه پالس اکسيمتری
+      </span>
+    </div>
+    <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+      <div style="font-weight: bold;">
+        <span class="time">:(EN 60601-1</span>
+        استاندارد
+        <span class="time">2.2.15 , 3.1</span>
+        3- بررسی لوازم جانبی (بند
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+        <tbody>
+          <tr>
+            <td rowspan="2"></td>
+            <td rowspan="2">Accessory</td>
+            <td rowspan="2">Model</td>
+            <td colspan="2">Result</td>
+            <td rowspan="2">Comment</td>
+          </tr>
+          <tr>
+            <td>Ok</td>
+            <td>Rej</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Spo2</td>
+            <td>{{ form.s3_e1_accessory}}</td>
+            {% if form.s3_e1_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.s3_e1_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+            {% if form.s3_e1_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s3_e1_comment }}</td>
+            {% endif %}
+          </tr>
+
+        </tbody>
+      </table>
+      <br>
+
+      <div style="font-weight: bold;">
+        <span class="time">:(EN 60601-1</span>
+        استاندارد
+        <span class="time">56.10 , 56.8 , 6.7 , 6.3 , 3.1</span>
+        4- بررسی ظاهری دستگاه (بند
+      </div>
+
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+        <tbody>
+          <tr>
+            <td rowspan="2">Function</td>
+            <td rowspan="2">Comment</td>
+            <td colspan="2">Result</td>
+          </tr>
+          <tr>
+            <td>Ok</td>
+            <td>Rej</td>
+          </tr>
+          <tr>
+            <td>Connection</td>
+            {% if form.s4_e1_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s4_e1_comment }}</td>
+            {% endif %}
+            {% if form.s4_e1_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.4_e1_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>Keys and Controllers</td>
+            {% if form.s4_e2_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s4_e2_comment }}</td>
+            {% endif %}
+            {% if form.s4_e2_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.4_e2_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>Indicators and display</td>
+            {% if form.s4_e3_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s4_e3_comment }}</td>
+            {% endif %}
+            {% if form.s4_e3_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.4_e3_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>Battery</td>
+            {% if form.s4_e4_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s4_e4_comment }}</td>
+            {% endif %}
+            {% if form.s4_e4_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.4_e4_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;">
+        <span class="time">:(EN 60601-1</span>
+        استاندارد
+        <span class="time">7.1</span>
+        5-بررسی توان دستگاه(بند
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 tb-4 time">
+        <tbody>
+          <tr>
+            <td colspan="2">Nominal Power</td>
+            <td colspan="2">Measured Power</td>
+            <td colspan="2">Result</td>
+          </tr>
+          <tr>
+            <td>V.A</td>
+            <td>Watt</td>
+            <td>Voltage<br>(V)</td>
+            <td>Current <br> (A)</td>
+            <td>Ok</td>
+            <td>REJ</td>
+
+          </tr>
+          <tr>
+            <!-- va -->
+            <td>{{ data.19 }}</td>
+            <!-- watt -->
+            <td>{{ data.18 }}</td>
+            <td>{{ form.s5_e1_v}}</td>
+            <td>{{ form.s5_e1_a}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;">
+        <span class="time">:(EN 60601-1</span>
+        استاندارد
+        <span class="time">18.f</span>
+        6- زمين حفاظتی (بند
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="2">Setting</td>
+            <td>Type</td>
+            <td colspan="5">READING</td>
+          </tr>
+          <tr>
+            <td rowspan="5">Protective Earth Resistance</td>
+            <td rowspan="5">Test current 25A</td>
+            <td rowspan="5">
+              <span style="font-weight: bold;">power supply cord</span>
+              {% if form.s6_e1_type == on %}
+              <br>
+              Yes&#9635;
+              <br>
+              No&#9633;
+              {% else %}
+              <br>
+              Yes&#9633;
+              <br>
+              No&#9635;
+              {% endif %}
+            </td>
+            <td rowspan="4">Earth Resistance</td>
+            <td rowspan="4">Permissible Error</td>
+            <td colspan="2" rowspan="3">Result</td>
+            <td rowspan="4">Comment</td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+            <td>Ok</td>
+            <td>Rej</td>
+          </tr>
+          <tr>
+            <td>{{ form.s6_e1_er}}</td>
+            <td>0.2</td>
+            {% if form.s6_e1_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.s6_e1_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+            {% if form.s6_e1_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.6_e1_comment }}</td>
+            {% endif %}
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 4</div>
+    </div>
+  </div>
+
+  <div class="page-4 page1" style="font-family:'B Nazanin';">
+    <div style="text-align: center;width: 100%;height: 5cm;">
+      <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+        <span>
+          <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+          شماره گزارش:
+        </span><br>
+        <span>
+          <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+          تاريخ صدور:
+
+        </span><br>
+        <span>
+          <span class="time">F51042</span>
+          شماره مدرک:
+
+        </span>
+      </span>
+      <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+        گزارش آزمون کنترل کیفی
+        <br>
+        دستگاه پالس اکسيمتری
+      </span>
+    </div>
+    <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+      <div style="font-weight: bold;">
+
+        <span style="font-weight: bold;">
+          :(
+          <span class="time">EN 60601-1</span>
+          استاندارد
+          <span class="time">19.f</span>
+          (بند
+        </span>
+        7- اندازه گيری جريان نشتی زمين
+      </div>
+
+
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+        <tbody>
+          <tr>
+            <td colspan="2">Setting</td>
+            <td colspan="2">Reading [mA]</td>
+            <td rowspan="2">Permissible Error [&mu;A]</td>
+            <td colspan="2">Result</td>
+            <td rowspan="2">Comment</td>
+          </tr>
+          <tr>
+            <td>Device</td>
+            <td>Safety Analyzer</td>
+            <td>AP-Earth</td>
+            <td>No AP-Earth</td>
+            <td>Ok</td>
+            <td>Rej</td>
+          </tr>
+          <tr>
+            <td>Device on</td>
+            <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
+            <td>{{ form.s7_e1_aplc}}</td>
+            <td>{{ form.s7_e1_noaplc}}</td>
+            <td>500</td>
+            {% if form.s7_e1_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.s7_e1_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+            {% if form.s7_e1_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s7_e1_comment }}</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>Device off</td>
+            <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
+            <td>{{ form.s7_e2_aplc}}</td>
+            <td>{{ form.s7_e2_noaplc}}</td>
+            <td>500</td>
+            {% if form.s7_e2_comment.id == 1 %}
+            <td>&#10004;</td>
+            <td></td>
+            {% elif form.s7_e2_comment.id == 2 %}
+            <td></td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td>&#10004;</td>
+            {% endif %}
+            {% if form.s7_e2_comment.id == 1%}
+            <td></td>
+            {% else %}
+            <td>{{ form.s7_e2_comment }}</td>
+            {% endif %}
+          </tr>
+        </tbody>
+      </table>
+      <br>
+
+
+      <div style="font-weight: bold;">
+        <span class="time">:(EN 60601-1</span>
+        استاندارد
+        <span class="time">19.f</span>
+        8- اندازه گيری جريان کمکی بيمار(بند
+      </div>
+      {# TODO s8 ap type #}
+      <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+        <tbody>
+          <tr>
+            <td colspan="4">Setting</td>
+            <td rowspan="2">Patient Auxiliary Current</td>
+            <td rowspan="2">Permissible Error</td>
+            <td colspan="2">Result</td>
+          </tr>
+          <tr>
+            <td>AP</td>
+            <td>AP Type&nbsp;</td>
+            <td>DUT Status</td>
+            <td>Analyzer Status</td>
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>RA</td>
+            <td>-</td>
+            <td>Device ON</td>
+            <td>Norm Pol,No Earth, L2</td>
+            <td>N/A</td>
+            <td><span>N/A</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>LA</td>
+            <td>-</td>
+            <td>Device ON</td>
+            <td>Norm Pol,No Earth, L2</td>
+            <td>N/A</td>
+            <td><span>N/A</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>LL</td>
+            <td>-</td>
+            <td>Device ON</td>
+            <td>Norm Pol,No Earth, L2</td>
+            <td>N/A</td>
+            <td><span>N/A</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br><br><br><br><br>
+      <div style="width:100%;direction: rtl; text-align: right;">
+        <div style="margin-bottom: -5cm;" class="sign-2"><img
+            src="http://{{domain_name}}{{ user_profile.signature.url }}" alt="" style="height: 6cm;">
+        </div>
+      </div>
+      <div style="margin-top: -4.5cm;font-family:'B Zar' ">
+        <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
+        <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده:
+          {{ user_profile.user.first_name }}</div>
+      </div>
+
+
+      <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 4 از 4</div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {#    <div class="page-2 page1" style="font-family:'B Nazanin';">#}
+  {#            <div style="margin-right: 2cm;margin-left: 4cm;">#}
+  {#               <div style="padding-top: 6cm;">#}
+  {#                    <span style="font-weight: bold;font-size: 18pt;">تستهای کمی:</span>#}
+  {#                   <br>#}
+  {#                   <span>کلاس دستگاه:</span>#}
+  {#                   <br>#}
+  {#                   <span>#}
+  {#                        4 Class II    1 Class I  & Internally Powered         2 Internally Powered         3 Class I#}
+  {#                   </span>#}
+  {#                   <div style="font-weight: bold;">#}
+  {#                       <span class="time">:([2]</span>#}
+  {#                       ازمرجع#}
+  {#                       <span class="time">18.f</span>#}
+  {#                       1) مقاومت زمین حفاظتی(مطابق بند#}
+  {#                   </div>#}
+  {#                   <div>#}
+  {#                      مقدار اندازه گیری شده: .............اهم#}
+  {#                   </div>#}
+  {##}
+  {#               </div>#}
+  {##}
+  {##}
+  {##}
+  {##}
+  {##}
+  {#<table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">#}
+  {#      <tbody>#}
+  {#         <tr>#}
+  {#            <td rowspan="2">توضیحات</td>#}
+  {#            <td colspan="2">نتیجه</td>#}
+  {#            <td rowspan="2">حد مجاز (Ω)</td>#}
+  {#            <td rowspan="2">نوع کابل</td>#}
+  {##}
+  {#          </tr>#}
+  {#            <tr>#}
+  {#                <td>Rej</td>#}
+  {#                <td>Ok</td>#}
+  {#            </tr>#}
+  {#        <tr>#}
+  {#          <td></td>#}
+  {#          <td></td>#}
+  {#          <td></td>#}
+  {#          <td>0.1</td>#}
+  {#            <td>جدا شدنی</td>#}
+  {#        </tr>#}
+  {#        <tr>#}
+  {#          <td></td>#}
+  {#          <td></td>#}
+  {#          <td></td>#}
+  {#          <td>0.2</td>#}
+  {#            <td>جدا نشدنی</td>#}
+  {#        </tr>#}
+  {##}
+  {#      </tbody>#}
+  {##}
+  {#    </table>#}
+  {#                <br>#}
+  {##}
+  {##}
+  {##}
+  {##}
+  {##}
+  {##}
+  {#            <div style="font-weight: bold;">#}
+  {#                        <span class="time">:([2]</span>#}
+  {#                       ازمرجع#}
+  {#                       <span class="time">19</span>#}
+  {#2) جریان نشتی زمین(طبق بند#}
+  {#            </div>#}
+  {##}
+  {##}
+  {##}
+  {#<table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">#}
+  {##}
+  {#          <tbody>#}
+  {#          <tr>#}
+  {#                <td rowspan="2">توضیحات</td>#}
+  {#                <td colspan="2">نتیجه</td>#}
+  {#                <td rowspan="2">مقدار مجاز (µa)</td>#}
+  {#                <td rowspan="2">مقدار قرائت شده (µa)</td>#}
+  {#                <td rowspan="2">شرایط کاری</td>#}
+  {#                <td rowspan="2">حالت تست</td>#}
+  {#              </tr>#}
+  {#                <tr>#}
+  {#                    <td>Rej</td>#}
+  {#                    <td>Ok</td>#}
+  {#                </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>500</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- روشن</td>#}
+  {#              <td rowspan="4">عادی</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>500</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- خاموش </td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>500</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;"> Standby -</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>500</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- پلاریته معکوس</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>1000</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- قطع یکی از سیمهای تغذیه</td>#}
+  {#              <td>تک اشکالی</td>#}
+  {#            </tr>#}
+  {##}
+  {#          </tbody>#}
+  {##}
+  {#        </table>#}
+  {##}
+  {##}
+  {##}
+  {##}
+  {##}
+  {#        <div>نکات:</div>#}
+  {#            <div style="margin-right: 1cm;">#}
+  {#	1) در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F  به زمین متصل و از آن جدا می باشند نیز تکرار شود.#}
+  {#            </div>#}
+  {#        <br>#}
+  {##}
+  {##}
+  {##}
+  {#                     <div style="font-weight: bold;">#}
+  {#                        <span class="time">:([2]</span>#}
+  {#                       ازمرجع#}
+  {#                       <span class="time">19</span>#}
+  {#3) جریان نشتی محفظه(بند#}
+  {#                     </div>#}
+  {##}
+  {#<table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">#}
+  {#          <tbody>#}
+  {#                        <tr>#}
+  {#                <td rowspan="2">توضیحات</td>#}
+  {#                <td colspan="2">نتیجه</td>#}
+  {#                <td rowspan="2">مقدار مجاز (µa)</td>#}
+  {#                <td rowspan="2">مقدار قرائت شده (µa)</td>#}
+  {#                <td rowspan="2">شرایط کاری</td>#}
+  {#                <td rowspan="2">حالت تست</td>#}
+  {#              </tr>#}
+  {#                <tr>#}
+  {#                    <td>Rej</td>#}
+  {#                    <td>Ok</td>#}
+  {#                </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>100</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- روشن</td>#}
+  {#              <td rowspan="4">عادی</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>100</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- خاموش </td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>100</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;"> Standby -</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>100</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- پلاریته معکوس</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>500</td>#}
+  {#              <td></td>#}
+  {#              <td style="text-align: right;">- قطع یکی از سیمهای تغذیه – قطع زمین حفاظتی</td>#}
+  {#              <td>تک اشکالی</td>#}
+  {#            </tr>#}
+  {##}
+  {#          </tbody>#}
+  {##}
+  {#        </table>#}
+  {##}
+  {#        <div>#}
+  {#            نکات:#}
+  {#        </div>#}
+  {#        <div style="margin-right: 1cm;">#}
+  {#            1- در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F  به زمین متصل و از آن جدا می باشند نیز تکرار شود.#}
+  {#        </div>#}
+  {##}
+  {#        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 7</div>#}
+  {##}
+  {#    </div>#}
+  {##}
+  {#    </div>#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {#            <div class="page-3 page1" style="font-family:'B Nazanin';">#}
+  {#            <div style="margin-right: 2cm;margin-left: 4cm;">#}
+  {#                      <div style="padding-top: 5cm;">#}
+  {##}
+  {#                   <div style="font-weight: bold;">#}
+  {#                       <span class="time">:([3]</span>#}
+  {#                       ازمرجع#}
+  {#                       <span class="time">19.4</span>#}
+  {#                       و طبق بند#}
+  {#                       <span class="time">[2]</span>#}
+  {#                       از مرجع#}
+  {#                       <sapn class="time">19</sapn>#}
+  {#                       4) جریان نشتی بیمار(طبق#}
+  {#                   </div>#}
+  {#               </div>#}
+  {##}
+  {##}
+  {##}
+  {#        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time tb-4">#}
+  {#<tbody>#}
+  {#<tr>#}
+  {#<td colspan="3" style="border: none;"></td>#}
+  {#<td colspan="4">#}
+  {#    AP#}
+  {#    <span style="font-family: 'B Nazanin';">نوع</span>#}
+  {#    </td>#}
+  {#<td colspan="2" rowspan="2">#}
+  {#    <span style="font-family: 'B Nazanin';">مقدار قرائت شده</span>#}
+  {#    (&micro;a)#}
+  {#</td>#}
+  {#<td rowspan="3">#}
+  {#    <span style="font-family: 'B Nazanin';"> شرایط کاری</span>#}
+  {#</td>#}
+  {#<td rowspan="3">#}
+  {#    <span style="font-family: 'B Nazanin';">حالت تست</span>#}
+  {#</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td rowspan="2">#}
+  {#        <span style="font-family: 'B Nazanin';">توضیحات</span>#}
+  {#</td>#}
+  {#<td colspan="2">#}
+  {#        <span style="font-family: 'B Nazanin';">نتیجه</span>#}
+  {#</td>#}
+  {#<td colspan="2">BF type</td>#}
+  {#<td colspan="2">CF type</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>Rej</td>#}
+  {#<td>Ok</td>#}
+  {#<td>ac&nbsp;</td>#}
+  {#<td>dc</td>#}
+  {#<td>ac</td>#}
+  {#<td>dc</td>#}
+  {#<td>ac</td>#}
+  {#<td>dc</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td>100</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td  style="font-family: 'B Nazanin';text-align: right;">#}
+  {#        <span>- روشن</span>#}
+  {#</td>#}
+  {#<td rowspan="4">#}
+  {#        <span style="font-family: 'B Nazanin';">عادی</span>#}
+  {#</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td><span>-</span></td>#}
+  {#<td>100</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td  style="font-family: 'B Nazanin';text-align: right;">#}
+  {##}
+  {#        <span>- خاموش</span>#}
+  {##}
+  {#</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td><span>-</span></td>#}
+  {#<td>100</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td style="text-align: right;">Standby -</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td><span>-</span></td>#}
+  {#<td>100</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>10</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td  style="font-family: 'B Nazanin';text-align: right;">#}
+  {#        <span>- پلاریته معکوس</span>#}
+  {#</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td><span>-</span></td>#}
+  {#<td>500</td>#}
+  {#<td>50</td>#}
+  {#<td>50</td>#}
+  {#<td>50</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td  style="font-family: 'B Nazanin';text-align: right;">#}
+  {#        <span>- قطع یکی از سیمهای تغذیه</span>#}
+  {##}
+  {#</td>#}
+  {#<td rowspan="2">#}
+  {##}
+  {#            <span style="font-family: 'B Nazanin';"> تک اشکالی</span>#}
+  {#</td>#}
+  {#</tr>#}
+  {#<tr>#}
+  {#<td>-</td>#}
+  {#<td>-</td>#}
+  {#<td><span>-</span></td>#}
+  {#<td>500</td>#}
+  {#<td>50</td>#}
+  {#<td>50</td>#}
+  {#<td>50</td>#}
+  {#<td>N.A</td>#}
+  {#<td>N.A</td>#}
+  {#<td style="font-family: 'B Nazanin';text-align: right;">#}
+  {#                <span>- قطع زمین حفاظتی</span>#}
+  {#</td>#}
+  {#</tr>#}
+  {#</tbody>#}
+  {#</table>#}
+  {##}
+  {#    <div>#}
+  {##}
+  {#                   <div style="font-weight: bold;">#}
+  {#                       <span class="time">:([2]</span>#}
+  {#                       ازمرجع#}
+  {#                       <span class="time">19</span>#}
+  {#                       بند#}
+  {#5) جریان نشتی  بیمار (قسمت کاربردی ایزوله و اعمال ولتاژ خارجی)(بند                    </div>#}
+  {#               </div>#}
+  {##}
+  {#        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time tb-4">#}
+  {##}
+  {#          <tbody>#}
+  {#                    <tr style="font-family: 'B Nazanin';">#}
+  {#                <td rowspan="2">توضیحات</td>#}
+  {#                <td colspan="2">نتیجه</td>#}
+  {#                <td colspan="2">#}
+  {#                    <span style="font-family: 'Times New Roman';">(µa)</span>#}
+  {#                    مقدار مجاز#}
+  {#                </td>#}
+  {#                <td colspan="2">#}
+  {##}
+  {#                    مقدار قرائت شده#}
+  {#                   <span class="time">(µa)</span>#}
+  {#                </td>#}
+  {#                <td rowspan="2">شرایط کاری</td>#}
+  {#                <td rowspan="2">حالت تست</td>#}
+  {#              </tr>#}
+  {#                <tr>#}
+  {#                    <td>Rej</td>#}
+  {#                    <td>Ok</td>#}
+  {#                    <td>BF type</td>#}
+  {#                    <td>CF type</td>#}
+  {#                    <td>BF type</td>#}
+  {#                    <td>CF type</td>#}
+  {##}
+  {#                </tr>#}
+  {#            <tr>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td>5000</td>#}
+  {#              <td>100</td>#}
+  {#              <td></td>#}
+  {#              <td></td>#}
+  {#              <td style="font-family: 'B Nazanin';">اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>#}
+  {#              <td style="font-family: 'B Nazanin';">تک اشکالی</td>#}
+  {#            </tr>#}
+  {##}
+  {#          </tbody>#}
+  {##}
+  {#        </table>#}
+  {#                <div style="font-weight:bold; ">#}
+  {#                    6) صحت فلو:#}
+  {#                </div>#}
+  {#        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 tb-4 time">#}
+  {#        <tbody>#}
+  {#            <tr style="font-family: 'B Nazanin';">#}
+  {#                <td rowspan="2">فلوی تنظیمی#}
+  {#                    <br>#}
+  {#                    <span class="time">(mL/hr)</span>#}
+  {#                </td>#}
+  {#                <td rowspan="2">فلوی اندازه گیری شده</td>#}
+  {#                <td rowspan="2">مقدار خطا (%)</td>#}
+  {#                <td colspan="2">نتیجه</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#                <td>Rej</td>#}
+  {#                <td>Ok</td>#}
+  {#            </tr>#}
+  {#        <tr>#}
+  {#            <td>50mL/hr </td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {##}
+  {#        </tr>#}
+  {#        <tr>#}
+  {#            <td>100mL/hr</td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#        </tr>#}
+  {#        </tbody>#}
+  {#        </table>#}
+  {##}
+  {#        <div style="font-weight: bold;">#}
+  {#            7) فشار ماکزیمم#}
+  {#        </div>#}
+  {##}
+  {#     <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 tb-4 time">#}
+  {#        <tbody>#}
+  {#            <tr style="font-family: 'B Nazanin';">#}
+  {#                <td rowspan="2">فلوی تنظیمی#}
+  {#                    <br>#}
+  {#                    <span class="time">(mL/hr)</span>#}
+  {#                </td>#}
+  {#                <td rowspan="2">فشار ماکزیمم  اندازه گیری شده</td>#}
+  {#                <td rowspan="2">#}
+  {#                    مقدار مجاز:#}
+  {#                    <br>#}
+  {#                    <span class="time">P&lt;20psi</span>#}
+  {#                </td>#}
+  {#                <td colspan="2">نتیجه</td>#}
+  {#            </tr>#}
+  {#            <tr>#}
+  {#                <td>Rej</td>#}
+  {#                <td>Ok</td>#}
+  {#            </tr>#}
+  {#        <tr>#}
+  {#            <td>10mL/hr</td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {##}
+  {#        </tr>#}
+  {#        <tr>#}
+  {#            <td>100mL/hr</td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#            <td></td>#}
+  {#        </tr>#}
+  {#        </tbody>#}
+  {#        </table>#}
+  {##}
+  {##}
+  {#        <div style="font-weight: bold;">#}
+  {##}
+  {#            <span class="time">100 μL</span>#}
+  {#            8) فعال شدن آلارم آشکارساز هوا با تزریق#}
+  {#        </div>#}
+  {#                <div>#}
+  {#                    <span class="time">N.A:</span>#}
+  {#                    نتیجه#}
+  {#                    <span style="margin-left: 7cm;">هوا</span>#}
+  {#                </div>#}
+  {##}
+  {#            <div style="width:100%;direction: rtl; text-align: right;">#}
+  {#                <div class="sign-2" style="margin-bottom: -5cm;"></div>#}
+  {#            </div>#}
+  {#            <div style="margin-top: -4.5cm;font-family:'B Zar' ">#}
+  {#                <div style="display: inline-block;">سمت:کارشناس کنترل کیفی</div>#}
+  {#                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: مهندس سعید نریمانی</div>#}
+  {#            </div>#}
+  {##}
+  {##}
+  {#        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 4 از 7</div>#}
+  {##}
+  {#    </div>#}
+  {##}
+  {##}
+  {#</div>#}
+
+
+
+</body>
+{% endblock %}

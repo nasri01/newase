@@ -1,0 +1,1187 @@
+{% load static %}
+{% load widget_tweaks %}
+
+
+
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='Suction' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+
+
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاه ساکشن
+      </h1>
+
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+
+            {% render_field form.device style="display:inline;width:50%;"  class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+
+
+<input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+            <label>دستگاه شماره 4 :</label>
+            <span class="ee">
+              {{form.cal_dev4}}
+            </span><br>
+
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+
+      <div style="font-weight: bold;font-size: 18px;">
+
+        تستهای کیفی:
+      </div>
+      <br>
+
+      <table style="margin: auto; width: 100%; text-align: center;direction: ltr;" class="tb-1 tb-4">
+        <tbody>
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2" style="width: 4cm;">نتیجه</td>
+            <td rowspan="2">عنوان بررسی</td>
+            <td rowspan="2" style="width: 2cm;">ردیف</td>
+          </tr>
+          <tr>
+            <td style="width: 2cm;">Rej</td>
+            <td style="width: 2cm;">Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e1_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><span>شماره سريال</span></td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e2_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><span>نصب صحيح اجزاء دستگاه</span></td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e3_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">چرخ ها / ترمزها</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e4_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">دوشاخه برق</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e5_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><span>گلند و سیم برق</span></td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e6_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">استند ونگهدارنده يونيت دستگاه</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e7_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">دسته و اتصالات</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e8_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">جافيوزي و فيوزها</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e9_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">برچسب ها وعلائم</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e10_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">
+              <span>on/off</span>
+              کليد
+            </td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e11_comment}}</td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">
+              <span>Standby</span>
+              کليد
+            </td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e12_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;">باکتريا فيلتر</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e13_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;">باطري</td>
+            <td>13</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e14_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;">عملکرد پدال</td>
+            <td>14</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e15_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;">اتصالات (شيلنگها و آدابتور)</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e16_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>صداي الکتروپمپ</span></td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e17_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>کيفيت ظاهري و عملکرد گيج</span></td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e18_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>کيفيت ظاهري و عملکرد رگولاتور</span></td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e19_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>ماکزيمم مکش</span></td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e20_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>تست نشتي هوا</span></td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e21_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>سالم بودن مانع سرريز</span></td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e22_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>جارها و گپ جار</span></td>
+            <td>22</td>
+          </tr>
+          <tr>
+            <td>{{ form.s0_e23_comment}}</td>
+            <td></td>
+            <td></td>
+
+            <td style="text-align: right;"><span>آلارمها</span></td>
+            <td>23</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <br>
+      <span style="font-weight: bold;font-size: 18px;">
+        تست های کمی:
+      </span>
+      <br>
+      <div>
+        1- صحت داده هاي عملکردي دستگاه </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr>
+
+            <td>اختلاف <span>bar</span></td>
+            <td>مقدار خوانده شده (ساكشن) <br><span>bar</span></td>
+            <td><span>مقدار واقعي (مرجع) <br><span>bar</span></span></td>
+            <td><span>اختلاف
+                <br>
+                <span>mmHg</span></span></td>
+            <td><span>مقدار خوانده شده (ساكشن)
+                <br>
+                <span>mmHg</span>
+              </span></td>
+            <td><span>مقدار واقعي (مرجع)
+                <br>
+                <span>mmHg</span>
+              </span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>{{ form.s1_e2_rr}}</td>
+            <td></td>
+            <td>0</td>
+            <td>{{ form.s1_e1_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0.1</td>
+            <td>{{ form.s1_e4_rr}}</td>
+            <td></td>
+            <td>100</td>
+            <td>{{ form.s1_e3_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0.3</td>
+            <td>{{ form.s1_e6_rr}}</td>
+            <td></td>
+            <td>200</td>
+            <td>{{ form.s1_e5_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0.5</td>
+            <td>{{ form.s1_e8_rr}}</td>
+            <td></td>
+            <td>400</td>
+            <td>{{ form.s1_e7_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0.7</td>
+            <td>{{ form.s1_e10_rr}}</td>
+            <td></td>
+            <td>500</td>
+            <td>{{ form.s1_e9_rr}}</td>
+          </tr>
+          {#    </div>#}
+        </tbody>
+
+
+      </table>
+      <br>
+      <span style="font-weight: bold;">
+        1bar=760mmHg
+      </span>
+      <br><br>
+      <span style="direction: rtl;font-weight: bold;">2- کاليبراسيون گيج هاي کم فشار (خلاء)</span>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr>
+
+            <td>اختلاف <span>mbar</span></td>
+            <td>مقدار خوانده شده (ساكشن) <br><span>mbar</span></td>
+            <td><span>مقدار واقعي (مرجع) <br><span>mbar</span></span></td>
+            <td><span>اختلاف
+                <br>
+                <span>mmHg</span></span></td>
+            <td><span>مقدار خوانده شده (ساكشن)
+                <br>
+                <span>mmHg</span>
+              </span></td>
+            <td><span>مقدار واقعي (مرجع)
+                <br>
+                <span>mmHg</span>
+              </span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>{{ form.s2_e2_rr}}</td>
+            <td></td>
+            <td>0</td>
+            <td>{{ form.s2_e1_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>50</td>
+            <td>{{ form.s2_e4_rr}}</td>
+            <td></td>
+            <td>38</td>
+            <td>{{ form.s2_e3_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>100</td>
+            <td>{{ form.s2_e6_rr}}</td>
+            <td></td>
+            <td>76</td>
+            <td>{{ form.s2_e5_rr}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>150</td>
+            <td>{{ form.s2_e8_rr}}</td>
+            <td></td>
+            <td>114</td>
+            <td>{{ form.s2_e7_rr}}</td>
+          </tr>
+
+          {#    </div>#}
+        </tbody>
+
+
+      </table>
+
+
+
+      <!--</div>-->
+      {#/////////////////////////////////////////////#}
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='Suction' %}">
+            ذخیره نهایی
+          </button>
+
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li>
+                بيش از حد استاندارد بودن خطای گیج دستگاه 
+              </li>
+              <li>
+                کمتر از حد استاندارد بودن خطای گیج دستگاه
+              </li>
+              <li>
+                خرابی رگولاتور
+              </li>
+              <li>
+                خرابی گیج فشار
+              </li>
+              <li>
+                بیش از حد استاندارد بودن حداکثر فشار مکش
+              </li>
+              <li>
+                کمتر از حد استاندارد بودن حداکثر فشار مکش
+              </li>
+              <li>
+                نداشتن پیچ تنظیم فشار
+              </li>
+              <li>
+                زیاد بودن صدای الکتروپمپ
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+
+<script>
+  /////////////////table0
+  $("#id_s0_e1_comment")
+    .focusout(function () {
+      if ($("#id_s0_e1_comment").val() >= 3) {
+        $("#id_s0_e1_comment").css("background-color", "#f24858");
+        $("#id_s0_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 1)) {
+        $("#id_s0_e1_comment").css("background-color", "white");
+        $("#id_s0_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 2)) {
+        $("#id_s0_e1_comment").css("background-color", 'yellow');
+        $("#id_s0_e1_comment").css("color", "black");
+      }
+    });
+  /////
+
+  $("#id_s0_e2_comment")
+    .focusout(function () {
+      if ($("#id_s0_e2_comment").val() >= 3) {
+        $("#id_s0_e2_comment").css("background-color", "#f24858");
+        $("#id_s0_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 1)) {
+        $("#id_s0_e2_comment").css("background-color", "white");
+        $("#id_s0_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 2)) {
+        $("#id_s0_e2_comment").css("background-color", 'yellow');
+        $("#id_s0_e2_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e3_comment")
+    .focusout(function () {
+      if ($("#id_s0_e3_comment").val() >= 3) {
+        $("#id_s0_e3_comment").css("background-color", "#f24858");
+        $("#id_s0_e3_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 1)) {
+        $("#id_s0_e3_comment").css("background-color", "white");
+        $("#id_s0_e3_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 2)) {
+        $("#id_s0_e3_comment").css("background-color", 'yellow');
+        $("#id_s0_e3_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e4_comment")
+    .focusout(function () {
+      if ($("#id_s0_e4_comment").val() >= 3) {
+        $("#id_s0_e4_comment").css("background-color", "#f24858");
+        $("#id_s0_e4_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 1)) {
+        $("#id_s0_e4_comment").css("background-color", "white");
+        $("#id_s0_e4_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 2)) {
+        $("#id_s0_e4_comment").css("background-color", 'yellow');
+        $("#id_s0_e4_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e5_comment")
+    .focusout(function () {
+      if ($("#id_s0_e5_comment").val() >= 3) {
+        $("#id_s0_e5_comment").css("background-color", "#f24858");
+        $("#id_s0_e5_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 1)) {
+        $("#id_s0_e5_comment").css("background-color", "white");
+        $("#id_s0_e5_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 2)) {
+        $("#id_s0_e5_comment").css("background-color", 'yellow');
+        $("#id_s0_e5_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e6_comment")
+    .focusout(function () {
+      if ($("#id_s0_e6_comment").val() >= 3) {
+        $("#id_s0_e6_comment").css("background-color", "#f24858");
+        $("#id_s0_e6_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 1)) {
+        $("#id_s0_e6_comment").css("background-color", "white");
+        $("#id_s0_e6_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 2)) {
+        $("#id_s0_e6_comment").css("background-color", 'yellow');
+        $("#id_s0_e6_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e7_comment")
+    .focusout(function () {
+      if ($("#id_s0_e7_comment").val() >= 3) {
+        $("#id_s0_e7_comment").css("background-color", "#f24858");
+        $("#id_s0_e7_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 1)) {
+        $("#id_s0_e7_comment").css("background-color", "white");
+        $("#id_s0_e7_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 2)) {
+        $("#id_s0_e7_comment").css("background-color", 'yellow');
+        $("#id_s0_e7_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e8_comment")
+    .focusout(function () {
+      if ($("#id_s0_e8_comment").val() >= 3) {
+        $("#id_s0_e8_comment").css("background-color", "#f24858");
+        $("#id_s0_e8_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 1)) {
+        $("#id_s0_e8_comment").css("background-color", "white");
+        $("#id_s0_e8_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 2)) {
+        $("#id_s0_e8_comment").css("background-color", 'yellow');
+        $("#id_s0_e8_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e9_comment")
+    .focusout(function () {
+      if ($("#id_s0_e9_comment").val() >= 3) {
+        $("#id_s0_e9_comment").css("background-color", "#f24858");
+        $("#id_s0_e9_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 1)) {
+        $("#id_s0_e9_comment").css("background-color", "white");
+        $("#id_s0_e9_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 2)) {
+        $("#id_s0_e9_comment").css("background-color", 'yellow');
+        $("#id_s0_e9_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e10_comment")
+    .focusout(function () {
+      if ($("#id_s0_e10_comment").val() >= 3) {
+        $("#id_s0_e10_comment").css("background-color", "#f24858");
+        $("#id_s0_e10_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 1)) {
+        $("#id_s0_e10_comment").css("background-color", "white");
+        $("#id_s0_e10_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 2)) {
+        $("#id_s0_e10_comment").css("background-color", 'yellow');
+        $("#id_s0_e10_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e11_comment")
+    .focusout(function () {
+      if ($("#id_s0_e11_comment").val() >= 3) {
+        $("#id_s0_e11_comment").css("background-color", "#f24858");
+        $("#id_s0_e11_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 1)) {
+        $("#id_s0_e11_comment").css("background-color", "white");
+        $("#id_s0_e11_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 2)) {
+        $("#id_s0_e11_comment").css("background-color", 'yellow');
+        $("#id_s0_e11_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e12_comment")
+    .focusout(function () {
+      if ($("#id_s0_e12_comment").val() >= 3) {
+        $("#id_s0_e12_comment").css("background-color", "#f24858");
+        $("#id_s0_e12_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 1)) {
+        $("#id_s0_e12_comment").css("background-color", "white");
+        $("#id_s0_e12_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 2)) {
+        $("#id_s0_e12_comment").css("background-color", 'yellow');
+        $("#id_s0_e12_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e13_comment")
+    .focusout(function () {
+      if ($("#id_s0_e13_comment").val() >= 3) {
+        $("#id_s0_e13_comment").css("background-color", "#f24858");
+        $("#id_s0_e13_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 1)) {
+        $("#id_s0_e13_comment").css("background-color", "white");
+        $("#id_s0_e13_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 2)) {
+        $("#id_s0_e13_comment").css("background-color", 'yellow');
+        $("#id_s0_e13_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e14_comment")
+    .focusout(function () {
+      if ($("#id_s0_e14_comment").val() >= 3) {
+        $("#id_s0_e14_comment").css("background-color", "#f24858");
+        $("#id_s0_e14_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 1)) {
+        $("#id_s0_e14_comment").css("background-color", "white");
+        $("#id_s0_e14_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 2)) {
+        $("#id_s0_e14_comment").css("background-color", 'yellow');
+        $("#id_s0_e14_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e15_comment")
+    .focusout(function () {
+      if ($("#id_s0_e15_comment").val() >= 3) {
+        $("#id_s0_e15_comment").css("background-color", "#f24858");
+        $("#id_s0_e15_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 1)) {
+        $("#id_s0_e15_comment").css("background-color", "white");
+        $("#id_s0_e15_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 2)) {
+        $("#id_s0_e15_comment").css("background-color", 'yellow');
+        $("#id_s0_e15_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e16_comment")
+    .focusout(function () {
+      if ($("#id_s0_e16_comment").val() >= 3) {
+        $("#id_s0_e16_comment").css("background-color", "#f24858");
+        $("#id_s0_e16_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 1)) {
+        $("#id_s0_e16_comment").css("background-color", "white");
+        $("#id_s0_e16_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 2)) {
+        $("#id_s0_e16_comment").css("background-color", 'yellow');
+        $("#id_s0_e16_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e17_comment")
+    .focusout(function () {
+      if ($("#id_s0_e17_comment").val() >= 3) {
+        $("#id_s0_e17_comment").css("background-color", "#f24858");
+        $("#id_s0_e17_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 1)) {
+        $("#id_s0_e17_comment").css("background-color", "white");
+        $("#id_s0_e17_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 2)) {
+        $("#id_s0_e17_comment").css("background-color", 'yellow');
+        $("#id_s0_e17_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e18_comment")
+    .focusout(function () {
+      if ($("#id_s0_e18_comment").val() >= 3) {
+        $("#id_s0_e18_comment").css("background-color", "#f24858");
+        $("#id_s0_e18_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 1)) {
+        $("#id_s0_e18_comment").css("background-color", "white");
+        $("#id_s0_e18_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 2)) {
+        $("#id_s0_e18_comment").css("background-color", 'yellow');
+        $("#id_s0_e18_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e19_comment")
+    .focusout(function () {
+      if ($("#id_s0_e19_comment").val() >= 3) {
+        $("#id_s0_e19_comment").css("background-color", "#f24858");
+        $("#id_s0_e19_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 1)) {
+        $("#id_s0_e19_comment").css("background-color", "white");
+        $("#id_s0_e19_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 2)) {
+        $("#id_s0_e19_comment").css("background-color", 'yellow');
+        $("#id_s0_e19_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e20_comment")
+    .focusout(function () {
+      if ($("#id_s0_e20_comment").val() >= 3) {
+        $("#id_s0_e20_comment").css("background-color", "#f24858");
+        $("#id_s0_e20_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 1)) {
+        $("#id_s0_e20_comment").css("background-color", "white");
+        $("#id_s0_e20_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 2)) {
+        $("#id_s0_e20_comment").css("background-color", 'yellow');
+        $("#id_s0_e20_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e21_comment")
+    .focusout(function () {
+      if ($("#id_s0_e21_comment").val() >= 3) {
+        $("#id_s0_e21_comment").css("background-color", "#f24858");
+        $("#id_s0_e21_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 1)) {
+        $("#id_s0_e21_comment").css("background-color", "white");
+        $("#id_s0_e21_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 2)) {
+        $("#id_s0_e21_comment").css("background-color", 'yellow');
+        $("#id_s0_e21_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e22_comment")
+    .focusout(function () {
+      if ($("#id_s0_e22_comment").val() >= 3) {
+        $("#id_s0_e22_comment").css("background-color", "#f24858");
+        $("#id_s0_e22_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 1)) {
+        $("#id_s0_e22_comment").css("background-color", "white");
+        $("#id_s0_e22_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 2)) {
+        $("#id_s0_e22_comment").css("background-color", 'yellow');
+        $("#id_s0_e22_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e23_comment")
+    .focusout(function () {
+      if ($("#id_s0_e23_comment").val() >= 3) {
+        $("#id_s0_e23_comment").css("background-color", "#f24858");
+        $("#id_s0_e23_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e23_comment").val() == 1)) {
+        $("#id_s0_e23_comment").css("background-color", "white");
+        $("#id_s0_e23_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e23_comment").val() == 2)) {
+        $("#id_s0_e23_comment").css("background-color", 'yellow');
+        $("#id_s0_e23_comment").css("color", "black");
+      }
+    });
+  /////
+
+  ///////// table 1
+
+
+  $("#id_s1_e3_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e3_rr").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e3_rr").val().length != 0)) {
+        $("#id_s1_e3_rr").css("background-color", "#f24858");
+        $("#id_s1_e3_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e3_rr").val().length == 0)) {
+        $("#id_s1_e3_rr").css("background-color", "white");
+        $("#id_s1_e3_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s1_e4_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e4_rr").val() - 0.1) / 0.1;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e4_rr").val().length != 0)) {
+        $("#id_s1_e4_rr").css("background-color", "#f24858");
+        $("#id_s1_e4_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e4_rr").val().length == 0)) {
+        $("#id_s1_e4_rr").css("background-color", "white");
+        $("#id_s1_e4_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s1_e5_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e5_rr").val() - 200) / 200;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e5_rr").val().length != 0)) {
+        $("#id_s1_e5_rr").css("background-color", "#f24858");
+        $("#id_s1_e5_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e5_rr").val().length == 0)) {
+        $("#id_s1_e5_rr").css("background-color", "white");
+        $("#id_s1_e5_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s1_e6_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e6_rr").val() - 0.3) / 0.3;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e6_rr").val().length != 0)) {
+        $("#id_s1_e6_rr").css("background-color", "#f24858");
+        $("#id_s1_e6_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e6_rr").val().length == 0)) {
+        $("#id_s1_e6_rr").css("background-color", "white");
+        $("#id_s1_e6_rr").css("color", "black");
+      }
+    });
+  $("#id_s1_e7_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e7_rr").val() - 400) / 400;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e7_rr").val().length != 0)) {
+        $("#id_s1_e7_rr").css("background-color", "#f24858");
+        $("#id_s1_e7_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e7_rr").val().length == 0)) {
+        $("#id_s1_e7_rr").css("background-color", "white");
+        $("#id_s1_e7_rr").css("color", "black");
+      }
+    });
+  $("#id_s1_e8_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e8_rr").val() - 0.5) / 0.5;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e8_rr").val().length != 0)) {
+        $("#id_s1_e8_rr").css("background-color", "#f24858");
+        $("#id_s1_e8_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e8_rr").val().length == 0)) {
+        $("#id_s1_e8_rr").css("background-color", "white");
+        $("#id_s1_e8_rr").css("color", "black");
+      }
+    });
+  $("#id_s1_e9_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e9_rr").val() - 500) / 500;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e9_rr").val().length != 0)) {
+        $("#id_s1_e9_rr").css("background-color", "#f24858");
+        $("#id_s1_e9_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e9_rr").val().length == 0)) {
+        $("#id_s1_e9_rr").css("background-color", "white");
+        $("#id_s1_e9_rr").css("color", "black");
+      }
+    });
+  $("#id_s1_e10_rr")
+    .focusout(function () {
+      var n = ($("#id_s1_e10_rr").val() - 0.7) / 0.7;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s1_e10_rr").val().length != 0)) {
+        $("#id_s1_e10_rr").css("background-color", "#f24858");
+        $("#id_s1_e10_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s1_e10_rr").val().length == 0)) {
+        $("#id_s1_e10_rr").css("background-color", "white");
+        $("#id_s1_e10_rr").css("color", "black");
+      }
+    });
+
+
+  // table 2
+
+
+
+  $("#id_s2_e3_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e3_rr").val() - 38) / 38;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e3_rr").val().length != 0)) {
+        $("#id_s2_e3_rr").css("background-color", "#f24858");
+        $("#id_s2_e3_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e3_rr").val().length == 0)) {
+        $("#id_s2_e3_rr").css("background-color", "white");
+        $("#id_s2_e3_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e4_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e4_rr").val() - 50) / 50;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e4_rr").val().length != 0)) {
+        $("#id_s2_e4_rr").css("background-color", "#f24858");
+        $("#id_s2_e4_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e4_rr").val().length == 0)) {
+        $("#id_s2_e4_rr").css("background-color", "white");
+        $("#id_s2_e4_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e5_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e5_rr").val() - 76) / 76;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e5_rr").val().length != 0)) {
+        $("#id_s2_e5_rr").css("background-color", "#f24858");
+        $("#id_s2_e5_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e5_rr").val().length == 0)) {
+        $("#id_s2_e5_rr").css("background-color", "white");
+        $("#id_s2_e5_rr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e6_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e6_rr").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e6_rr").val().length != 0)) {
+        $("#id_s2_e6_rr").css("background-color", "#f24858");
+        $("#id_s2_e6_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e6_rr").val().length == 0)) {
+        $("#id_s2_e6_rr").css("background-color", "white");
+        $("#id_s2_e6_rr").css("color", "black");
+      }
+    });
+  $("#id_s2_e7_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e7_rr").val() - 114) / 114;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e7_rr").val().length != 0)) {
+        $("#id_s2_e7_rr").css("background-color", "#f24858");
+        $("#id_s2_e7_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e7_rr").val().length == 0)) {
+        $("#id_s2_e7_rr").css("background-color", "white");
+        $("#id_s2_e7_rr").css("color", "black");
+      }
+    });
+  $("#id_s2_e8_rr")
+    .focusout(function () {
+      var n = ($("#id_s2_e8_rr").val() - 150) / 150;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.1 && ($("#id_s2_e8_rr").val().length != 0)) {
+        $("#id_s2_e8_rr").css("background-color", "#f24858");
+        $("#id_s2_e8_rr").css("color", "white");
+      }
+      else if (n <= 0.1 || ($("#id_s2_e8_rr").val().length == 0)) {
+        $("#id_s2_e8_rr").css("background-color", "white");
+        $("#id_s2_e8_rr").css("color", "black");
+      }
+    });
+
+
+</script>

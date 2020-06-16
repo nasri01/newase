@@ -1,0 +1,350 @@
+{% extends 'base-spo2.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: "B Zar";
+        src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Titr";
+        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Lotus";
+        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Nazanin";
+        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
+    }
+
+
+    @font-face {
+        font-family: "B Yagut";
+        src: url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.ttf") format("truetype");
+
+    }
+
+
+
+
+    .tb-4 td {
+        padding-top: 0.1cm;
+        padding-bottom: 0.1cm;
+    }
+
+    .time {
+        font-family: "Times New Roman";
+    }
+
+    .time2 td {
+        font-family: "Times New Roman";
+
+    }
+</style>
+
+<body style="text-align: right;font-size: 16pt;">
+
+    <div class="cover main" style="font-family:'B Lotus';">
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
+
+            <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+                گواهينامه کنترل کیفی وکاليبراسيون فلومتر اکسیژن
+            </h1>
+            <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
+                <tr>
+                    <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+                    </td>
+                    <td class="no-border"><span
+                            class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }}
+                        </span>تاريخ کنترل کيفي: </td>
+                    <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
+                    <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
+                    <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
+                    <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
+                    <td class="no-border"><span class="time">
+                            {% if form.device.property_number != None %}
+                            {{form.device.property_number}}
+                            {% endif %}
+                        </span>کداموال :</td>
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
+                    <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+                        کنترل کيفي: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+
+                </tr>
+
+            </table>
+            <div style="height:4cm;">
+                <div>موارد عدم شمول:</div>
+                <span>
+                    {{ form.totalcomment }}
+                </span>
+
+            </div>
+            <span style="font-weight: bold;">تجهيزات آزمون:</span>
+            <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2">
+                <tr>
+                    <td>تاريخ انقضاء</td>
+                    <td>تاريخ کاليبراسيون</td>
+                    <td>شماره سریال</td>
+                    <td>مدل</td>
+                    <td>نام تجهيز</td>
+                    <td>ردیف</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev1.serial }}</td>
+                    <td>{{ form.cal_dev1.name }}</td>
+                    <td>{{ form.cal_dev1.type.name }}</td>
+                    <td>1</td>
+                </tr>
+
+            </table>
+            <br>
+            <div>مراجع: </div>
+            <div class="time" style="text-align: left;">
+                <span>1) ECRI-IPM Anesthesia Unit Ventilator:2001</span><br>
+                <span>2) IEC60601-1:1998,Am1:1993,Am2:1995</span><br>
+                <span>3) ECRI-IPM Anesthesia Ventilator:2008,Anesthesia unit Ventilator:2001</span>
+
+            </div>
+            <br>
+            <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+                طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+                ملي يا بين المللي قابل رديابي است.</div>
+            <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+            <br>
+            <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+                است.</div>
+            <table style="margin: auto;text-align: center;font-weight: bold;">
+                <tr>
+                    <td style="width: 9cm;">مهر آزمايشگاه</td>
+                    <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+                </tr>
+                <tr>
+                    <img src="{% static 'img/spo2/stamp.jpg' %}"
+                        style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
+
+                    <td style="height: 3.5cm;">
+                        <!-- <div class="stmp"></div> -->
+            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
+                    </td>
+                    <td style="height: 3.5cm;position: relative;">
+                        <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+                        <!-- <div class="signature"></div> -->
+            <img style="width: 6cm; height:4cm; margin-right: 2cm;" src="https://{{ domain_name }}/static/img/signature.png">
+                    </td>
+                </tr>
+
+            </table>
+            <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51042</div>
+        </div>
+    </div>
+
+
+    <div class="page-1 page1">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51042</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون کنترل کیفی
+                <br>
+                دستگاه فلومتر اکسیژن
+            </span>
+        </div>
+
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;font-size: 18pt; text-align: center;;font-family:'B Lotus'">
+                گزارش آزمون فلومتر اکسیژن
+            </div>
+            <table style="margin: auto; width: 100%; text-align: center;" class="tb-1 time">
+                <tbody>
+                    <tr>
+                        <td colspan="6"><span style="font-family: 'B Titr'">جدول اندازه گيري فلومتر</span></td>
+                    </tr>
+                    <tr style="font-weight: bold;font-family:'B Lotus';">
+                        <td class="time">Rej</td>
+                        <td class="time">OK</td>
+                        <td><span>
+                                خطای
+                                <br>
+                                <span class="time">(10%)</span>
+                                مجاز
+                                <br>
+                                <span class="time">(LPM)</span>
+                            </span></td>
+                        <td><span>
+                                اختلاف
+                                <br>
+                                <span class="time">(LPM)</span>
+                            </span></td>
+                        <td><span>مقدار مرجع کاليبراتور
+                                <br>
+                                <span class="time">(LPM)</span>
+                            </span></td>
+                        <td><span>
+                                مقدار تنظيمي برروي فلومتر
+                            </span></td>
+                    </tr>
+                    <div class="time2">
+                        <tr>
+                            {% if data.6 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.6 }}</td>
+                            <td>{{data.0 }}</td>
+                            <td>{{form.s1_e1_rlpm}}</td>
+                            <td>0.5</td>
+                        </tr>
+                        <tr>
+                            {% if data.7 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.7 }}</td>
+                            <td>{{data.1 }}</td>
+                            <td>{{form.s1_e2_rlpm}}</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            {% if data.8 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.8 }}</td>
+                            <td>{{data.2 }}</td>
+                            <td>{{form.s1_e3_rlpm}}</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            {% if data.9 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.9 }}</td>
+                            <td>{{data.3 }}</td>
+                            <td>{{form.s1_e4_rlpm}}</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            {% if data.10 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.10 }}</td>
+                            <td>{{data.4 }}</td>
+                            <td>{{form.s1_e5_rlpm}}</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            {% if data.11 <= 10 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                            {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                            {% endif %}
+                            <td>{{data.11 }}</td>
+                            <td>{{data.5 }}</td>
+                            <td>{{form.s1_e6_rlpm}}</td>
+                            <td>15</td>
+                        </tr>
+                    </div>
+                </tbody>
+            </table>
+            <br><br><br><br>
+
+            <div style="width:100%;direction: rtl; text-align: right;">
+                <div style="margin-bottom: -5cm;" class="sign-2"><img src="http://{{domain_name}}{{ user_profile.signature.url }}" alt=""
+            style="height: 6cm;">
+        </div>
+            </div>
+            <div style="margin-top: -4.5cm;font-family:'B Zar' ">
+                <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
+                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: {{ user_profile.user.first_name }}
+                </div>
+            </div>
+
+
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 2</div>
+
+        </div>
+    </div>
+
+</body>
+{% endblock %}

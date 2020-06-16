@@ -1,0 +1,255 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>تغییر ایمیل</title>
+    <!-- STYLES -->
+    <style>
+        @font-face {
+            font-family: 'iransans4';
+
+            src: url("{% static 'fonts/IRANSansWeb.eot' %}") format('eot'),
+            url("{% static 'fonts/IRANSansWeb.woff' %}") format('woff'),
+            url("{% static 'fonts/IRANSansWeb.woff2' %}") format('woff2'),
+            url("{% static 'fonts/IRANSansWeb.ttf' %}") format('truetype');
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        body {
+            font-family: iransans4;
+            background-color: #eee;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .form-box {
+            width: 400px;
+            margin: auto;
+            /* border: 1px solid lightgrey; */
+            border-radius: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            background-color: white;
+            padding: 20px;
+
+        }
+
+        /* input[type="password"] {
+            border: none;
+            width: 80%;
+            margin: 4px;
+            height: 2rem;
+       
+    } */
+        /* .email-box{
+            box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.2);
+            width: 100%;
+            border-radius: 5px;
+            padding: 5px;
+        } */
+        .logo {
+            width: 140px;
+            padding: 30px 0 20px 0;
+            margin: auto;
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+
+
+        /* ////////////////////////////// */
+        #lb-old-pass,
+        #lb-pass1,
+        #lb-pass2 {
+            position: absolute;
+            right: 10px;
+            padding-right: 5px;
+            padding-left: 5px;
+
+            top: 13px;
+            background-color: white;
+        }
+
+        #in-old-pass,
+        #in-pass1,
+        #in-pass2 {
+            height: 43px;
+            padding: 9px;
+            line-height: 1.6;
+            display: block;
+            font-weight: 400;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            font-size: 13px;
+            width: 100%;
+            display: inline-block;
+        }
+
+        #in-old-pass:focus,
+        #in-pass1:focus,
+        #in-pass2:focus {
+            outline: none;
+            border: 2px solid #aaaaee;
+        }
+    </style>
+
+    <!--  -->
+</head>
+
+<body>
+    <!--  -->
+
+
+    <div class="container-fluid" style="margin-top: 20px;">
+        <img class="logo" src="{% static 'img/sairan.svg' %}" alt="logo">
+        <div class="form-box">
+            <span style="font-weight: bold;font-size: 1.3rem;color:#444;">تغییر ایمیل</span>
+            <hr>
+
+            <form method="post" action="{% url  'change_email' %}">{% csrf_token %}
+                <!-- <div> -->
+
+                {% if red_status %}
+                <div class="alert alert-danger" role="alert">
+                    موارد مطابقت ندارند !
+                </div>
+                {% endif %}
+                <div class="alert alert-primary" role="alert">
+                    لطفاً ایمیل جدید خود را وارد کرده .
+                </div>
+                <!-- <p> "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."</p> -->
+
+                <fieldset class="module aligned wide">
+
+                    <div class="form-row">
+                        <div style="position: relative;width:95%;">
+
+
+                            <div class="form-row">
+                                <div style="position: relative;width:95%;">
+                                    <input type="email" name="email1" id="in-pass1"
+                                        style="width: 100%;margin-bottom:15px;" required>
+                                    <label id="lb-pass1">ایمیل جدید
+
+                                        <script>
+
+                                            if ($("#in-pass1").val() != "") {
+                                                $("#lb-pass1").css("top", "-10px");
+                                                $("#lb-pass1").css("color", "blue");
+                                                $("#lb-pass1").css("transition", ".15s ease all");
+                                                $("#lb-pass1").css("font-size", "12px");
+                                            }
+                                            $("#in-pass1").focus(function () {
+                                                $("#lb-pass1").css("top", "-10px");
+                                                $("#lb-pass1").css("color", "blue");
+                                                $("#lb-pass1").css("transition", ".15s ease all");
+                                                $("#lb-pass1").css("font-size", "12px");
+
+
+                                            });
+                                            $("#in-pass1").focusout(function () {
+                                                if ($("#in-pass1").val() == "") {
+                                                    $("#lb-pass1").css("top", "13px");
+                                                    $("#lb-pass1").css("color", "black");
+                                                    $("#lb-pass1").css("transition", ".15s ease all");
+                                                    $("#lb-pass1").css("font-size", "14px");
+
+                                                }
+                                            });
+
+                                        </script>
+                                    </label>
+                                </div>
+                                <!-- old -->
+
+                            </div>
+
+
+
+
+
+                            <div class="form-row">
+                                <!-- {{ form.new_password2.label_tag }} {{ form.new_password2 }} -->
+
+                                <!-- old -->
+                                <div style="position: relative;width:95%;">
+
+
+                                    <input type="email" name="email2" id="in-pass2"
+                                        style="width: 100%;margin-bottom:15px;" required>
+                                    <label id="lb-pass2">تأیید ایمیل جدید
+
+                                        <script>
+
+                                            if ($("#in-pass2").val() != "") {
+                                                $("#lb-pass2").css("top", "-10px");
+                                                $("#lb-pass2").css("color", "blue");
+                                                $("#lb-pass2").css("transition", ".15s ease all");
+                                                $("#lb-pass2").css("font-size", "12px");
+                                            }
+                                            $("#in-pass2").focus(function () {
+                                                $("#lb-pass2").css("top", "-10px");
+                                                $("#lb-pass2").css("color", "blue");
+                                                $("#lb-pass2").css("transition", ".15s ease all");
+                                                $("#lb-pass2").css("font-size", "12px");
+
+
+                                            });
+                                            $("#in-pass2").focusout(function () {
+                                                if ($("#in-pass2").val() == "") {
+                                                    $("#lb-pass2").css("top", "13px");
+                                                    $("#lb-pass2").css("color", "black");
+                                                    $("#lb-pass2").css("transition", ".15s ease all");
+                                                    $("#lb-pass2").css("font-size", "14px");
+
+                                                }
+                                            });
+
+                                        </script>
+                                    </label>
+                                </div>
+                                <!-- old -->
+
+
+
+                            </div>
+
+                </fieldset>
+
+                <div class="submit-row">
+                    <input type="submit" value="تغییر ایمیل " class="btn btn-info submit-btn">
+                </div>
+
+                <!-- </div> -->
+            </form>
+        </div>
+
+    </div>
+    </div>
+
+
+
+
+    <!--  -->
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+</html>

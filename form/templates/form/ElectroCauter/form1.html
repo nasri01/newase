@@ -1,0 +1,5032 @@
+{% load static %}
+{% load widget_tweaks %}
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='ElectroCauter' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;">
+        گواهينامه کنترل کيفي دستگاه الکتروسرجری
+      </h1>
+
+
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+
+            {% render_field form.device style="display:inline;width:50%;"  class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+      
+      
+        <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+            <label>دستگاه شماره 4 :</label>
+            <span class="ee">
+              {{form.cal_dev4}}
+            </span><br>
+            <label>دستگاه شماره 5 :</label>
+            <span class="ee">
+              {{form.cal_dev5}}
+            </span><br>
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+      <div style="font-weight: bold;font-size: 18px;">
+
+        تستهای کیفی:
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr>
+            <td rowspan="2"><span>توضیحات</span></td>
+            <td colspan="2"><span>نتیجه</span></td>
+            <td rowspan="2"><span>عنوان بررسی</span></td>
+            <td rowspan="2"><span>ردیف</span></td>
+          </tr>
+          <tr>
+            <td><span class="time">OK</span></td>
+            <td><span class="time">REJ</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e1_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">بدنه و شاسی</td>
+            <td><span>1</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e2_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">نصب و اتصالات</td>
+            <td><span>2</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e3_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">چرخ ها و ترمزها</td>
+            <td><span>3</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e4_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">دو شاخه ی برق اصلی</td>
+            <td><span>4</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e5_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">کابل برق</td>
+            <td><span>5</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e6_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">گلند ها</td>
+            <td><span>6</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e7_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">کابل ها</td>
+            <td><span>7</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e8_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">اتصالات و کانکتور ها</td>
+            <td><span>8</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e9_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">الکترود های خنثی</td>
+            <td><span>9</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e10_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">فیلتر ها</td>
+            <td><span>10</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e11_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>کنترل&shy;ها و سوئیچ&shy;ها</span></td>
+            <td><span>11</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e12_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>نشانگرها و نمایشگرها</span></td>
+            <td><span>12</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e13_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>مانیتورینگ پیوستگی کابل خنثی</span></td>
+            <td><span>13</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e14_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>سیگنال های صوتی</span></td>
+            <td><span>14</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e15_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">برچسب گذاری</td>
+            <td><span>15</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e16_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>کنترل پایی</span></td>
+            <td><span>16</span></td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e17_comment}}</td>
+            <td></td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">لوازم جانبی</td>
+            <td><span>17</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+
+      <div style="font-weight: bold;font-size: 18px;">
+        • آزمون های کمی :
+
+      </div>
+      <div style="font-weight: bold;">
+        1. مقاومت زمین الکترود خنثی :
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2" class="line-1">
+            </td>
+          </tr>
+          <tr>
+            <td class="time">OK</td>
+            <td class="time">REJ</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>N/A</td>
+            <td style="direction: rtl;">
+              20
+              مگا اهم
+              &lt;
+              برای دستگاه های زمین مرجع
+
+            </td>
+            <td style="font-weight: bold;">مقاومت زمین الکترود خنثی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;">
+        2. مانیتورینگ الکترود خنثی :
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2" class="line-1"></td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{form.s2_e1}}</td>
+            <td style="direction: rtl;">
+
+              ( ≤ 1000) اهم
+
+            </td>
+            <td style="font-weight: bold;">مانیتورینگ پیوستگی کابل</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{form.s2_e2}}</td>
+            <td style="direction: rtl;">
+              (150 >> 5) اهم
+            </td>
+            <td style="font-weight: bold;">مانیتورینگ وضعیت تماس</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;direction:rtl;">
+        3. اندازه گیری جریان / توان خروجی RF :
+
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : منوپلار- برش</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e1_m }}</td>
+            <td>{{ form.s3a_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3a_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e2_m }}</td>
+            <td>{{ form.s3a_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3a_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e3_m }}</td>
+            <td>{{ form.s3a_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3a_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e4_m }}</td>
+            <td>{{ form.s3a_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3a_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e5_m }}</td>
+            <td>{{ form.s3a_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3a_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e6_m }}</td>
+            <td>{{ form.s3a_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3a_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3a_e7_m }}</td>
+            <td>{{ form.s3a_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3a_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : منوپلار- انعقاد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e1_m }}</td>
+            <td>{{ form.s3b_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e2_m }}</td>
+            <td>{{ form.s3b_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3b_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e3_m }}</td>
+            <td>{{ form.s3b_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e4_m }}</td>
+            <td>{{ form.s3b_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e5_m }}</td>
+            <td>{{ form.s3b_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e6_m }}</td>
+            <td>{{ form.s3b_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3b_e7_m }}</td>
+            <td>{{ form.s3b_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3b_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : منوپلار- ترکیبی</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e1_m }}</td>
+            <td>{{ form.s3c_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e2_m }}</td>
+            <td>{{ form.s3c_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3c_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e3_m }}</td>
+            <td>{{ form.s3c_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e4_m }}</td>
+            <td>{{ form.s3c_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e5_m }}</td>
+            <td>{{ form.s3c_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e6_m }}</td>
+            <td>{{ form.s3c_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3c_e7_m }}</td>
+            <td>{{ form.s3c_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3c_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : بایپلار- برش</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e1_m }}</td>
+            <td>{{ form.s3d_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e2_m }}</td>
+            <td>{{ form.s3d_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e3_m }}</td>
+            <td>{{ form.s3d_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e4_m }}</td>
+            <td>{{ form.s3d_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3d_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e5_m }}</td>
+            <td>{{ form.s3d_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e6_m }}</td>
+            <td>{{ form.s3d_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3d_e7_m }}</td>
+            <td>{{ form.s3d_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3d_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : بایپلار- انعقاد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e1_m }}</td>
+            <td>{{ form.s3e_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3e_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e2_m }}</td>
+            <td>{{ form.s3e_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3e_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e3_m }}</td>
+            <td>{{ form.s3e_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3e_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e4_m }}</td>
+            <td>{{ form.s3e_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3e_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e5_m }}</td>
+            <td>{{ form.s3e_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3e_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e6_m }}</td>
+            <td>{{ form.s3e_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3e_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3e_e7_m }}</td>
+            <td>{{ form.s3e_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3e_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="5">
+              <span class="time">RF</span>
+              اندازه گیری جریان / توان خروجی
+            </td>
+            <td>مد : بایپلار- ترکیبی</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">مقدار تنظیم شده</td>
+            <td rowspan="2">حد مجاز خطا</td>
+            <td rowspan="2">مقدار بار قرار داده شده</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e1_m }}</td>
+            <td>{{ form.s3f_e1_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3f_e1_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e2_m }}</td>
+            <td>{{ form.s3f_e2_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3f_e2_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e3_m }}</td>
+            <td>{{ form.s3f_e3_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3f_e3_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e4_m }}</td>
+            <td>{{ form.s3f_e4_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3f_e4_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e5_m }}</td>
+            <td>{{ form.s3f_e5_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+            <td>{{ form.s3f_e5_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e6_m }}</td>
+            <td>{{ form.s3f_e6_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3f_e6_1 }}</td>
+          </tr>
+          <tr>
+            <td><span></span></td>
+            <td></td>
+            <td>{{ form.s3f_e7_m }}</td>
+            <td>{{ form.s3f_e7_s }}</td>
+            <td style="direction: rtl;">
+              15% یا 5 وات
+            </td>
+
+
+            <td>{{ form.s3f_e7_1 }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br><br><br>
+      <div style="font-weight: bold;">
+        4. اندازه گیری جریان های نشتی فرکانس بالا :
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ارجاع شده به زمین-1</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4a_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4a_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4a_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ارجاع شده به زمین-2</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4b_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4b_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4b_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ایزوله شده از زمین</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد (الکترود فعال)</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4c_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4c_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4c_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ایزوله شده از زمین با بار </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد (الکترود فعال)</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4d_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4d_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4d_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ایزوله شده از زمین</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد (الکترود خنثی)</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4e_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4e_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4e_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td>الکترود خنثی ایزوله شده از زمین با بار </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد (الکترود خنثی)</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4f_e1}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+            <td style="font-weight: bold;">برش</td>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4f_e2}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4f_e3}}</td>
+            <td style="direction: rtl;">
+              150 میلی آمپر≥
+            </td>
+
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td rowspan="3" class="line-1">
+              <span style="text-align: left;display: block;margin-left: 0.25cm;">بایپلار- قطب 1</span>
+              <br>
+              <span>مد</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+          </tr>
+          <tr class="time">
+            <td>REJ</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4g_e1 }}</td>
+
+            <td class="time" style="line-height: 0.25cm;">
+              {{ form.s4g_e1_p2000 }}&ge;
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4g_e2 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              {{ form.s4g_e2_p2000 }}&ge;
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4g_e3 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td rowspan="3" class="line-1">
+              <span style="text-align: left;display: block;margin-left: 0.25cm;">بایپلار- قطب 1</span>
+              <span style="text-align: right;display: block;margin-right: 0.25cm;">با بار</span>
+              <span>مد</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+          </tr>
+          <tr class="time">
+            <td>REJ</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4h_e1 }}</td>
+
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4h_e2 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4h_e3 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td rowspan="3" class="line-1">
+              <span style="text-align: left;display: block;margin-left: 0.25cm;">بایپلار- قطب 2</span>
+              <br>
+              <span>مد</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+          </tr>
+          <tr class="time">
+            <td>REJ</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4i_e1 }}</td>
+
+
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4i_e2 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4i_e3 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا</td>
+            <td rowspan="3" class="line-1">
+              <span style="text-align: left;display: block;margin-left: 0.25cm;">بایپلار- قطب 2</span>
+              <span style="text-align: right;display: block;margin-right: 0.25cm;">با بار</span>
+              <span>مد</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+          </tr>
+          <tr class="time">
+            <td>REJ</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4j_e1 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4j_e2 }}</td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4j_e3 }}</td>
+            </td>
+            <td class="time" style="line-height: 0.25cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="font-weight: 100;font-size: 30pt;">√</span>
+                <span style="margin-left: 1.6cm;">&ge;</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td>الکترود خنثی ارجاع شده به زمین-1</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;" class="time">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4k_e1 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4k_e2 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4k_e3 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td>الکترود خنثی ارجاع شده به زمین-2</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;" class="time">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4l_e1 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4l_e2 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4l_e3 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td>الکترود خنثی ایزوله شدهاز زمین</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;" class="time">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4m_e1 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4m_e2 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4m_e3 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td>الکترود خنثی ایزوله شده از زمین با بار</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;" class="time">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4n_e1 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4n_e2 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4n_e3 }}</td>
+            <td>
+              <span>&le;</span>
+              میلی آمپر
+              <span class="time">100</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td rowspan="3" class="line-1">
+              <div style="text-align: left;margin-left: 0.25cm;">بایپلار- قطب 1</div>
+              <br>
+              <div>مد</div>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز
+              <br>
+              <span class="time">(µA)</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4o_e1 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4o_e2 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4o_e3 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td rowspan="3" class="line-1">
+              <div style="text-align: left;margin-left: 0.25cm;">بایپلار- قطب 1</div>
+              <div style="text-align: right;margin-right: 0.2cm;"> با بار</div>
+              <div>مد</div>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز
+              <br>
+              <span class="time">(µA)</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4p_e1 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4p_e2 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4p_e3 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td rowspan="3" class="line-1">
+              <div style="text-align: left;margin-left: 0.25cm;">بایپلار- قطب 2</div>
+              <br>
+              <div>مد</div>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز
+              <br>
+              <span class="time">(µA)</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4q_e1 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4q_e2 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4q_e3 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">اندازه گیری جریان های نشتی فرکانس بالا (مستقیما از ترمینال)</td>
+            <td rowspan="3" class="line-1">
+              <div style="text-align: left;margin-left: 0.25cm;">بایپلار- قطب 2</div>
+              <div style="text-align: right;margin-right: 0.2cm;"> با بار</div>
+              <div>مد</div>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز
+              <br>
+              <span class="time">(µA)</span>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4r_e1 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4r_e2 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s4r_e3 }}</td>
+            <td class="time" style="line-height: 0.35cm;">
+              <div style="padding-top: 0.2cm;">
+                <span>p</span>
+                <br>
+                <span style="margin-left: 0.5cm;">
+                  <span>&le;</span>
+                  <span style="font-weight: 100;font-size: 20pt;">√</span>
+                </span>
+                <span style="margin-left: 2cm;">&le; 100</span>
+                <br>
+                <span style="border-top: 1pt solid black;">20000</span>
+              </div>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br><br>
+
+      <div style="font-weight: bold;">
+        5. تداخل بین خروجی های بیمار :
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">تداخل بین خروجی های بیمار</td>
+            <td>بایپلار- قطب 1 با بار یا اتصال کوتاه</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5a_e1 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5a_e2 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5a_e3 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">تداخل بین خروجی های بیمار</td>
+            <td>بایپلار- قطب 2 با بار یا اتصال کوتاه</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5b_e1 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5b_e2 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5b_e3 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">50</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td colspan="4">تداخل بین خروجی های بیمار</td>
+            <td class="line-1">
+              <div>منوپلار</div>
+              <div>مد</div>
+            </td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td colspan="2">نتيجه</td>
+            <td rowspan="2">مقدار اندازه گیری شده</td>
+            <td rowspan="2">حد مجاز</td>
+            <td rowspan="2">مد</td>
+          </tr>
+          <tr style="font-weight: bold;">
+            <td class="time">REJ</td>
+            <td class="time">OK</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5c_e1 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">150</span>
+            </td>
+            <td style="font-weight: bold;">برش</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5c_e2 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">150</span>
+            </td>
+            <td style="font-weight: bold;">انعقاد</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form.s5c_e3 }}</td>
+            <td>
+              <span class="time">≤</span>
+              <span>میلی آمپر</span>
+              <span class="time">150</span>
+            </td>
+            <td style="font-weight: bold;">ترکیبی</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <br><br><br>
+      <div style="font-weight: bold;font-size: 18px;">• تست های ایمـنی الکتـریکی :</div>
+
+
+      <br>
+      <span style="font-weight: bold;">کلاس دستگاه:</span>
+      <div style="width: 20%;">
+        {{ form.test_type }}
+      </div>
+
+      <br><br>
+      <div style="font-weight: bold;">
+        مقدار اندازه گیری شده: {{ form.s11_e1_res }}اهم
+      </div>
+      <br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">حد مجاز (Ω)</td>
+            <td rowspan="2">نوع کابل</td>
+
+          </tr>
+          <tr class="time">
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s11_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">0.1</td>
+            <td>جدا شدنی</td>
+          </tr>
+          <tr>
+            <td>{{ form.s11_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">0.2</td>
+            <td>جدا نشدنی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+      <br>
+
+
+      <div style="font-weight: bold;">2. جریان نشتی زمین : </div>
+
+      <br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-2">
+        <tbody>
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">مقدار مجاز (µa)</td>
+            <td rowspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="2">شرایط کاری</td>
+            <td rowspan="2">حالت تست</td>
+          </tr>
+          <tr class="time">
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s12_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">5000</td>
+            <td>{{ form.s12_e1_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- روشن</td>
+            <td rowspan="4">عادی</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">5000</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">- خاموش </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">5000</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">-آماده به کار</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">5000</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+          </tr>
+          <tr>
+            <td>{{ form.s12_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">10000</td>
+            <td>{{ form.s12_e2_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+            <td>تک اشکالی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+      <br>
+      <div style="font-weight: bold;">نکات : </div>
+      <ul style="direction: rtl;">
+        <li>در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمت های کاربردی نوع Fبه زمین متصل و از آن جدا
+          می باشند نیز تکرار شود.</li>
+        <li>اگر کلاس دستگاه، کلاس Internally Powered را شامل می شود، تست های فوق باید با وجود باتری در دستگاه و با برق
+          AC و بار دیگر با خارج نمودن باتری از دستگاه و با برقAC تکرار شود.</li>
+      </ul>
+
+      <br><br>
+      <div style="font-weight: bold;">3. جریان نشتی محفظه:</div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">مقدار مجاز (µa)</td>
+            <td rowspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="2">شرایط کاری</td>
+            <td rowspan="2">حالت تست</td>
+          </tr>
+          <tr style="font-weight: bold;" class="time">
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s13_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td>{{ form.s13_e1_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- روشن</td>
+            <td rowspan="4">عادی</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">- خاموش </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">-آماده به کار</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+          </tr>
+          <tr>
+            <td>{{ form.s13_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s13_e2_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه – قطع زمین حفاظتی</td>
+            <td>تک اشکالی</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;">نکات : </div>
+      <ul style="direction: rtl;">
+        <li>در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمت های کاربردی نوع Fبه زمین متصل و از آن جدا
+          می‌باشند نیز تکرار شود.</li>
+        <li>اگر کلاس دستگاه، کلاس Internally Powered را شامل می شود، تست های فوق باید با وجود باتری در دستگاه و با برق
+          AC و بار دیگر با خارج نمودن باتری از دستگاه و با برقAC و حالت سوم تنها با باتری و بدون برق AC تکرار شود.</li>
+      </ul>
+
+      <div style="font-weight: bold;">4. جریان نشتی بیمار: {{ form.s14_type}}</div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td rowspan="3"><span>توضیحات</span></td>
+            <td colspan="2" rowspan="2"><span>نتيجه</span></td>
+            <td colspan="4"><span>
+                <span class="time">(&micro;A)</span>
+                مقدار مجاز
+              </span></td>
+            <td colspan="4" rowspan="2"><span>* قسمت کاربردی و مقدار قرائت شده
+                <br>
+                <span class="time">(&micro;A)</span>
+              </span></td>
+            <td rowspan="3"><span>شرایط کاری</span></td>
+            <td rowspan="3"><span>حالت تست</span></td>
+          </tr>
+          <tr class="time" style="font-weight: bold;">
+            <td colspan="2"><span>BF type</span></td>
+            <td colspan="2"><span>CF type</span></td>
+          </tr>
+          <tr class="time" style="font-weight: bold;">
+            <td>REJ</td>
+            <td>OK</td>
+            <td><span>AC</span></td>
+            <td><span>DC</span></td>
+            <td><span>AC</span></td>
+            <td><span>DC</span></td>
+            <td><span>4</span></td>
+            <td><span>3</span></td>
+            <td><span>2</span></td>
+            <td><span>1</span></td>
+          </tr>
+          <tr>
+            <td>{{ form.s14_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td>{{ form.s14_e1_lc4 }}</td>
+            <td>{{ form.s14_e1_lc3 }}</td>
+            <td>{{ form.s14_e1_lc2 }}</td>
+            <td>{{ form.s14_e1_lc1 }}</td>
+            <td style="text-align: right;direction: rtl;"><span>- روشن</span></td>
+            <td rowspan="4"><span>عادی</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- خاموش</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- آماده به کار</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- پلاریته معکوس</span></td>
+          </tr>
+          <tr>
+            <td>{{ form.s14_e2_comment }}</td>
+
+            <td></td>
+            <td></td>
+            <td class="time"><span>500</span></td>
+            <td class="time">50</td>
+            <td class="time"><span>50</span></td>
+            <td class="time"><span>50</span></td>
+            <td>{{ form.s14_e2_lc4 }}</td>
+            <td>{{ form.s14_e2_lc3 }}</td>
+            <td>{{ form.s14_e2_lc2 }}</td>
+            <td>{{ form.s14_e2_lc1 }}</td>
+            <td style="text-align: right;direction: rtl;min-width: 100px;"><span>- قطع یکی از سیم های تغذیه</span></td>
+            <td rowspan="2" style="min-width: 60px;"><span>تک اشکالی</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>500</span></td>
+            <td class="time">50</td>
+            <td class="time"><span>50</span></td>
+            <td class="time"><span>50</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- قطع زمین حفاظتی</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+      <div>*:قسمت کاربردی1: الکترود منوپلار،2: الکترود خنثی، 3: بایپلار- قطب 1،4: بایپلار- قطب 2</div>
+      <div>نکته : اگر کلاس دستگاه، کلاس Internally Powered را شامل می شود، تست های فوق باید با وجود باتری در دستگاه و با
+        برق AC و بار دیگر با خارج نمودن باتری از دستگاه و با برقAC و حالت سوم تنها با باتری و بدون برق AC (جریان بین
+        قسمت کاربردی و بدنه) تکرار شود.</div>
+      <br>
+      <br><br>
+
+
+      <div style="font-weight: bold;">5. جریان کمکی بیمار: {{ form.s15_type}}</div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr style="font-weight: bold;">
+            <td rowspan="3"><span>توضیحات</span></td>
+            <td colspan="2" rowspan="2"><span>نتيجه</span></td>
+            <td colspan="4"><span>
+                <span class="time">(&micro;A)</span>
+                مقدار مجاز
+              </span></td>
+            <td colspan="4" rowspan="2"><span>* قسمت کاربردی و مقدار قرائت شده
+                <br>
+                <span class="time">(&micro;A)</span>
+              </span></td>
+            <td rowspan="3"><span>شرایط کاری</span></td>
+            <td rowspan="3"><span>حالت تست</span></td>
+          </tr>
+          <tr class="time" style="font-weight: bold;">
+            <td colspan="2"><span>BF type</span></td>
+            <td colspan="2"><span>CF type</span></td>
+          </tr>
+          <tr class="time" style="font-weight: bold;">
+            <td>REJ</td>
+            <td>OK</td>
+            <td><span>AC</span></td>
+            <td><span>DC</span></td>
+            <td><span>AC</span></td>
+            <td><span>DC</span></td>
+            <td><span>4</span></td>
+            <td><span>3</span></td>
+            <td><span>2</span></td>
+            <td><span>1</span></td>
+          </tr>
+          <tr>
+            <td>{{ form.s15_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td>{{ form.s15_e1_lc4 }}</td>
+            <td>{{ form.s15_e1_lc3 }}</td>
+            <td>{{ form.s15_e1_lc2 }}</td>
+            <td>{{ form.s15_e1_lc1 }}</td>
+            <td style="text-align: right;direction: rtl;min-width: 100px;"><span>- روشن</span></td>
+            <td rowspan="4" style="min-width: 50px;"><span>عادی</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- خاموش</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- آماده به کار</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>100</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td class="time"><span>10</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- پلاریته معکوس</span></td>
+          </tr>
+          <tr>
+            <td>{{ form.s15_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>500</span></td>
+            <td class="time">50</td>
+            <td class="time"><span>50</span></td>
+            <td class="time"><span>50</span></td>
+            <td>{{ form.s15_e2_lc4 }}</td>
+            <td>{{ form.s15_e2_lc3 }}</td>
+            <td>{{ form.s15_e2_lc2 }}</td>
+            <td>{{ form.s15_e2_lc1 }}</td>
+            <td style="text-align: right;direction: rtl;"><span>- قطع یکی از سیم های تغذیه</span></td>
+            <td rowspan="2"><span>تک اشکالی</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>500</span></td>
+            <td class="time">50</td>
+            <td class="time"><span>50</span></td>
+            <td class="time"><span>50</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;direction: rtl;"><span>- قطع زمین حفاظتی</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div>*:قسمت کاربردی1: الکترود منوپلار،2: الکترود خنثی، 3: بایپلار- قطب 1،4: بایپلار- قطب 2</div>
+      <div style="margin-right: 1cm;">نکته</div>
+      <div style="margin-right: 2cm;">-اگر کلاس دستگاه، کلاس Internally Powered را شامل می¬شود، تست های فوق باید با وجود
+        باتری در دستگاه و با برق AC و بار دیگر با خارج نمودن باتری از دستگاه و با برقAC و حالت سوم تنها با باتری و بدون
+        برق AC (جریان بین قسمت کاربردی و بدنه) تکرار شود.</div>
+      <br>
+      <div style="font-weight: bold;">6.جریان نشتی بیمار (قسمت کاربردی ایزوله و اعمال ولتاژ خارجی): {{ form.s16_type}}
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr>
+            <td rowspan="2"><span>توضیحات</span></td>
+            <td colspan="2"><span>نتيجه</span></td>
+            <td colspan="2"><span>مقدار
+                <br>
+                مجاز
+                <br>
+                <span class="time">(&micro;A)</span>
+              </span></td>
+            <td colspan="4"><span>
+                قسمت کاربردی و مقدار قرائت شده *
+                <br>
+                <span class="time">(&micro;A)</span>
+              </span></td>
+            <td rowspan="2" style="min-width: 150px;"><span>شرایط کاری</span></td>
+            <td rowspan="2"><span>حالت تست</span></td>
+          </tr>
+          <tr class="time">
+            <td>REJ</td>
+            <td>OK</td>
+            <td><span>BF type</span></td>
+            <td><span>CF type</span></td>
+            <td><span>4</span></td>
+            <td><span>3</span></td>
+            <td><span>2</span></td>
+            <td><span>1</span></td>
+          </tr>
+          <tr>
+            <td>{{ form.s16_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time"><span>5000</span></td>
+            <td class="time"><span>100</span></td>
+            <td>{{ form.s16_e1_lc4 }}</td>
+            <td>{{ form.s16_e1_lc3 }}</td>
+            <td>{{ form.s16_e1_lc2 }}</td>
+            <td>{{ form.s16_e1_lc1 }}</td>
+            <td>اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>
+            <td><span>تک اشکالی</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div>*:قسمت کاربردی1: الکترود منوپلار،2: الکترود خنثی، 3: بایپلار- قطب 1،4: بایپلار- قطب 2</div>
+      <div>نکته : </div>
+      <div style="margin-right: 1cm;">-اگر کلاس دستگاه، کلاس Internally Powered را شامل می شود، تست های فوق باید با وجود
+        باتری در دستگاه و با برقAC و بار دیگر با خارج نمودن باتری از دستگاه و با برق AC تکرار شود.</div>
+
+      <br><br>
+
+      <div style="font-weight: bold;">• اقدامات پیشگیرانه :</div>
+      <table style="margin: auto;width: 50%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr>
+            <td>توضیحات</td>
+            <td>عنوان</td>
+          </tr>
+          <tr>
+            <td>{{ form.se_e1_comment }}</td>
+            <td>{{ form.se_e1_title }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.se_e2_comment }}</td>
+            <td>{{ form.se_e2_title }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!--</div>-->
+      {#/////////////////////////////////////////////#}
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='ElectroCauter' %}">
+            ذخیره نهایی
+          </button>
+
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li>عدم تست مد: منوپلار- انعقاد به علت اشکال در ولوم انعقاد </li>
+              <li>عدم تست قسمت Coaculation به علت وجود اشکال فنی</li>
+              <li>کمتر از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار-برش وانعقاد</li>
+              <li>بیش از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار-برش وانعقاد</li>
+              <li>بیش از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار-برش</li>
+              <li>کمتر از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار-برش </li>
+              <li>بیش از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار-انعقاد</li>
+              <li>کمتر از رنج استاندارد بودن مقادیراندازه گيری توان خروجي در مد : منوپلار- انعقاد</li>
+              <li>بیش از رنج استاندارد بودن مقادیراندازه گيری جریان های نشتی فرکانس بالا</li>
+              <li>کمتر از رنج استاندارد بودن مقادیراندازه گيری جریان های نشتی فرکانس بالا</li>
+              <li>خرابی سوییچ تعویض پدال روی قسمت بایپلار</li>
+              <li>خرابی سوکت کابل رابط پلیت دستگاه</li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+<script>
+  // table 0
+
+
+  $("#id_s0_e1_comment")
+    .focusout(function () {
+      if ($("#id_s0_e1_comment").val() >= 3) {
+        $("#id_s0_e1_comment").css("background-color", "#f24858");
+        $("#id_s0_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 1)) {
+        $("#id_s0_e1_comment").css("background-color", "white");
+        $("#id_s0_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 2)) {
+        $("#id_s0_e1_comment").css("background-color", 'yellow');
+        $("#id_s0_e1_comment").css("color", "black");
+      }
+    });
+  /////
+
+  $("#id_s0_e2_comment")
+    .focusout(function () {
+      if ($("#id_s0_e2_comment").val() >= 3) {
+        $("#id_s0_e2_comment").css("background-color", "#f24858");
+        $("#id_s0_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 1)) {
+        $("#id_s0_e2_comment").css("background-color", "white");
+        $("#id_s0_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 2)) {
+        $("#id_s0_e2_comment").css("background-color", 'yellow');
+        $("#id_s0_e2_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e3_comment")
+    .focusout(function () {
+      if ($("#id_s0_e3_comment").val() >= 3) {
+        $("#id_s0_e3_comment").css("background-color", "#f24858");
+        $("#id_s0_e3_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 1)) {
+        $("#id_s0_e3_comment").css("background-color", "white");
+        $("#id_s0_e3_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 2)) {
+        $("#id_s0_e3_comment").css("background-color", 'yellow');
+        $("#id_s0_e3_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e4_comment")
+    .focusout(function () {
+      if ($("#id_s0_e4_comment").val() >= 3) {
+        $("#id_s0_e4_comment").css("background-color", "#f24858");
+        $("#id_s0_e4_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 1)) {
+        $("#id_s0_e4_comment").css("background-color", "white");
+        $("#id_s0_e4_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 2)) {
+        $("#id_s0_e4_comment").css("background-color", 'yellow');
+        $("#id_s0_e4_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e5_comment")
+    .focusout(function () {
+      if ($("#id_s0_e5_comment").val() >= 3) {
+        $("#id_s0_e5_comment").css("background-color", "#f24858");
+        $("#id_s0_e5_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 1)) {
+        $("#id_s0_e5_comment").css("background-color", "white");
+        $("#id_s0_e5_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 2)) {
+        $("#id_s0_e5_comment").css("background-color", 'yellow');
+        $("#id_s0_e5_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e6_comment")
+    .focusout(function () {
+      if ($("#id_s0_e6_comment").val() >= 3) {
+        $("#id_s0_e6_comment").css("background-color", "#f24858");
+        $("#id_s0_e6_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 1)) {
+        $("#id_s0_e6_comment").css("background-color", "white");
+        $("#id_s0_e6_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 2)) {
+        $("#id_s0_e6_comment").css("background-color", 'yellow');
+        $("#id_s0_e6_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e7_comment")
+    .focusout(function () {
+      if ($("#id_s0_e7_comment").val() >= 3) {
+        $("#id_s0_e7_comment").css("background-color", "#f24858");
+        $("#id_s0_e7_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 1)) {
+        $("#id_s0_e7_comment").css("background-color", "white");
+        $("#id_s0_e7_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 2)) {
+        $("#id_s0_e7_comment").css("background-color", 'yellow');
+        $("#id_s0_e7_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e8_comment")
+    .focusout(function () {
+      if ($("#id_s0_e8_comment").val() >= 3) {
+        $("#id_s0_e8_comment").css("background-color", "#f24858");
+        $("#id_s0_e8_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 1)) {
+        $("#id_s0_e8_comment").css("background-color", "white");
+        $("#id_s0_e8_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 2)) {
+        $("#id_s0_e8_comment").css("background-color", 'yellow');
+        $("#id_s0_e8_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e9_comment")
+    .focusout(function () {
+      if ($("#id_s0_e9_comment").val() >= 3) {
+        $("#id_s0_e9_comment").css("background-color", "#f24858");
+        $("#id_s0_e9_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 1)) {
+        $("#id_s0_e9_comment").css("background-color", "white");
+        $("#id_s0_e9_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 2)) {
+        $("#id_s0_e9_comment").css("background-color", 'yellow');
+        $("#id_s0_e9_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e10_comment")
+    .focusout(function () {
+      if ($("#id_s0_e10_comment").val() >= 3) {
+        $("#id_s0_e10_comment").css("background-color", "#f24858");
+        $("#id_s0_e10_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 1)) {
+        $("#id_s0_e10_comment").css("background-color", "white");
+        $("#id_s0_e10_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 2)) {
+        $("#id_s0_e10_comment").css("background-color", 'yellow');
+        $("#id_s0_e10_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e11_comment")
+    .focusout(function () {
+      if ($("#id_s0_e11_comment").val() >= 3) {
+        $("#id_s0_e11_comment").css("background-color", "#f24858");
+        $("#id_s0_e11_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 1)) {
+        $("#id_s0_e11_comment").css("background-color", "white");
+        $("#id_s0_e11_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 2)) {
+        $("#id_s0_e11_comment").css("background-color", 'yellow');
+        $("#id_s0_e11_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e12_comment")
+    .focusout(function () {
+      if ($("#id_s0_e12_comment").val() >= 3) {
+        $("#id_s0_e12_comment").css("background-color", "#f24858");
+        $("#id_s0_e12_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 1)) {
+        $("#id_s0_e12_comment").css("background-color", "white");
+        $("#id_s0_e12_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 2)) {
+        $("#id_s0_e12_comment").css("background-color", 'yellow');
+        $("#id_s0_e12_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e13_comment")
+    .focusout(function () {
+      if ($("#id_s0_e13_comment").val() >= 3) {
+        $("#id_s0_e13_comment").css("background-color", "#f24858");
+        $("#id_s0_e13_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 1)) {
+        $("#id_s0_e13_comment").css("background-color", "white");
+        $("#id_s0_e13_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 2)) {
+        $("#id_s0_e13_comment").css("background-color", 'yellow');
+        $("#id_s0_e13_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e14_comment")
+    .focusout(function () {
+      if ($("#id_s0_e14_comment").val() >= 3) {
+        $("#id_s0_e14_comment").css("background-color", "#f24858");
+        $("#id_s0_e14_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 1)) {
+        $("#id_s0_e14_comment").css("background-color", "white");
+        $("#id_s0_e14_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 2)) {
+        $("#id_s0_e14_comment").css("background-color", 'yellow');
+        $("#id_s0_e14_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e15_comment")
+    .focusout(function () {
+      if ($("#id_s0_e15_comment").val() >= 3) {
+        $("#id_s0_e15_comment").css("background-color", "#f24858");
+        $("#id_s0_e15_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 1)) {
+        $("#id_s0_e15_comment").css("background-color", "white");
+        $("#id_s0_e15_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 2)) {
+        $("#id_s0_e15_comment").css("background-color", 'yellow');
+        $("#id_s0_e15_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e16_comment")
+    .focusout(function () {
+      if ($("#id_s0_e16_comment").val() >= 3) {
+        $("#id_s0_e16_comment").css("background-color", "#f24858");
+        $("#id_s0_e16_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 1)) {
+        $("#id_s0_e16_comment").css("background-color", "white");
+        $("#id_s0_e16_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 2)) {
+        $("#id_s0_e16_comment").css("background-color", 'yellow');
+        $("#id_s0_e16_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e17_comment")
+    .focusout(function () {
+      if ($("#id_s0_e17_comment").val() >= 3) {
+        $("#id_s0_e17_comment").css("background-color", "#f24858");
+        $("#id_s0_e17_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 1)) {
+        $("#id_s0_e17_comment").css("background-color", "white");
+        $("#id_s0_e17_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 2)) {
+        $("#id_s0_e17_comment").css("background-color", 'yellow');
+        $("#id_s0_e17_comment").css("color", "black");
+      }
+    });
+  /////
+  // table 1
+  $("#id_s1_res")
+    .focusout(function () {
+      if (($("#id_s1_res").val() <= 20) && ($("#id_s1_res").val().length != 0)) {
+        $("#id_s1_res").css("background-color", "#f24858");
+        $("#id_s1_res").css("color", "white");
+
+        //   $("#id_s2_e1_comment").css("background-color", "#f24858");
+        //   $("#id_s2_e1_comment").css("color", "white");
+        //   $("#id_s2_e1_comment").val("2");
+
+      }
+      else if (($("#id_s1_res").val() > 20) || ($("#id_s1_res").val().length == 0)) {
+        $("#id_s1_res").css("background-color", "white");
+        $("#id_s1_res").css("color", "black");
+
+        //   $("#id_s2_e1_comment").css("background-color", "white");
+        //   $("#id_s2_e1_comment").css("color", "black");
+        //   $("#id_s2_e1_comment").val("1");
+
+      }
+    });
+  /////  tabkle 2
+
+
+
+
+  $("#id_s2_e1")
+    .focusout(function () {
+      if ($("#id_s2_e1").val() > 1000 && ($("#id_s2_e1").val().length != 0)) {
+        $("#id_s2_e1").css("background-color", "#f24858");
+        $("#id_s2_e1").css("color", "white");
+
+      }
+      else if (($("#id_s2_e1").val() <= 1000) || ($("#id_s2_e1").val().length == 0)) {
+        $("#id_s2_e1").css("background-color", "white");
+        $("#id_s2_e1").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////??????????
+  $("#id_s2_e2")
+    .focusout(function () {
+      if (($("#id_s2_e2").val() < 5 || $("#id_s2_e2").val() > 150) && ($("#id_s2_e2").val().length != 0)) {
+        $("#id_s2_e2").css("background-color", "#f24858");
+        $("#id_s2_e2").css("color", "white");
+
+      }
+      else if (($("#id_s2_e2").val() >= 5 || $("#id_s2_e2").val() <= 150) || ($("#id_s2_e2").val().length == 0)) {
+        $("#id_s2_e2").css("background-color", "white");
+        $("#id_s2_e2").css("color", "black");
+
+      }
+    });
+
+
+
+
+  // ///////////////////// table 3
+
+
+  $("#id_s3a_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e1_m").val() - $("#id_s3a_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e1_s").val() * 0.15 < val) && ($("#id_s3a_e1_m").val().length != 0)) {
+        $("#id_s3a_e1_m").css("background-color", "#f24858");
+        $("#id_s3a_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e1_s").val() * 0.15 >= val) || ($("#id_s3a_e1_m").val().length == 0)) {
+        $("#id_s3a_e1_m").css("background-color", "white");
+        $("#id_s3a_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3a_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e2_m").val() - $("#id_s3a_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e2_s").val() * 0.15 < val) && ($("#id_s3a_e2_m").val().length != 0)) {
+        $("#id_s3a_e2_m").css("background-color", "#f24858");
+        $("#id_s3a_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e2_s").val() * 0.15 >= val) || ($("#id_s3a_e2_m").val().length == 0)) {
+        $("#id_s3a_e2_m").css("background-color", "white");
+        $("#id_s3a_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3a_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e3_m").val() - $("#id_s3a_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e3_s").val() * 0.15 < val) && ($("#id_s3a_e3_m").val().length != 0)) {
+        $("#id_s3a_e3_m").css("background-color", "#f24858");
+        $("#id_s3a_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e3_s").val() * 0.15 >= val) || ($("#id_s3a_e3_m").val().length == 0)) {
+        $("#id_s3a_e3_m").css("background-color", "white");
+        $("#id_s3a_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3a_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e4_m").val() - $("#id_s3a_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e4_s").val() * 0.15 < val) && ($("#id_s3a_e4_m").val().length != 0)) {
+        $("#id_s3a_e4_m").css("background-color", "#f24858");
+        $("#id_s3a_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e4_s").val() * 0.15 >= val) || ($("#id_s3a_e4_m").val().length == 0)) {
+        $("#id_s3a_e4_m").css("background-color", "white");
+        $("#id_s3a_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3a_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e5_m").val() - $("#id_s3a_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e5_s").val() * 0.15 < val) && ($("#id_s3a_e5_m").val().length != 0)) {
+        $("#id_s3a_e5_m").css("background-color", "#f24858");
+        $("#id_s3a_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e5_s").val() * 0.15 >= val) || ($("#id_s3a_e5_m").val().length == 0)) {
+        $("#id_s3a_e5_m").css("background-color", "white");
+        $("#id_s3a_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3a_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e6_m").val() - $("#id_s3a_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e6_s").val() * 0.15 < val) && ($("#id_s3a_e6_m").val().length != 0)) {
+        $("#id_s3a_e6_m").css("background-color", "#f24858");
+        $("#id_s3a_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e6_s").val() * 0.15 >= val) || ($("#id_s3a_e6_m").val().length == 0)) {
+        $("#id_s3a_e6_m").css("background-color", "white");
+        $("#id_s3a_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3a_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3a_e7_m").val() - $("#id_s3a_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3a_e7_s").val() * 0.15 < val) && ($("#id_s3a_e7_m").val().length != 0)) {
+        $("#id_s3a_e7_m").css("background-color", "#f24858");
+        $("#id_s3a_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3a_e7_s").val() * 0.15 >= val) || ($("#id_s3a_e7_m").val().length == 0)) {
+        $("#id_s3a_e7_m").css("background-color", "white");
+        $("#id_s3a_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  $("#id_s3b_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e1_m").val() - $("#id_s3b_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e1_s").val() * 0.15 < val) && ($("#id_s3b_e1_m").val().length != 0)) {
+        $("#id_s3b_e1_m").css("background-color", "#f24858");
+        $("#id_s3b_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e1_s").val() * 0.15 >= val) || ($("#id_s3b_e1_m").val().length == 0)) {
+        $("#id_s3b_e1_m").css("background-color", "white");
+        $("#id_s3b_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3b_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e2_m").val() - $("#id_s3b_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e2_s").val() * 0.15 < val) && ($("#id_s3b_e2_m").val().length != 0)) {
+        $("#id_s3b_e2_m").css("background-color", "#f24858");
+        $("#id_s3b_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e2_s").val() * 0.15 >= val) || ($("#id_s3b_e2_m").val().length == 0)) {
+        $("#id_s3b_e2_m").css("background-color", "white");
+        $("#id_s3b_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3b_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e3_m").val() - $("#id_s3b_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e3_s").val() * 0.15 < val) && ($("#id_s3b_e3_m").val().length != 0)) {
+        $("#id_s3b_e3_m").css("background-color", "#f24858");
+        $("#id_s3b_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e3_s").val() * 0.15 >= val) || ($("#id_s3b_e3_m").val().length == 0)) {
+        $("#id_s3b_e3_m").css("background-color", "white");
+        $("#id_s3b_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3b_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e4_m").val() - $("#id_s3b_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e4_s").val() * 0.15 < val) && ($("#id_s3b_e4_m").val().length != 0)) {
+        $("#id_s3b_e4_m").css("background-color", "#f24858");
+        $("#id_s3b_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e4_s").val() * 0.15 >= val) || ($("#id_s3b_e4_m").val().length == 0)) {
+        $("#id_s3b_e4_m").css("background-color", "white");
+        $("#id_s3b_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3b_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e5_m").val() - $("#id_s3b_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e5_s").val() * 0.15 < val) && ($("#id_s3b_e5_m").val().length != 0)) {
+        $("#id_s3b_e5_m").css("background-color", "#f24858");
+        $("#id_s3b_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e5_s").val() * 0.15 >= val) || ($("#id_s3b_e5_m").val().length == 0)) {
+        $("#id_s3b_e5_m").css("background-color", "white");
+        $("#id_s3b_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3b_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e6_m").val() - $("#id_s3b_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e6_s").val() * 0.15 < val) && ($("#id_s3b_e6_m").val().length != 0)) {
+        $("#id_s3b_e6_m").css("background-color", "#f24858");
+        $("#id_s3b_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e6_s").val() * 0.15 >= val) || ($("#id_s3b_e6_m").val().length == 0)) {
+        $("#id_s3b_e6_m").css("background-color", "white");
+        $("#id_s3b_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3b_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3b_e7_m").val() - $("#id_s3b_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3b_e7_s").val() * 0.15 < val) && ($("#id_s3b_e7_m").val().length != 0)) {
+        $("#id_s3b_e7_m").css("background-color", "#f24858");
+        $("#id_s3b_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3b_e7_s").val() * 0.15 >= val) || ($("#id_s3b_e7_m").val().length == 0)) {
+        $("#id_s3b_e7_m").css("background-color", "white");
+        $("#id_s3b_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  $("#id_s3c_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e1_m").val() - $("#id_s3c_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e1_s").val() * 0.15 < val) && ($("#id_s3c_e1_m").val().length != 0)) {
+        $("#id_s3c_e1_m").css("background-color", "#f24858");
+        $("#id_s3c_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e1_s").val() * 0.15 >= val) || ($("#id_s3c_e1_m").val().length == 0)) {
+        $("#id_s3c_e1_m").css("background-color", "white");
+        $("#id_s3c_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3c_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e2_m").val() - $("#id_s3c_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e2_s").val() * 0.15 < val) && ($("#id_s3c_e2_m").val().length != 0)) {
+        $("#id_s3c_e2_m").css("background-color", "#f24858");
+        $("#id_s3c_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e2_s").val() * 0.15 >= val) || ($("#id_s3c_e2_m").val().length == 0)) {
+        $("#id_s3c_e2_m").css("background-color", "white");
+        $("#id_s3c_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3c_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e3_m").val() - $("#id_s3c_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e3_s").val() * 0.15 < val) && ($("#id_s3c_e3_m").val().length != 0)) {
+        $("#id_s3c_e3_m").css("background-color", "#f24858");
+        $("#id_s3c_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e3_s").val() * 0.15 >= val) || ($("#id_s3c_e3_m").val().length == 0)) {
+        $("#id_s3c_e3_m").css("background-color", "white");
+        $("#id_s3c_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3c_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e4_m").val() - $("#id_s3c_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e4_s").val() * 0.15 < val) && ($("#id_s3c_e4_m").val().length != 0)) {
+        $("#id_s3c_e4_m").css("background-color", "#f24858");
+        $("#id_s3c_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e4_s").val() * 0.15 >= val) || ($("#id_s3c_e4_m").val().length == 0)) {
+        $("#id_s3c_e4_m").css("background-color", "white");
+        $("#id_s3c_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3c_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e5_m").val() - $("#id_s3c_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e5_s").val() * 0.15 < val) && ($("#id_s3c_e5_m").val().length != 0)) {
+        $("#id_s3c_e5_m").css("background-color", "#f24858");
+        $("#id_s3c_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e5_s").val() * 0.15 >= val) || ($("#id_s3c_e5_m").val().length == 0)) {
+        $("#id_s3c_e5_m").css("background-color", "white");
+        $("#id_s3c_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3c_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e6_m").val() - $("#id_s3c_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e6_s").val() * 0.15 < val) && ($("#id_s3c_e6_m").val().length != 0)) {
+        $("#id_s3c_e6_m").css("background-color", "#f24858");
+        $("#id_s3c_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e6_s").val() * 0.15 >= val) || ($("#id_s3c_e6_m").val().length == 0)) {
+        $("#id_s3c_e6_m").css("background-color", "white");
+        $("#id_s3c_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3c_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3c_e7_m").val() - $("#id_s3c_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3c_e7_s").val() * 0.15 < val) && ($("#id_s3c_e7_m").val().length != 0)) {
+        $("#id_s3c_e7_m").css("background-color", "#f24858");
+        $("#id_s3c_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3c_e7_s").val() * 0.15 >= val) || ($("#id_s3c_e7_m").val().length == 0)) {
+        $("#id_s3c_e7_m").css("background-color", "white");
+        $("#id_s3c_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  $("#id_s3d_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e1_m").val() - $("#id_s3d_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e1_s").val() * 0.15 < val) && ($("#id_s3d_e1_m").val().length != 0)) {
+        $("#id_s3d_e1_m").css("background-color", "#f24858");
+        $("#id_s3d_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e1_s").val() * 0.15 >= val) || ($("#id_s3d_e1_m").val().length == 0)) {
+        $("#id_s3d_e1_m").css("background-color", "white");
+        $("#id_s3d_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3d_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e2_m").val() - $("#id_s3d_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e2_s").val() * 0.15 < val) && ($("#id_s3d_e2_m").val().length != 0)) {
+        $("#id_s3d_e2_m").css("background-color", "#f24858");
+        $("#id_s3d_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e2_s").val() * 0.15 >= val) || ($("#id_s3d_e2_m").val().length == 0)) {
+        $("#id_s3d_e2_m").css("background-color", "white");
+        $("#id_s3d_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3d_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e3_m").val() - $("#id_s3d_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e3_s").val() * 0.15 < val) && ($("#id_s3d_e3_m").val().length != 0)) {
+        $("#id_s3d_e3_m").css("background-color", "#f24858");
+        $("#id_s3d_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e3_s").val() * 0.15 >= val) || ($("#id_s3d_e3_m").val().length == 0)) {
+        $("#id_s3d_e3_m").css("background-color", "white");
+        $("#id_s3d_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3d_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e4_m").val() - $("#id_s3d_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e4_s").val() * 0.15 < val) && ($("#id_s3d_e4_m").val().length != 0)) {
+        $("#id_s3d_e4_m").css("background-color", "#f24858");
+        $("#id_s3d_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e4_s").val() * 0.15 >= val) || ($("#id_s3d_e4_m").val().length == 0)) {
+        $("#id_s3d_e4_m").css("background-color", "white");
+        $("#id_s3d_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3d_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e5_m").val() - $("#id_s3d_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e5_s").val() * 0.15 < val) && ($("#id_s3d_e5_m").val().length != 0)) {
+        $("#id_s3d_e5_m").css("background-color", "#f24858");
+        $("#id_s3d_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e5_s").val() * 0.15 >= val) || ($("#id_s3d_e5_m").val().length == 0)) {
+        $("#id_s3d_e5_m").css("background-color", "white");
+        $("#id_s3d_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3d_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e6_m").val() - $("#id_s3d_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e6_s").val() * 0.15 < val) && ($("#id_s3d_e6_m").val().length != 0)) {
+        $("#id_s3d_e6_m").css("background-color", "#f24858");
+        $("#id_s3d_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e6_s").val() * 0.15 >= val) || ($("#id_s3d_e6_m").val().length == 0)) {
+        $("#id_s3d_e6_m").css("background-color", "white");
+        $("#id_s3d_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3d_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3d_e7_m").val() - $("#id_s3d_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3d_e7_s").val() * 0.15 < val) && ($("#id_s3d_e7_m").val().length != 0)) {
+        $("#id_s3d_e7_m").css("background-color", "#f24858");
+        $("#id_s3d_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3d_e7_s").val() * 0.15 >= val) || ($("#id_s3d_e7_m").val().length == 0)) {
+        $("#id_s3d_e7_m").css("background-color", "white");
+        $("#id_s3d_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  $("#id_s3e_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e1_m").val() - $("#id_s3e_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e1_s").val() * 0.15 < val) && ($("#id_s3e_e1_m").val().length != 0)) {
+        $("#id_s3e_e1_m").css("background-color", "#f24858");
+        $("#id_s3e_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e1_s").val() * 0.15 >= val) || ($("#id_s3e_e1_m").val().length == 0)) {
+        $("#id_s3e_e1_m").css("background-color", "white");
+        $("#id_s3e_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3e_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e2_m").val() - $("#id_s3e_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e2_s").val() * 0.15 < val) && ($("#id_s3e_e2_m").val().length != 0)) {
+        $("#id_s3e_e2_m").css("background-color", "#f24858");
+        $("#id_s3e_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e2_s").val() * 0.15 >= val) || ($("#id_s3e_e2_m").val().length == 0)) {
+        $("#id_s3e_e2_m").css("background-color", "white");
+        $("#id_s3e_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3e_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e3_m").val() - $("#id_s3e_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e3_s").val() * 0.15 < val) && ($("#id_s3e_e3_m").val().length != 0)) {
+        $("#id_s3e_e3_m").css("background-color", "#f24858");
+        $("#id_s3e_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e3_s").val() * 0.15 >= val) || ($("#id_s3e_e3_m").val().length == 0)) {
+        $("#id_s3e_e3_m").css("background-color", "white");
+        $("#id_s3e_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3e_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e4_m").val() - $("#id_s3e_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e4_s").val() * 0.15 < val) && ($("#id_s3e_e4_m").val().length != 0)) {
+        $("#id_s3e_e4_m").css("background-color", "#f24858");
+        $("#id_s3e_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e4_s").val() * 0.15 >= val) || ($("#id_s3e_e4_m").val().length == 0)) {
+        $("#id_s3e_e4_m").css("background-color", "white");
+        $("#id_s3e_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3e_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e5_m").val() - $("#id_s3e_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e5_s").val() * 0.15 < val) && ($("#id_s3e_e5_m").val().length != 0)) {
+        $("#id_s3e_e5_m").css("background-color", "#f24858");
+        $("#id_s3e_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e5_s").val() * 0.15 >= val) || ($("#id_s3e_e5_m").val().length == 0)) {
+        $("#id_s3e_e5_m").css("background-color", "white");
+        $("#id_s3e_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3e_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e6_m").val() - $("#id_s3e_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e6_s").val() * 0.15 < val) && ($("#id_s3e_e6_m").val().length != 0)) {
+        $("#id_s3e_e6_m").css("background-color", "#f24858");
+        $("#id_s3e_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e6_s").val() * 0.15 >= val) || ($("#id_s3e_e6_m").val().length == 0)) {
+        $("#id_s3e_e6_m").css("background-color", "white");
+        $("#id_s3e_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3e_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3e_e7_m").val() - $("#id_s3e_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3e_e7_s").val() * 0.15 < val) && ($("#id_s3e_e7_m").val().length != 0)) {
+        $("#id_s3e_e7_m").css("background-color", "#f24858");
+        $("#id_s3e_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3e_e7_s").val() * 0.15 >= val) || ($("#id_s3e_e7_m").val().length == 0)) {
+        $("#id_s3e_e7_m").css("background-color", "white");
+        $("#id_s3e_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  $("#id_s3f_e1_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e1_m").val() - $("#id_s3f_e1_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e1_s").val() * 0.15 < val) && ($("#id_s3f_e1_m").val().length != 0)) {
+        $("#id_s3f_e1_m").css("background-color", "#f24858");
+        $("#id_s3f_e1_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e1_s").val() * 0.15 >= val) || ($("#id_s3f_e1_m").val().length == 0)) {
+        $("#id_s3f_e1_m").css("background-color", "white");
+        $("#id_s3f_e1_m").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s3f_e2_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e2_m").val() - $("#id_s3f_e2_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e2_s").val() * 0.15 < val) && ($("#id_s3f_e2_m").val().length != 0)) {
+        $("#id_s3f_e2_m").css("background-color", "#f24858");
+        $("#id_s3f_e2_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e2_s").val() * 0.15 >= val) || ($("#id_s3f_e2_m").val().length == 0)) {
+        $("#id_s3f_e2_m").css("background-color", "white");
+        $("#id_s3f_e2_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3f_e3_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e3_m").val() - $("#id_s3f_e3_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e3_s").val() * 0.15 < val) && ($("#id_s3f_e3_m").val().length != 0)) {
+        $("#id_s3f_e3_m").css("background-color", "#f24858");
+        $("#id_s3f_e3_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e3_s").val() * 0.15 >= val) || ($("#id_s3f_e3_m").val().length == 0)) {
+        $("#id_s3f_e3_m").css("background-color", "white");
+        $("#id_s3f_e3_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3f_e4_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e4_m").val() - $("#id_s3f_e4_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e4_s").val() * 0.15 < val) && ($("#id_s3f_e4_m").val().length != 0)) {
+        $("#id_s3f_e4_m").css("background-color", "#f24858");
+        $("#id_s3f_e4_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e4_s").val() * 0.15 >= val) || ($("#id_s3f_e4_m").val().length == 0)) {
+        $("#id_s3f_e4_m").css("background-color", "white");
+        $("#id_s3f_e4_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3f_e5_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e5_m").val() - $("#id_s3f_e5_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e5_s").val() * 0.15 < val) && ($("#id_s3f_e5_m").val().length != 0)) {
+        $("#id_s3f_e5_m").css("background-color", "#f24858");
+        $("#id_s3f_e5_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e5_s").val() * 0.15 >= val) || ($("#id_s3f_e5_m").val().length == 0)) {
+        $("#id_s3f_e5_m").css("background-color", "white");
+        $("#id_s3f_e5_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3f_e6_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e6_m").val() - $("#id_s3f_e6_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e6_s").val() * 0.15 < val) && ($("#id_s3f_e6_m").val().length != 0)) {
+        $("#id_s3f_e6_m").css("background-color", "#f24858");
+        $("#id_s3f_e6_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e6_s").val() * 0.15 >= val) || ($("#id_s3f_e6_m").val().length == 0)) {
+        $("#id_s3f_e6_m").css("background-color", "white");
+        $("#id_s3f_e6_m").css("color", "black");
+
+      }
+    });
+
+  $("#id_s3f_e7_m")
+    .focusout(function () {
+      var val = $("#id_s3f_e7_m").val() - $("#id_s3f_e7_s").val();
+      if (val < 0)
+        val = -val;
+      if ((val > 5 && $("#id_s3f_e7_s").val() * 0.15 < val) && ($("#id_s3f_e7_m").val().length != 0)) {
+        $("#id_s3f_e7_m").css("background-color", "#f24858");
+        $("#id_s3f_e7_m").css("color", "white");
+
+      }
+      else if ((val <= 5 || $("#id_s3f_e7_s").val() * 0.15 >= val) || ($("#id_s3f_e7_m").val().length == 0)) {
+        $("#id_s3f_e7_m").css("background-color", "white");
+        $("#id_s3f_e7_m").css("color", "black");
+
+      }
+    });
+  ////////////////////////////////////////
+
+
+  ///////////////////////////////////// table 4
+  $("#id_s4a_e1")
+    .focusout(function () {
+      if ($("#id_s4a_e1").val() > 150 && ($("#id_s4a_e1").val().length != 0)) {
+        $("#id_s4a_e1").css("background-color", "#f24858");
+        $("#id_s4a_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4a_e1").val() <= 150) || ($("#id_s4a_e1").val().length == 0)) {
+        $("#id_s4a_e1").css("background-color", "white");
+        $("#id_s4a_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4a_e2")
+    .focusout(function () {
+      if ($("#id_s4a_e2").val() > 150 && ($("#id_s4a_e2").val().length != 0)) {
+        $("#id_s4a_e2").css("background-color", "#f24858");
+        $("#id_s4a_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4a_e2").val() <= 150) || ($("#id_s4a_e2").val().length == 0)) {
+        $("#id_s4a_e2").css("background-color", "white");
+        $("#id_s4a_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4a_e3")
+    .focusout(function () {
+      if ($("#id_s4a_e3").val() > 150 && ($("#id_s4a_e3").val().length != 0)) {
+        $("#id_s4a_e3").css("background-color", "#f24858");
+        $("#id_s4a_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4a_e3").val() <= 150) || ($("#id_s4a_e3").val().length == 0)) {
+        $("#id_s4a_e3").css("background-color", "white");
+        $("#id_s4a_e3").css("color", "black");
+
+      }
+    });
+  //
+  $("#id_s4b_e1")
+    .focusout(function () {
+      if ($("#id_s4b_e1").val() > 150 && ($("#id_s4b_e1").val().length != 0)) {
+        $("#id_s4b_e1").css("background-color", "#f24858");
+        $("#id_s4b_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4b_e1").val() <= 150) || ($("#id_s4b_e1").val().length == 0)) {
+        $("#id_s4b_e1").css("background-color", "white");
+        $("#id_s4b_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4b_e2")
+    .focusout(function () {
+      if ($("#id_s4b_e2").val() > 150 && ($("#id_s4b_e2").val().length != 0)) {
+        $("#id_s4b_e2").css("background-color", "#f24858");
+        $("#id_s4b_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4b_e2").val() <= 150) || ($("#id_s4b_e2").val().length == 0)) {
+        $("#id_s4b_e2").css("background-color", "white");
+        $("#id_s4b_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4b_e3")
+    .focusout(function () {
+      if ($("#id_s4b_e3").val() > 150 && ($("#id_s4b_e3").val().length != 0)) {
+        $("#id_s4b_e3").css("background-color", "#f24858");
+        $("#id_s4b_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4b_e3").val() <= 150) || ($("#id_s4b_e3").val().length == 0)) {
+        $("#id_s4b_e3").css("background-color", "white");
+        $("#id_s4b_e3").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4c_e1")
+    .focusout(function () {
+      if ($("#id_s4c_e1").val() > 150 && ($("#id_s4c_e1").val().length != 0)) {
+        $("#id_s4c_e1").css("background-color", "#f24858");
+        $("#id_s4c_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4c_e1").val() <= 150) || ($("#id_s4c_e1").val().length == 0)) {
+        $("#id_s4c_e1").css("background-color", "white");
+        $("#id_s4c_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4c_e2")
+    .focusout(function () {
+      if ($("#id_s4c_e2").val() > 150 && ($("#id_s4c_e2").val().length != 0)) {
+        $("#id_s4c_e2").css("background-color", "#f24858");
+        $("#id_s4c_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4c_e2").val() <= 150) || ($("#id_s4c_e2").val().length == 0)) {
+        $("#id_s4c_e2").css("background-color", "white");
+        $("#id_s4c_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4c_e3")
+    .focusout(function () {
+      if ($("#id_s4c_e3").val() > 150 && ($("#id_s4c_e3").val().length != 0)) {
+        $("#id_s4c_e3").css("background-color", "#f24858");
+        $("#id_s4c_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4c_e3").val() <= 150) || ($("#id_s4c_e3").val().length == 0)) {
+        $("#id_s4c_e3").css("background-color", "white");
+        $("#id_s4c_e3").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4d_e1")
+    .focusout(function () {
+      if ($("#id_s4d_e1").val() > 150 && ($("#id_s4d_e1").val().length != 0)) {
+        $("#id_s4d_e1").css("background-color", "#f24858");
+        $("#id_s4d_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4d_e1").val() <= 150) || ($("#id_s4d_e1").val().length == 0)) {
+        $("#id_s4d_e1").css("background-color", "white");
+        $("#id_s4d_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4d_e2")
+    .focusout(function () {
+      if ($("#id_s4d_e2").val() > 150 && ($("#id_s4d_e2").val().length != 0)) {
+        $("#id_s4d_e2").css("background-color", "#f24858");
+        $("#id_s4d_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4d_e2").val() <= 150) || ($("#id_s4d_e2").val().length == 0)) {
+        $("#id_s4d_e2").css("background-color", "white");
+        $("#id_s4d_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4d_e3")
+    .focusout(function () {
+      if ($("#id_s4d_e3").val() > 150 && ($("#id_s4d_e3").val().length != 0)) {
+        $("#id_s4d_e3").css("background-color", "#f24858");
+        $("#id_s4d_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4d_e3").val() <= 150) || ($("#id_s4d_e3").val().length == 0)) {
+        $("#id_s4d_e3").css("background-color", "white");
+        $("#id_s4d_e3").css("color", "black");
+
+      }
+    });
+
+  $("#id_s4e_e1")
+    .focusout(function () {
+      if ($("#id_s4e_e1").val() > 150 && ($("#id_s4e_e1").val().length != 0)) {
+        $("#id_s4e_e1").css("background-color", "#f24858");
+        $("#id_s4e_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4e_e1").val() <= 150) || ($("#id_s4e_e1").val().length == 0)) {
+        $("#id_s4e_e1").css("background-color", "white");
+        $("#id_s4e_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4e_e2")
+    .focusout(function () {
+      if ($("#id_s4e_e2").val() > 150 && ($("#id_s4e_e2").val().length != 0)) {
+        $("#id_s4e_e2").css("background-color", "#f24858");
+        $("#id_s4e_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4e_e2").val() <= 150) || ($("#id_s4e_e2").val().length == 0)) {
+        $("#id_s4e_e2").css("background-color", "white");
+        $("#id_s4e_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4e_e3")
+    .focusout(function () {
+      if ($("#id_s4e_e3").val() > 150 && ($("#id_s4e_e3").val().length != 0)) {
+        $("#id_s4e_e3").css("background-color", "#f24858");
+        $("#id_s4e_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4e_e3").val() <= 150) || ($("#id_s4e_e3").val().length == 0)) {
+        $("#id_s4e_e3").css("background-color", "white");
+        $("#id_s4e_e3").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4f_e1")
+    .focusout(function () {
+      if ($("#id_s4f_e1").val() > 150 && ($("#id_s4f_e1").val().length != 0)) {
+        $("#id_s4f_e1").css("background-color", "#f24858");
+        $("#id_s4f_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4f_e1").val() <= 150) || ($("#id_s4f_e1").val().length == 0)) {
+        $("#id_s4f_e1").css("background-color", "white");
+        $("#id_s4f_e1").css("color", "black");
+
+      }
+    });
+  $("#id_s4f_e2")
+    .focusout(function () {
+      if ($("#id_s4f_e2").val() > 150 && ($("#id_s4f_e2").val().length != 0)) {
+        $("#id_s4f_e2").css("background-color", "#f24858");
+        $("#id_s4f_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4f_e2").val() <= 150) || ($("#id_s4f_e2").val().length == 0)) {
+        $("#id_s4f_e2").css("background-color", "white");
+        $("#id_s4f_e2").css("color", "black");
+
+      }
+    });
+  $("#id_s4f_e3")
+    .focusout(function () {
+      if ($("#id_s4f_e3").val() > 150 && ($("#id_s4f_e3").val().length != 0)) {
+        $("#id_s4f_e3").css("background-color", "#f24858");
+        $("#id_s4f_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4f_e3").val() <= 150) || ($("#id_s4f_e3").val().length == 0)) {
+        $("#id_s4f_e3").css("background-color", "white");
+        $("#id_s4f_e3").css("color", "black");
+
+      }
+    });
+  // //////////////////////////////////////
+
+  $("#id_s4k_e1")
+    .focusout(function () {
+      if ($("#id_s4k_e1").val() > 100 && ($("#id_s4k_e1").val().length != 0)) {
+        $("#id_s4k_e1").css("background-color", "#f24858");
+        $("#id_s4k_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4k_e1").val() <= 100) || ($("#id_s4k_e1").val().length == 0)) {
+        $("#id_s4k_e1").css("background-color", "white");
+        $("#id_s4k_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4k_e2")
+    .focusout(function () {
+      if ($("#id_s4k_e2").val() > 100 && ($("#id_s4k_e2").val().length != 0)) {
+        $("#id_s4k_e2").css("background-color", "#f24858");
+        $("#id_s4k_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4k_e2").val() <= 100) || ($("#id_s4k_e2").val().length == 0)) {
+        $("#id_s4k_e2").css("background-color", "white");
+        $("#id_s4k_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s4k_e3")
+    .focusout(function () {
+      if ($("#id_s4k_e3").val() > 100 && ($("#id_s4k_e3").val().length != 0)) {
+        $("#id_s4k_e3").css("background-color", "#f24858");
+        $("#id_s4k_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4k_e3").val() <= 100) || ($("#id_s4k_e3").val().length == 0)) {
+        $("#id_s4k_e3").css("background-color", "white");
+        $("#id_s4k_e3").css("color", "black");
+
+      }
+    });
+  //////////
+
+
+  $("#id_s4l_e1")
+    .focusout(function () {
+      if ($("#id_s4l_e1").val() > 100 && ($("#id_s4l_e1").val().length != 0)) {
+        $("#id_s4l_e1").css("background-color", "#f24858");
+        $("#id_s4l_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4l_e1").val() <= 100) || ($("#id_s4l_e1").val().length == 0)) {
+        $("#id_s4l_e1").css("background-color", "white");
+        $("#id_s4l_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4l_e2")
+    .focusout(function () {
+      if ($("#id_s4l_e2").val() > 100 && ($("#id_s4l_e2").val().length != 0)) {
+        $("#id_s4l_e2").css("background-color", "#f24858");
+        $("#id_s4l_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4l_e2").val() <= 100) || ($("#id_s4l_e2").val().length == 0)) {
+        $("#id_s4l_e2").css("background-color", "white");
+        $("#id_s4l_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s4l_e3")
+    .focusout(function () {
+      if ($("#id_s4l_e3").val() > 100 && ($("#id_s4l_e3").val().length != 0)) {
+        $("#id_s4l_e3").css("background-color", "#f24858");
+        $("#id_s4l_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4l_e3").val() <= 100) || ($("#id_s4l_e3").val().length == 0)) {
+        $("#id_s4l_e3").css("background-color", "white");
+        $("#id_s4l_e3").css("color", "black");
+
+      }
+    });
+  /////////
+
+
+
+
+  $("#id_s4m_e1")
+    .focusout(function () {
+      if ($("#id_s4m_e1").val() > 100 && ($("#id_s4m_e1").val().length != 0)) {
+        $("#id_s4m_e1").css("background-color", "#f24858");
+        $("#id_s4m_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4m_e1").val() <= 100) || ($("#id_s4m_e1").val().length == 0)) {
+        $("#id_s4m_e1").css("background-color", "white");
+        $("#id_s4m_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4m_e2")
+    .focusout(function () {
+      if ($("#id_s4m_e2").val() > 100 && ($("#id_s4m_e2").val().length != 0)) {
+        $("#id_s4m_e2").css("background-color", "#f24858");
+        $("#id_s4m_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4m_e2").val() <= 100) || ($("#id_s4m_e2").val().length == 0)) {
+        $("#id_s4m_e2").css("background-color", "white");
+        $("#id_s4m_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s4m_e3")
+    .focusout(function () {
+      if ($("#id_s4m_e3").val() > 100 && ($("#id_s4m_e3").val().length != 0)) {
+        $("#id_s4m_e3").css("background-color", "#f24858");
+        $("#id_s4m_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4m_e3").val() <= 100) || ($("#id_s4m_e3").val().length == 0)) {
+        $("#id_s4m_e3").css("background-color", "white");
+        $("#id_s4m_e3").css("color", "black");
+
+      }
+    });
+  //////////
+
+
+  $("#id_s4n_e1")
+    .focusout(function () {
+      if ($("#id_s4n_e1").val() > 100 && ($("#id_s4n_e1").val().length != 0)) {
+        $("#id_s4n_e1").css("background-color", "#f24858");
+        $("#id_s4n_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4n_e1").val() <= 100) || ($("#id_s4n_e1").val().length == 0)) {
+        $("#id_s4n_e1").css("background-color", "white");
+        $("#id_s4n_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s4n_e2")
+    .focusout(function () {
+      if ($("#id_s4n_e2").val() > 100 && ($("#id_s4n_e2").val().length != 0)) {
+        $("#id_s4n_e2").css("background-color", "#f24858");
+        $("#id_s4n_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4n_e2").val() <= 100) || ($("#id_s4n_e2").val().length == 0)) {
+        $("#id_s4n_e2").css("background-color", "white");
+        $("#id_s4n_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s4n_e3")
+    .focusout(function () {
+      if ($("#id_s4n_e3").val() > 100 && ($("#id_s4n_e3").val().length != 0)) {
+        $("#id_s4n_e3").css("background-color", "#f24858");
+        $("#id_s4n_e3").css("color", "white");
+
+      }
+      else if (($("#id_s4n_e3").val() <= 100) || ($("#id_s4n_e3").val().length == 0)) {
+        $("#id_s4n_e3").css("background-color", "white");
+        $("#id_s4n_e3").css("color", "black");
+
+      }
+    });
+  ///////
+
+
+
+  $("#id_s5a_e1")
+    .focusout(function () {
+      if ($("#id_s5a_e1").val() > 50 && ($("#id_s5a_e1").val().length != 0)) {
+        $("#id_s5a_e1").css("background-color", "#f24858");
+        $("#id_s5a_e1").css("color", "white");
+
+      }
+      else if (($("#id_s5a_e1").val() <= 50) || ($("#id_s5a_e1").val().length == 0)) {
+        $("#id_s5a_e1").css("background-color", "white");
+        $("#id_s5a_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s5a_e2")
+    .focusout(function () {
+      if ($("#id_s5a_e2").val() > 50 && ($("#id_s5a_e2").val().length != 0)) {
+        $("#id_s5a_e2").css("background-color", "#f24858");
+        $("#id_s5a_e2").css("color", "white");
+
+      }
+      else if (($("#id_s5a_e2").val() <= 50) || ($("#id_s5a_e2").val().length == 0)) {
+        $("#id_s5a_e2").css("background-color", "white");
+        $("#id_s5a_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s5a_e3")
+    .focusout(function () {
+      if ($("#id_s5a_e3").val() > 50 && ($("#id_s5a_e3").val().length != 0)) {
+        $("#id_s5a_e3").css("background-color", "#f24858");
+        $("#id_s5a_e3").css("color", "white");
+
+      }
+      else if (($("#id_s5a_e3").val() <= 50) || ($("#id_s5a_e3").val().length == 0)) {
+        $("#id_s5a_e3").css("background-color", "white");
+        $("#id_s5a_e3").css("color", "black");
+
+      }
+    });
+
+  ///////////
+
+
+  $("#id_s5b_e1")
+    .focusout(function () {
+      if ($("#id_s5b_e1").val() > 50 && ($("#id_s5b_e1").val().length != 0)) {
+        $("#id_s5b_e1").css("background-color", "#f24858");
+        $("#id_s5b_e1").css("color", "white");
+
+      }
+      else if (($("#id_s5b_e1").val() <= 50) || ($("#id_s5b_e1").val().length == 0)) {
+        $("#id_s5b_e1").css("background-color", "white");
+        $("#id_s5b_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s5b_e2")
+    .focusout(function () {
+      if ($("#id_s5b_e2").val() > 50 && ($("#id_s5b_e2").val().length != 0)) {
+        $("#id_s5b_e2").css("background-color", "#f24858");
+        $("#id_s5b_e2").css("color", "white");
+
+      }
+      else if (($("#id_s5b_e2").val() <= 50) || ($("#id_s5b_e2").val().length == 0)) {
+        $("#id_s5b_e2").css("background-color", "white");
+        $("#id_s5b_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s5b_e3")
+    .focusout(function () {
+      if ($("#id_s5b_e3").val() > 50 && ($("#id_s5b_e3").val().length != 0)) {
+        $("#id_s5b_e3").css("background-color", "#f24858");
+        $("#id_s5b_e3").css("color", "white");
+
+      }
+      else if (($("#id_s5b_e3").val() <= 50) || ($("#id_s5b_e3").val().length == 0)) {
+        $("#id_s5b_e3").css("background-color", "white");
+        $("#id_s5b_e3").css("color", "black");
+
+      }
+    });
+
+  //////
+
+
+  $("#id_s5c_e1")
+    .focusout(function () {
+      if ($("#id_s5c_e1").val() > 150 && ($("#id_s5c_e1").val().length != 0)) {
+        $("#id_s5c_e1").css("background-color", "#f24858");
+        $("#id_s5c_e1").css("color", "white");
+
+      }
+      else if (($("#id_s5c_e1").val() <= 150) || ($("#id_s5c_e1").val().length == 0)) {
+        $("#id_s5c_e1").css("background-color", "white");
+        $("#id_s5c_e1").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s5c_e2")
+    .focusout(function () {
+      if ($("#id_s5c_e2").val() > 150 && ($("#id_s5c_e2").val().length != 0)) {
+        $("#id_s5c_e2").css("background-color", "#f24858");
+        $("#id_s5c_e2").css("color", "white");
+
+      }
+      else if (($("#id_s5c_e2").val() <= 150) || ($("#id_s5c_e2").val().length == 0)) {
+        $("#id_s5c_e2").css("background-color", "white");
+        $("#id_s5c_e2").css("color", "black");
+
+      }
+    });
+
+  $("#id_s5c_e3")
+    .focusout(function () {
+      if ($("#id_s5c_e3").val() > 150 && ($("#id_s5c_e3").val().length != 0)) {
+        $("#id_s5c_e3").css("background-color", "#f24858");
+        $("#id_s5c_e3").css("color", "white");
+
+      }
+      else if (($("#id_s5c_e3").val() <= 150) || ($("#id_s5c_e3").val().length == 0)) {
+        $("#id_s5c_e3").css("background-color", "white");
+        $("#id_s5c_e3").css("color", "black");
+
+      }
+    });
+
+  //////////////////////////////////////////////////////////////////////////////   ghesmat 2
+
+  $("#id_s11_e1_res")
+    .focusout(function () {
+      if ($("#id_s11_e1_res").val() > 0.1 && ($("#id_s11_e1_res").val().length != 0)) {
+        $("#id_s11_e1_res").css("background-color", "#f24858");
+        $("#id_s11_e1_res").css("color", "white");
+
+        $("#id_s11_e1_comment").css("background-color", "#f24858");
+        $("#id_s11_e1_comment").css("color", "white");
+        $("#id_s11_e1_comment").val("2");
+
+      }
+      else if (($("#id_s11_e1_res").val() <= 0.1) || ($("#id_s11_e1_res").val().length == 0)) {
+        $("#id_s11_e1_res").css("background-color", "white");
+        $("#id_s11_e1_res").css("color", "black");
+
+        $("#id_s11_e1_comment").css("background-color", "white");
+        $("#id_s11_e1_comment").css("color", "black");
+        $("#id_s11_e1_comment").val("1");
+
+      }
+
+
+
+      if ($("#id_s11_e1_res").val() > 0.2 && ($("#id_s11_e1_res").val().length != 0)) {
+        $("#id_s11_e1_res").css("background-color", "#f24858");
+        $("#id_s11_e1_res").css("color", "white");
+
+        $("#id_s11_e2_comment").css("background-color", "#f24858");
+        $("#id_s11_e2_comment").css("color", "white");
+        $("#id_s11_e2_comment").val("2");
+
+      }
+      else if (($("#id_s11_e1_res").val() <= 0.2) || ($("#id_s11_e1_res").val().length == 0)) {
+        $("#id_s11_e1_res").css("background-color", "white");
+        $("#id_s11_e1_res").css("color", "black");
+
+        $("#id_s11_e2_comment").css("background-color", "white");
+        $("#id_s11_e2_comment").css("color", "black");
+        $("#id_s11_e2_comment").val("1");
+
+      }
+
+    });
+
+    $("#id_s11_e2_res")
+    .focusout(function () {
+      if ($("#id_s11_e2_res").val() > 0.1 && ($("#id_s11_e2_res").val().length != 0)) {
+        $("#id_s11_e2_res").css("background-color", "#f24858");
+        $("#id_s11_e2_res").css("color", "white");
+
+        $("#id_s11_e2_comment").css("background-color", "#f24858");
+        $("#id_s11_e2_comment").css("color", "white");
+        $("#id_s11_e2_comment").val("2");
+
+      }
+      else if (($("#id_s11_e2_res").val() <= 0.1) || ($("#id_s11_e2_res").val().length == 0)) {
+        $("#id_s11_e2_res").css("background-color", "white");
+        $("#id_s11_e2_res").css("color", "black");
+
+        $("#id_s11_e2_comment").css("background-color", "white");
+        $("#id_s11_e2_comment").css("color", "black");
+        $("#id_s11_e2_comment").val("1");
+
+      }
+
+
+
+      if ($("#id_s11_e2_res").val() > 0.2 && ($("#id_s11_e2_res").val().length != 0)) {
+        $("#id_s11_e2_res").css("background-color", "#f24858");
+        $("#id_s11_e2_res").css("color", "white");
+
+        $("#id_s11_e2_comment").css("background-color", "#f24858");
+        $("#id_s11_e2_comment").css("color", "white");
+        $("#id_s11_e2_comment").val("2");
+
+      }
+      else if (($("#id_s11_e2_res").val() <= 0.2) || ($("#id_s11_e2_res").val().length == 0)) {
+        $("#id_s11_e2_res").css("background-color", "white");
+        $("#id_s11_e2_res").css("color", "black");
+
+        $("#id_s11_e2_comment").css("background-color", "white");
+        $("#id_s11_e2_comment").css("color", "black");
+        $("#id_s11_e2_comment").val("1");
+
+      }
+
+    });
+
+  //////////////////////////////
+  $("#id_s12_e1_lc")
+    .focusout(function () {
+      if ($("#id_s12_e1_lc").val() > 5000 && ($("#id_s12_e1_lc").val().length != 0)) {
+        $("#id_s12_e1_lc").css("background-color", "#f24858");
+        $("#id_s12_e1_lc").css("color", "white");
+
+        $("#id_s12_e1_comment").css("background-color", "#f24858");
+        $("#id_s12_e1_comment").css("color", "white");
+        $("#id_s12_e1_comment").val("2");
+
+      }
+      else if (($("#id_s12_e1_lc").val() <= 5000) || ($("#id_s12_e1_lc").val().length == 0)) {
+        $("#id_s12_e1_lc").css("background-color", "white");
+        $("#id_s12_e1_lc").css("color", "black");
+
+        $("#id_s12_e1_comment").css("background-color", "white");
+        $("#id_s12_e1_comment").css("color", "black");
+        $("#id_s12_e1_comment").val("1");
+
+      }
+    });
+
+
+
+  $("#id_s12_e2_lc")
+    .focusout(function () {
+      if ($("#id_s12_e2_lc").val() > 10000 && ($("#id_s12_e2_lc").val().length != 0)) {
+        $("#id_s12_e2_lc").css("background-color", "#f24858");
+        $("#id_s12_e2_lc").css("color", "white");
+
+        $("#id_s12_e2_comment").css("background-color", "#f24858");
+        $("#id_s12_e2_comment").css("color", "white");
+        $("#id_s12_e2_comment").val("2");
+
+      }
+      else if (($("#id_s12_e2_lc").val() <= 10000) || ($("#id_s12_e2_lc").val().length == 0)) {
+        $("#id_s12_e2_lc").css("background-color", "white");
+        $("#id_s12_e2_lc").css("color", "black");
+
+        $("#id_s12_e2_comment").css("background-color", "white");
+        $("#id_s12_e2_comment").css("color", "black");
+        $("#id_s12_e2_comment").val("1");
+
+      }
+    });
+  ////////////
+
+  $("#id_s13_e1_lc")
+    .focusout(function () {
+      if ($("#id_s13_e1_lc").val() > 100 && ($("#id_s13_e1_lc").val().length != 0)) {
+        $("#id_s13_e1_lc").css("background-color", "#f24858");
+        $("#id_s13_e1_lc").css("color", "white");
+
+        $("#id_s13_e1_comment").css("background-color", "#f24858");
+        $("#id_s13_e1_comment").css("color", "white");
+        $("#id_s13_e1_comment").val("2");
+
+      }
+      else if (($("#id_s13_e1_lc").val() <= 100) || ($("#id_s13_e1_lc").val().length == 0)) {
+        $("#id_s13_e1_lc").css("background-color", "white");
+        $("#id_s13_e1_lc").css("color", "black");
+
+        $("#id_s13_e1_comment").css("background-color", "white");
+        $("#id_s13_e1_comment").css("color", "black");
+        $("#id_s13_e1_comment").val("1");
+
+      }
+    });
+
+
+
+  $("#id_s13_e2_lc")
+    .focusout(function () {
+      if ($("#id_s13_e2_lc").val() > 500 && ($("#id_s13_e2_lc").val().length != 0)) {
+        $("#id_s13_e2_lc").css("background-color", "#f24858");
+        $("#id_s13_e2_lc").css("color", "white");
+
+        $("#id_s13_e2_comment").css("background-color", "#f24858");
+        $("#id_s13_e2_comment").css("color", "white");
+        $("#id_s13_e2_comment").val("2");
+
+      }
+      else if (($("#id_s13_e2_lc").val() <= 500) || ($("#id_s13_e2_lc").val().length == 0)) {
+        $("#id_s13_e2_lc").css("background-color", "white");
+        $("#id_s13_e2_lc").css("color", "black");
+
+        $("#id_s13_e2_comment").css("background-color", "white");
+        $("#id_s13_e2_comment").css("color", "black");
+        $("#id_s13_e2_comment").val("1");
+
+      }
+    });
+
+  /////////////// table 14
+
+
+  var f = $("#id_s14_type").val();
+
+  if (f == 4) {
+    var a1 = 100;
+    var b1 = 500;
+  }
+  else {
+    var a1 = 10;
+    var b1 = 50;
+  }
+
+
+  // var c_1_check;
+  $("#id_s14_e1_lc1")
+    .focusout(function () {
+      if ($("#id_s14_e1_lc1").val() > a1 && ($("#id_s14_e1_lc1").val().length != 0)) {
+        $("#id_s14_e1_lc1").css("background-color", "#f24858");
+        $("#id_s14_e1_lc1").css("color", "white");
+
+      }
+      else if (($("#id_s14_e1_lc1").val() <= a1) || ($("#id_s14_e1_lc1").val().length == 0)) {
+        $("#id_s14_e1_lc1").css("background-color", "white");
+        $("#id_s14_e1_lc1").css("color", "black");
+      }
+    });
+
+  $("#id_s14_e1_lc2")
+    .focusout(function () {
+      if ($("#id_s14_e1_lc2").val() > a1 && ($("#id_s14_e1_lc2").val().length != 0)) {
+        $("#id_s14_e1_lc2").css("background-color", "#f24858");
+        $("#id_s14_e1_lc2").css("color", "white");
+
+      }
+      else if (($("#id_s14_e1_lc2").val() <= a1) || ($("#id_s14_e1_lc2").val().length == 0)) {
+        $("#id_s14_e1_lc2").css("background-color", "white");
+        $("#id_s14_e1_lc2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s14_e1_lc3")
+    .focusout(function () {
+      if ($("#id_s14_e1_lc3").val() > a1 && ($("#id_s14_e1_lc3").val().length != 0)) {
+        $("#id_s14_e1_lc3").css("background-color", "#f24858");
+        $("#id_s14_e1_lc3").css("color", "white");
+
+      }
+      else if (($("#id_s14_e1_lc3").val() <= a1) || ($("#id_s14_e1_lc3").val().length == 0)) {
+        $("#id_s14_e1_lc3").css("background-color", "white");
+        $("#id_s14_e1_lc3").css("color", "black");
+      }
+    });
+  $("#id_s14_e1_lc4")
+    .focusout(function () {
+      if ($("#id_s14_e1_lc4").val() > a1 && ($("#id_s14_e1_lc4").val().length != 0)) {
+        $("#id_s14_e1_lc4").css("background-color", "#f24858");
+        $("#id_s14_e1_lc4").css("color", "white");
+
+      }
+      else if (($("#id_s14_e1_lc4").val() <= a1) || ($("#id_s14_e1_lc4").val().length == 0)) {
+        $("#id_s14_e1_lc4").css("background-color", "white");
+        $("#id_s14_e1_lc4").css("color", "black");
+      }
+    });
+  $("#id_s14_e2_lc1")
+    .focusout(function () {
+      if ($("#id_s14_e2_lc1").val() > b1 && ($("#id_s14_e2_lc1").val().length != 0)) {
+        $("#id_s14_e2_lc1").css("background-color", "#f24858");
+        $("#id_s14_e2_lc1").css("color", "white");
+
+      }
+      else if (($("#id_s14_e2_lc1").val() <= b1) || ($("#id_s14_e2_lc1").val().length == 0)) {
+        $("#id_s14_e2_lc1").css("background-color", "white");
+        $("#id_s14_e2_lc1").css("color", "black");
+      }
+    });
+  $("#id_s14_e2_lc2")
+    .focusout(function () {
+      if ($("#id_s14_e2_lc2").val() > b1 && ($("#id_s14_e2_lc2").val().length != 0)) {
+        $("#id_s14_e2_lc2").css("background-color", "#f24858");
+        $("#id_s14_e2_lc2").css("color", "white");
+
+      }
+      else if (($("#id_s14_e2_lc2").val() <= b1) || ($("#id_s14_e2_lc2").val().length == 0)) {
+        $("#id_s14_e2_lc2").css("background-color", "white");
+        $("#id_s14_e2_lc2").css("color", "black");
+      }
+    });
+  $("#id_s14_e2_lc3")
+    .focusout(function () {
+      if ($("#id_s14_e2_lc3").val() > b1 && ($("#id_s14_e2_lc3").val().length != 0)) {
+        $("#id_s14_e2_lc3").css("background-color", "#f24858");
+        $("#id_s14_e2_lc3").css("color", "white");
+
+      }
+      else if (($("#id_s14_e2_lc3").val() <= b1) || ($("#id_s14_e2_lc3").val().length == 0)) {
+        $("#id_s14_e2_lc3").css("background-color", "white");
+        $("#id_s14_e2_lc3").css("color", "black");
+      }
+    });
+  $("#id_s14_e2_lc4")
+    .focusout(function () {
+      if ($("#id_s14_e2_lc4").val() > b1 && ($("#id_s14_e2_lc4").val().length != 0)) {
+        $("#id_s14_e2_lc4").css("background-color", "#f24858");
+        $("#id_s14_e2_lc4").css("color", "white");
+
+      }
+      else if (($("#id_s14_e2_lc4").val() <= b1) || ($("#id_s14_e2_lc4").val().length == 0)) {
+        $("#id_s14_e2_lc4").css("background-color", "white");
+        $("#id_s14_e2_lc4").css("color", "black");
+      }
+    });
+
+  /////////////// table 15
+
+
+
+  var f = $("#id_s14_type").val();
+
+  if (f == 4) {
+    var a2 = 100;
+    var b2 = 500;
+  }
+  else {
+    var a2 = 10;
+    var b2 = 50;
+  }
+
+  $("#id_s15_e1_lc1")
+    .focusout(function () {
+      if ($("#id_s15_e1_lc1").val() > a2 && ($("#id_s15_e1_lc1").val().length != 0)) {
+        $("#id_s15_e1_lc1").css("background-color", "#f24858");
+        $("#id_s15_e1_lc1").css("color", "white");
+
+      }
+      else if (($("#id_s15_e1_lc1").val() <= a2) || ($("#id_s15_e1_lc1").val().length == 0)) {
+        $("#id_s15_e1_lc1").css("background-color", "white");
+        $("#id_s15_e1_lc1").css("color", "black");
+      }
+    });
+
+  $("#id_s15_e1_lc2")
+    .focusout(function () {
+      if ($("#id_s15_e1_lc2").val() > a2 && ($("#id_s15_e1_lc2").val().length != 0)) {
+        $("#id_s15_e1_lc2").css("background-color", "#f24858");
+        $("#id_s15_e1_lc2").css("color", "white");
+
+      }
+      else if (($("#id_s15_e1_lc2").val() <= a2) || ($("#id_s15_e1_lc2").val().length == 0)) {
+        $("#id_s15_e1_lc2").css("background-color", "white");
+        $("#id_s15_e1_lc2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s15_e1_lc3")
+    .focusout(function () {
+      if ($("#id_s15_e1_lc3").val() > a2 && ($("#id_s15_e1_lc3").val().length != 0)) {
+        $("#id_s15_e1_lc3").css("background-color", "#f24858");
+        $("#id_s15_e1_lc3").css("color", "white");
+
+      }
+      else if (($("#id_s15_e1_lc3").val() <= a2) || ($("#id_s15_e1_lc3").val().length == 0)) {
+        $("#id_s15_e1_lc3").css("background-color", "white");
+        $("#id_s15_e1_lc3").css("color", "black");
+      }
+    });
+  $("#id_s15_e1_lc4")
+    .focusout(function () {
+      if ($("#id_s15_e1_lc4").val() > a2 && ($("#id_s15_e1_lc4").val().length != 0)) {
+        $("#id_s15_e1_lc4").css("background-color", "#f24858");
+        $("#id_s15_e1_lc4").css("color", "white");
+
+      }
+      else if (($("#id_s15_e1_lc4").val() <= a2) || ($("#id_s15_e1_lc4").val().length == 0)) {
+        $("#id_s15_e1_lc4").css("background-color", "white");
+        $("#id_s15_e1_lc4").css("color", "black");
+      }
+    });
+  $("#id_s15_e2_lc1")
+    .focusout(function () {
+      if ($("#id_s15_e2_lc1").val() > b2 && ($("#id_s15_e2_lc1").val().length != 0)) {
+        $("#id_s15_e2_lc1").css("background-color", "#f24858");
+        $("#id_s15_e2_lc1").css("color", "white");
+
+      }
+      else if (($("#id_s15_e2_lc1").val() <= b2) || ($("#id_s15_e2_lc1").val().length == 0)) {
+        $("#id_s15_e2_lc1").css("background-color", "white");
+        $("#id_s15_e2_lc1").css("color", "black");
+      }
+    });
+  $("#id_s15_e2_lc2")
+    .focusout(function () {
+      if ($("#id_s15_e2_lc2").val() > b2 && ($("#id_s15_e2_lc2").val().length != 0)) {
+        $("#id_s15_e2_lc2").css("background-color", "#f24858");
+        $("#id_s15_e2_lc2").css("color", "white");
+
+      }
+      else if (($("#id_s15_e2_lc2").val() <= b2) || ($("#id_s15_e2_lc2").val().length == 0)) {
+        $("#id_s15_e2_lc2").css("background-color", "white");
+        $("#id_s15_e2_lc2").css("color", "black");
+      }
+    });
+  $("#id_s15_e2_lc3")
+    .focusout(function () {
+      if ($("#id_s15_e2_lc3").val() > b2 && ($("#id_s15_e2_lc3").val().length != 0)) {
+        $("#id_s15_e2_lc3").css("background-color", "#f24858");
+        $("#id_s15_e2_lc3").css("color", "white");
+
+      }
+      else if (($("#id_s15_e2_lc3").val() <= b2) || ($("#id_s15_e2_lc3").val().length == 0)) {
+        $("#id_s15_e2_lc3").css("background-color", "white");
+        $("#id_s15_e2_lc3").css("color", "black");
+      }
+    });
+  $("#id_s15_e2_lc4")
+    .focusout(function () {
+      if ($("#id_s15_e2_lc4").val() > b2 && ($("#id_s15_e2_lc4").val().length != 0)) {
+        $("#id_s15_e2_lc4").css("background-color", "#f24858");
+        $("#id_s15_e2_lc4").css("color", "white");
+
+      }
+      else if (($("#id_s15_e2_lc4").val() <= b2) || ($("#id_s15_e2_lc4").val().length == 0)) {
+        $("#id_s15_e2_lc4").css("background-color", "white");
+        $("#id_s15_e2_lc4").css("color", "black");
+      }
+    });
+
+
+
+  // ///////////////////////////// table 16
+
+
+
+  var f2 = $("#id_s16_type").val();
+  if (f2 == 2) {
+    var a3 = 5000;
+  }
+  else {
+    var a3 = 100;
+  }
+
+
+  // var c_1_check;
+  $("#id_s16_e1_lc1")
+    .focusout(function () {
+      if ($("#id_s16_e1_lc1").val() > a3 && ($("#id_s16_e1_lc1").val().length != 0)) {
+        $("#id_s16_e1_lc1").css("background-color", "#f24858");
+        $("#id_s16_e1_lc1").css("color", "white");
+
+      }
+      else if (($("#id_s16_e1_lc1").val() <= a3) || ($("#id_s16_e1_lc1").val().length == 0)) {
+        $("#id_s16_e1_lc1").css("background-color", "white");
+        $("#id_s16_e1_lc1").css("color", "black");
+      }
+    });
+
+  $("#id_s16_e1_lc2")
+    .focusout(function () {
+      if ($("#id_s16_e1_lc2").val() > a3 && ($("#id_s16_e1_lc2").val().length != 0)) {
+        $("#id_s16_e1_lc2").css("background-color", "#f24858");
+        $("#id_s16_e1_lc2").css("color", "white");
+
+      }
+      else if (($("#id_s16_e1_lc2").val() <= a3) || ($("#id_s16_e1_lc2").val().length == 0)) {
+        $("#id_s16_e1_lc2").css("background-color", "white");
+        $("#id_s16_e1_lc2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s16_e1_lc3")
+    .focusout(function () {
+      if ($("#id_s16_e1_lc3").val() > a3 && ($("#id_s16_e1_lc3").val().length != 0)) {
+        $("#id_s16_e1_lc3").css("background-color", "#f24858");
+        $("#id_s16_e1_lc3").css("color", "white");
+
+      }
+      else if (($("#id_s16_e1_lc3").val() <= a3) || ($("#id_s16_e1_lc3").val().length == 0)) {
+        $("#id_s16_e1_lc3").css("background-color", "white");
+        $("#id_s16_e1_lc3").css("color", "black");
+      }
+    });
+  $("#id_s16_e1_lc4")
+    .focusout(function () {
+      if ($("#id_s16_e1_lc4").val() > a3 && ($("#id_s16_e1_lc4").val().length != 0)) {
+        $("#id_s16_e1_lc4").css("background-color", "#f24858");
+        $("#id_s16_e1_lc4").css("color", "white");
+
+      }
+      else if (($("#id_s16_e1_lc4").val() <= a3) || ($("#id_s16_e1_lc4").val().length == 0)) {
+        $("#id_s16_e1_lc4").css("background-color", "white");
+        $("#id_s16_e1_lc4").css("color", "black");
+      }
+    });
+
+
+
+
+
+  $("#id_s4g_e1")
+    .focusout(function () {
+      if ($("#id_s4g_e1").val() > $("#id_s4g_e1_p2000").val() && ($("#id_s4g_e1").val().length != 0)) {
+        $("#id_s4g_e1").css("background-col./or", "#f24858");
+        $("#id_s4g_e1").css("color", "white");
+
+      }
+      else if (($("#id_s4g_e1").val() <= $("#id_s4g_e1_p2000").val()) || ($("#id_s4g_e1").val().length == 0)) {
+        $("#id_s4g_e1").css("background-color", "white");
+        $("#id_s4g_e1").css("color", "black");
+      }
+    });
+
+
+
+
+
+  $("#id_s4g_e2")
+    .focusout(function () {
+      if ($("#id_s4g_e2").val() > $("#id_s4g_e2_p2000").val() && ($("#id_s4g_e2").val().length != 0)) {
+        $("#id_s4g_e2").css("background-color", "#f24858");
+        $("#id_s4g_e2").css("color", "white");
+
+      }
+      else if (($("#id_s4g_e2").val() <= $("#id_s4g_e2_p2000").val()) || ($("#id_s4g_e2").val().length == 0)) {
+        $("#id_s4g_e2").css("background-color", "white");
+        $("#id_s4g_e2").css("color", "black");
+      }
+    });
+</script>

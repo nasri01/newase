@@ -1,0 +1,281 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+
+{% if error %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endif %}
+
+
+
+
+<!--<header style="background-color: white;	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+
+<!--<div class="container-fluid header-img">-->
+<!--<img src="img/logo2.png"  alt="logo2" class="logo2">-->
+<!--<img src="img/logo.png"  alt="logo" class="logo">-->
+
+<!--</div>-->
+<!--</header>-->
+
+
+
+<!--style="padding:0;padding-right: 10%;padding-left: 10%;"-->
+
+
+
+{#    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">#}
+<style>
+    #lb-pass,
+    #lb-username {
+        position: absolute;
+        right: 10px;
+        padding-right: 5px;
+        padding-left: 5px;
+
+        top: 10px;
+        background-color: white;
+    }
+
+    #in-pass,
+    #in-username {
+        height: 43px;
+        padding: 9px;
+        line-height: 1.6;
+        display: block;
+        font-weight: 400;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        font-size: 13px;
+        width: 100%;
+        display: inline-block;
+    }
+
+    #in-pass:focus,
+    #in-username:focus {
+        /* top:20px; */
+        /* border:none; */
+        /* transition: .1s ease all; */
+        /* border: 10px solid gold; */
+        outline: none;
+        border: 2px solid #aaaaee;
+        /* border-radius: 8px; */
+
+    }
+</style>
+
+
+<div class="main">
+
+    <div class="container-fluid" style="margin-top: 5vmin;">
+        <!-- style="background-color: #0c5460;height: 100px;" -->
+        <div class="mt-sm-0 mt-md-4">
+            <div class="row">
+
+
+                <div class="col-sm-12 col-md-4 col-xl-3"
+                    style="margin: 4px 0px;display:flex;flex-direction: column;align-items:stretch;margin-top: 50px;">
+
+                    <div class="header-img">
+                        <img src="{% static 'img/logo2.jpg' %}" alt="logo2" class="logo2">
+                        <img src="{% static 'img/sairan.svg' %}" alt="logo" class="logo">
+
+                    </div>
+                    <br>
+                    <div class="alert alert-info" style="margin-bottom: 0;text-align: center;" role="alert" 1>
+                        شرکت آزما صبای اسپادانا نماینده رسمی کنترل کیفی تجهیزات پزشکی شرکت صاایران
+                    </div>
+
+                    <div class="login-box" style="font-family: light-iransans;margin-top: 15px;padding-top: 0;">
+                        <form method="post" action="{% url 'login1'%}">
+                            {% csrf_token %}
+
+                            <div style="position: relative;">
+                                <input id="in-username" name="username" type="text">
+                                <label class="aa" id="lb-username">نام کاربری
+
+                                    <script>
+
+                                        if ($("#in-username").val() != "") {
+                                            $("#lb-username").css("top", "-10px");
+                                            $("#lb-username").css("color", "blue");
+                                            $("#lb-username").css("transition", ".15s ease all");
+                                            $("#lb-username").css("font-size", "12px");
+                                        }
+                                        $("#in-username").focus(function () {
+                                            $("#lb-username").css("top", "-10px");
+                                            $("#lb-username").css("color", "blue");
+                                            $("#lb-username").css("transition", ".15s ease all");
+                                            $("#lb-username").css("font-size", "12px");
+
+
+                                        });
+                                        $("#in-username").focusout(function () {
+                                            if ($("#in-username").val() == "") {
+                                                $("#lb-username").css("top", "10px");
+                                                $("#lb-username").css("color", "black");
+                                                $("#lb-username").css("transition", ".15s ease all");
+                                                $("#lb-username").css("font-size", "14px");
+
+                                            }
+                                        });
+
+                                    </script>
+                                </label>
+                            </div>
+
+                            <div style="height: 15px;"></div>
+
+                            <div style="position: relative;">
+                                <input id="in-pass" name="password" type="password">
+                                <label class="aa" id="lb-pass">رمز عبور
+
+                                    <script>
+                                        //  alert($("#in-pass").val());
+                                        var a = 2;
+
+                                        // alert($("#in-pass").val().length);
+
+                                        if ($("#in-pass").val().length == 0) {
+
+                                        }
+                                        else {
+                                            $("#lb-pass").css("top", "-10px");
+                                            $("#lb-pass").css("color", "blue");
+                                            $("#lb-pass").css("transition", ".15s ease all");
+                                            $("#lb-pass").css("font-size", "12px");
+                                        }
+                                        $("#in-pass").focus(function () {
+                                            $("#lb-pass").css("top", "-10px");
+                                            $("#lb-pass").css("color", "blue");
+                                            $("#lb-pass").css("transition", ".15s ease all");
+                                            $("#lb-pass").css("font-size", "12px");
+
+
+                                        });
+                                        $("#in-pass").focusout(function () {
+                                            if ($("#in-pass").val() == "") {
+                                                $("#lb-pass").css("top", "10px");
+                                                $("#lb-pass").css("color", "black");
+                                                $("#lb-pass").css("transition", ".15s ease all");
+                                                $("#lb-pass").css("font-size", "14px");
+
+                                            }
+                                        });
+
+
+
+
+
+                                    </script>
+                                </label>
+                            </div>
+
+
+                            <div style="height: 15px;"></div>
+
+                            <div class="sr-btn">
+                                <a href="https://www.sairanmed.ir" class="demo-btn mu"
+                                    style="color: black;text-align: center;padding-top: 9px;"><img
+                                        style="width: 15px;margin-left: 5px;"
+                                        src="{% static 'img/home-icon.svg'%}">بازگشت به سایت</a>
+
+                                <input type="submit" value="ورود به سیستم" class="submit-btn mu"
+                                    style="background-color:#{{color}};">
+
+                            </div>
+                            <div class="forget-pass"><a href="{% url 'password_reset'%}">کلمه عبور خود را فراموش کرده
+                                    اید؟</a>
+                            </div>
+                        </form>
+                    </div>
+                    <!--<div class="contact-us">-->
+
+                    <!--</div>-->
+                    <hr>
+
+
+                    <div class="s-box" style="font-family: 'iransans';margin-top: 20px;margin-bottom: 20px;">
+                        جهت ثبت درخواست کنترل کیفی در ساعات اداری با شماره تلفن شرکت تماس بگیرید.<br>
+                        شماره تلفن: ۳۴۵۲۰۳۳۰−۰۳۱ <br>
+                        تلفن همراه:۰۹۱۳۰۰۰۳۸۴۰</div>
+
+
+
+
+
+
+                </div>
+                <div class="col-sm-12 col-md-8 col-xl-9 lf" style="margin-bottom: 50px;">
+
+                    <div class="container-fluid">
+                        <!--  -->
+                        <div id="slide-show" class="carousel slide" data-ride="carousel" style="z-index: 2;">
+                            <ul class="carousel-indicators">
+                                <li data-target="#slide-show" data-slide-to="0" class="active"></li>
+                                <li data-target="#slide-show" data-slide-to="1"></li>
+                                <li data-target="#slide-show" data-slide-to="2"></li>
+                            </ul>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <!-- d-block  -->
+                                    <!--style="max-height:300px;"-->
+                                    <!--style="min-height: 25vmax;"-->
+                                    <img src="{% static 'img/poster/a.png' %}" class="w-100">
+                                    <div class="carousel-caption">
+                                        <!--text-->
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/poster/b.png' %}" class="w-100">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/poster/c.png' %}" class="w-100">
+                                </div>
+                            </div>
+
+                            <a href="#slide-show" class="carousel-control-prev" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a>
+
+                            <a href="#slide-show" class="carousel-control-next" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div style="background-color:#{{color}};" class="bar">
+                    </div>
+                    <!--<img src="img/sairan.svg" style="margin: auto;" alt="logo" class="logo">-->
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--  -->
+        <br>
+
+
+
+    </div>
+</div>
+
+<!--  -->
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

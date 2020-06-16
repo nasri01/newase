@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if status and flag %}
+    <div class="alert alert-success">
+    {{ status }} {{request.user.first_name}}
+    </div>
+{% elif status and hflag %}
+    <div class="alert alert-success">
+    {{ status }}
+    </div>
+{% endif %}
+
+
+
+
+
+
+
+    {% csrf_token %}
+    <br />
+
+    DashBoard:<br />
+    <a href="{% url 'report-xlsx'%}" class="btn btn-primary" role="button" >Excel Report (.xlsx)</a>
+    <br />
+    <br />
+    <a href="{% url 'report-pdf'%}" class="btn btn-primary" role="button" >PDF RECORD (.pdf)</a>
+    <br />
+    <br />
+
+
+
+
+
+{% if xflag %}
+
+
+
+
+<form method="POST" action="{% url 'report-xlsx'%}">
+            {% csrf_token %}
+
+    start:
+    <input type="text" name="start_date">
+    <br />
+     <br />
+     <br />
+     <br /> <br />
+     <br /> <br />
+
+
+     <br />
+    End:
+    <input type="text" name="end_date">
+     <br />
+     <br />
+    <input type="submit" value="Get Report!" class="btn btn-primary">
+    <input type="reset" value="Reset Date" class="btn btn-default">
+
+</form>
+
+
+
+
+{% elif pflag %}
+
+
+
+
+<form method="POST" action="{% url 'report-pdf' %}">
+    {% csrf_token %}
+
+    Licence Number:
+    <input type="number" name="Licence">
+    <br />
+     <br />
+
+    <input type="submit" value="Get Crtificate!" class="btn btn-primary">
+    <input type="reset" value="Reset Date" class="btn btn-default">
+
+</form>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,1736 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='MonitorSpo2' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+  
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ ref_licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاه پالس اکسيمتر</h1>
+
+      <!--////////////////////////////////////////////////////////////-->
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+            {% render_field form.device style="display:inline;width:50%;"  class="search-a" searchable="Search here.." %}
+          </span>
+          <br>
+          <!-- / -->
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  id="select-state" class="search-a" style="display:inline;width:50%;"%}
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+          </span>
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+          </span>
+          <!--
+    <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+          </div>
+          <br><br>
+        </div>
+      </div>
+      <!--</form>-->
+
+      <br><br>
+
+
+      <span style="font-weight: bold;">
+        1.الزامات ایجاد وقفه در منبع تغذیه(بند201.11.8.101.1استانداردISO80601-2-61:2011)
+      </span>
+      <br>
+      <br>
+
+      <table style="direction: ltr;margin: auto;">
+        <thead>
+          <tr>
+            <th>SETTING</th>
+            <th>Alarm System Condition</th>
+            <th>RESULT</th>
+            <th style="width: 150px;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2">Power Supply Failure</td>
+            <td>At least a Medium Priority Technical Alarm</td>
+            <td></td>
+            <td>
+              <td>{{form.s1_e1_comment}}</td>
+            </td>
+          </tr>
+          <tr>
+            <td>Switchover to an internal electrical power source information signalor a Low priority technical alarm
+            </td>
+            <td></td>
+            <td>{{form.s1_e2_comment}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <br><br>
+      <span style="font-weight: bold;">
+        2.درستی SpO2(بند201.12.1.101.1استاندارد61:2011-2-ISO 80601)
+      </span>
+
+      <br><br>
+
+      <table style="direction: ltr;margin: auto;">
+        <thead>
+          <tr>
+            <th rowspan="2">DESCRIPTION OF TEST</th>
+            <th colspan="2">SETTING</th>
+            <th colspan="2">READING</th>
+          </tr>
+
+          <tr>
+            <th>SpO<sub>2</sub>(%)</th>
+            <th>PR(BPM)</th>
+            <th>SpO<sub>2</sub>(%)</th>
+            <th>PR(BPM)</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="11">SpO<sub>2</sub>% ACCURACY</td>
+            <td>70</td>
+            <td>75</td>
+            <td>{{form.s2_e1_spo2}}</td>
+            <td>{{form.s2_e1_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>75</td>
+            <td>75</td>
+            <td>{{form.s2_e2_spo2}}</td>
+            <td>{{form.s2_e2_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>80</td>
+            <td>75</td>
+            <td>{{form.s2_e3_spo2}}</td>
+            <td>{{form.s2_e3_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>85</td>
+            <td>75</td>
+            <td>{{form.s2_e4_spo2}}</td>
+            <td>{{form.s2_e4_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>88</td>
+            <td>75</td>
+            <td>{{form.s2_e5_spo2}}</td>
+            <td>{{form.s2_e5_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;">SpO<sub>2</sub>% ACCURACY</td> -->
+            <td>90</td>
+            <td>75</td>
+            <td>{{form.s2_e6_spo2}}</td>
+            <td>{{form.s2_e6_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>92</td>
+            <td>75</td>
+            <td>{{form.s2_e7_spo2}}</td>
+            <td>{{form.s2_e7_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>94</td>
+            <td>75</td>
+            <td>{{form.s2_e8_spo2}}</td>
+            <td>{{form.s2_e8_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>96</td>
+            <td>75</td>
+            <td>{{form.s2_e9_spo2}}</td>
+            <td>{{form.s2_e9_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>98</td>
+            <td>75</td>
+            <td>{{form.s2_e10_spo2}}</td>
+            <td>{{form.s2_e10_pr}}</td>
+          </tr>
+
+          <tr>
+            <!-- <td style="border:none;"></td> -->
+            <td>100</td>
+            <td>75</td>
+            <td>{{form.s2_e11_spo2}}</td>
+            <td>{{form.s2_e11_pr}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+
+      <br><br>
+
+
+      <span style="font-weight: bold;">
+        3.درستی نرخ پالس/ ضربان(بند201.12.1.104استانداردISO 80601-2-61:2011)
+      </span>
+      <br><br>
+      <table style="direction: ltr;margin: auto;overflow: scroll;">
+
+        <tr>
+          <th colspan="3">رنج تعیین شده نرخ پالس در دفترچه راهنمای دستگاه</th>
+          <th colspan="2">صحت نرخ پالس تعیین شده در دفترچه راهنمای دستگاه</th>
+        </tr>
+
+        <tr>
+          <td colspan="3">20-250 BPM</td>
+          <td colspan="2">At 20 bpm to 250 bpm : ± 3 bpm</td>
+        </tr>
+
+
+
+        <tr>
+          <th rowspan="2">DESCRIPTION OF TEST</th>
+          <th colspan="2">SETTING</th>
+          <th colspan="2">READING</th>
+        </tr>
+
+        <tr>
+          <th>SpO<sub>2</sub>(%)</th>
+          <th>PR(BMP)</th>
+          <th>SpO<sub>2</sub>(%)</th>
+          <th>PR(BMP)</th>
+
+        </tr>
+
+        <tr>
+          <td rowspan="5">Pulse rateACCURACY</td>
+          <td>96</td>
+          <td>35</td>
+          <td>{{form.s3_e1_spo2}}</td>
+          <td>{{form.s3_e1_pr}}</td>
+        </tr>
+
+        <tr>
+          <td>96</td>
+          <td>60</td>
+          <td>{{form.s3_e2_spo2}}</td>
+          <td>{{form.s3_e2_pr}}</td>
+        </tr>
+
+        <tr>
+          <td>96</td>
+          <td>100</td>
+          <td>{{form.s3_e3_spo2}}</td>
+          <td>{{form.s3_e3_pr}}</td>
+        </tr>
+
+        <tr>
+          <td>96</td>
+          <td>200</td>
+          <td>{{form.s3_e4_spo2}}</td>
+          <td>{{form.s3_e4_pr}}</td>
+        </tr>
+
+        <tr>
+          <td>96</td>
+          <td>240</td>
+          <td>{{form.s3_e5_spo2}}</td>
+          <td>{{form.s3_e5_pr}}</td>
+        </tr>
+
+      </table>
+
+
+      <br><br>
+
+
+      <span style="font-weight: bold;">
+        4.بررسی لوازم جانبی (بند3.1,2.2.15استاندارد EN 60601-1)
+      </span>
+      <br><br>
+      <table style="direction: ltr;margin: auto;overflow: scroll;">
+
+        <tr>
+          <th>Row</th>
+          <th>Accessory</th>
+          <th>Model</th>
+          <th>Result</th>
+          <th>Comment</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Spo2</td>
+          <td>{{form.s4_e1_acc}}</td>
+          <td></td>
+          <td>{{form.s4_e1_comment}}</td>
+        </tr>
+
+      </table>
+
+
+
+      <!--</div>-->
+      <!-- //////////////////////////////////////////////////////////// -->
+      <br>
+
+
+      <br><br>
+
+      <div class="row">
+        <div class="col-md-6">
+
+
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+
+
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='MonitorSpo2' %}">
+            ذخیره نهایی
+          </button>
+          
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li>
+                در دسترس نبودن پروب spo2 دستگاه و انجام تست با پروب دستگاه مشابه
+              </li>
+              <li>
+                عدم اندازه گیری ضربان هاي کمتر از50
+              </li>
+              <li>
+                عدم اندازه گیری ضربان هاي کمتر از70
+              </li>
+              <li>
+                پیغام Sensor off درمقدار پالسهای پایین
+              </li>
+              <li>
+                عدم نمایش SPO2 بدلیل اشکال فنی
+              </li>
+              <li>
+                REST شدن ناگهانی دستگاه
+              </li>
+              <li>
+                خرابی ماژول spo2 دستگاه
+              </li>
+              <li>
+                بیش از حد بودن مقادیر درصد اکسیژن
+              </li>
+              <li>
+                خرابی پروب spo2 دستگاه
+              </li>
+              <li>
+                عدم تست SP02به علت اشکال درسوکت
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+
+<script>
+
+  $("#id_s1_e1_comment")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+      if ($("#id_s1_e1_comment").val() >= 3) {
+        $("#id_s1_e1_comment").css("background-color", "#f24858");
+        $("#id_s1_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s1_e1_comment").val() == 1)) {
+        $("#id_s1_e1_comment").css("background-color", "white");
+        $("#id_s1_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s1_e1_comment").val() == 2)) {
+        $("#id_s1_e1_comment").css("background-color", 'yellow');
+        $("#id_s1_e1_comment").css("color", "black");
+      }
+    });
+
+
+  $("#id_s1_e2_comment")
+    .focusout(function () {
+      // alert($( "#id_s1_e2_comment" ).val());
+      if ($("#id_s1_e2_comment").val() >= 3) {
+        $("#id_s1_e2_comment").css("background-color", "#f24858");
+        $("#id_s1_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s1_e2_comment").val() == 1)) {
+        $("#id_s1_e2_comment").css("background-color", "white");
+        $("#id_s1_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s1_e2_comment").val() == 2)) {
+        $("#id_s1_e2_comment").css("background-color", 'yellow');
+        $("#id_s1_e2_comment").css("color", "black");
+      }
+    });
+  // ///////////////////// table 2 
+
+  $("#id_s2_e1_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s2_e1_spo2").val() - 70) / 70;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e1_spo2").val().length != 0)) {
+        $("#id_s2_e1_spo2").css("background-color", "#f24858");
+        $("#id_s2_e1_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e1_spo2").val().length == 0)) {
+        $("#id_s2_e1_spo2").css("background-color", "white");
+        $("#id_s2_e1_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e2_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e2_comment" ).val());
+
+      var n = ($("#id_s2_e2_spo2").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e2_spo2").val().length != 0)) {
+        $("#id_s2_e2_spo2").css("background-color", "#f24858");
+        $("#id_s2_e2_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e2_spo2").val().length == 0)) {
+        $("#id_s2_e2_spo2").css("background-color", "white");
+        $("#id_s2_e2_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e3_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e3_comment" ).val());
+
+      var n = ($("#id_s2_e3_spo2").val() - 80) / 80;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e3_spo2").val().length != 0)) {
+        $("#id_s2_e3_spo2").css("background-color", "#f24858");
+        $("#id_s2_e3_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e3_spo2").val().length == 0)) {
+        $("#id_s2_e3_spo2").css("background-color", "white");
+        $("#id_s2_e3_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e4_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e4_comment" ).val());
+
+      var n = ($("#id_s2_e4_spo2").val() - 85) / 85;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e4_spo2").val().length != 0)) {
+        $("#id_s2_e4_spo2").css("background-color", "#f24858");
+        $("#id_s2_e4_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e4_spo2").val().length == 0)) {
+        $("#id_s2_e4_spo2").css("background-color", "white");
+        $("#id_s2_e4_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e5_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e5_comment" ).val());
+
+      var n = ($("#id_s2_e5_spo2").val() - 88) / 88;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e5_spo2").val().length != 0)) {
+        $("#id_s2_e5_spo2").css("background-color", "#f24858");
+        $("#id_s2_e5_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e5_spo2").val().length == 0)) {
+        $("#id_s2_e5_spo2").css("background-color", "white");
+        $("#id_s2_e5_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e6_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e6_comment" ).val());
+
+      var n = ($("#id_s2_e6_spo2").val() - 90) / 90;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e6_spo2").val().length != 0)) {
+        $("#id_s2_e6_spo2").css("background-color", "#f24858");
+        $("#id_s2_e6_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e6_spo2").val().length == 0)) {
+        $("#id_s2_e6_spo2").css("background-color", "white");
+        $("#id_s2_e6_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e7_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e7_comment" ).val());
+
+      var n = ($("#id_s2_e7_spo2").val() - 92) / 92;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e7_spo2").val().length != 0)) {
+        $("#id_s2_e7_spo2").css("background-color", "#f24858");
+        $("#id_s2_e7_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e7_spo2").val().length == 0)) {
+        $("#id_s2_e7_spo2").css("background-color", "white");
+        $("#id_s2_e7_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e8_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e8_comment" ).val());
+
+      var n = ($("#id_s2_e8_spo2").val() - 94) / 94;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e8_spo2").val().length != 0)) {
+        $("#id_s2_e8_spo2").css("background-color", "#f24858");
+        $("#id_s2_e8_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e8_spo2").val().length == 0)) {
+        $("#id_s2_e8_spo2").css("background-color", "white");
+        $("#id_s2_e8_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e9_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e9_comment" ).val());
+
+      var n = ($("#id_s2_e9_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e9_spo2").val().length != 0)) {
+        $("#id_s2_e9_spo2").css("background-color", "#f24858");
+        $("#id_s2_e9_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e9_spo2").val().length == 0)) {
+        $("#id_s2_e9_spo2").css("background-color", "white");
+        $("#id_s2_e9_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e10_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e10_comment" ).val());
+
+      var n = ($("#id_s2_e10_spo2").val() - 98) / 98;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e10_spo2").val().length != 0)) {
+        $("#id_s2_e10_spo2").css("background-color", "#f24858");
+        $("#id_s2_e10_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e10_spo2").val().length == 0)) {
+        $("#id_s2_e10_spo2").css("background-color", "white");
+        $("#id_s2_e10_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e11_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e11_comment" ).val());
+
+      var n = ($("#id_s2_e11_spo2").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e11_spo2").val().length != 0)) {
+        $("#id_s2_e11_spo2").css("background-color", "#f24858");
+        $("#id_s2_e11_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e11_spo2").val().length == 0)) {
+        $("#id_s2_e11_spo2").css("background-color", "white");
+        $("#id_s2_e11_spo2").css("color", "black");
+      }
+    });
+  ////////////////////////////////
+
+
+  $("#id_s2_e1_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s2_e1_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e1_pr").val().length != 0)) {
+        $("#id_s2_e1_pr").css("background-color", "#f24858");
+        $("#id_s2_e1_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e1_pr").val().length == 0)) {
+        $("#id_s2_e1_pr").css("background-color", "white");
+        $("#id_s2_e1_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e2_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e2_comment" ).val());
+
+      var n = ($("#id_s2_e2_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e2_pr").val().length != 0)) {
+        $("#id_s2_e2_pr").css("background-color", "#f24858");
+        $("#id_s2_e2_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e2_pr").val().length == 0)) {
+        $("#id_s2_e2_pr").css("background-color", "white");
+        $("#id_s2_e2_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e3_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e3_comment" ).val());
+
+      var n = ($("#id_s2_e3_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e3_pr").val().length != 0)) {
+        $("#id_s2_e3_pr").css("background-color", "#f24858");
+        $("#id_s2_e3_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e3_pr").val().length == 0)) {
+        $("#id_s2_e3_pr").css("background-color", "white");
+        $("#id_s2_e3_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e4_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e4_comment" ).val());
+
+      var n = ($("#id_s2_e4_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e4_pr").val().length != 0)) {
+        $("#id_s2_e4_pr").css("background-color", "#f24858");
+        $("#id_s2_e4_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e4_pr").val().length == 0)) {
+        $("#id_s2_e4_pr").css("background-color", "white");
+        $("#id_s2_e4_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e5_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e5_comment" ).val());
+
+      var n = ($("#id_s2_e5_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e5_pr").val().length != 0)) {
+        $("#id_s2_e5_pr").css("background-color", "#f24858");
+        $("#id_s2_e5_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e5_pr").val().length == 0)) {
+        $("#id_s2_e5_pr").css("background-color", "white");
+        $("#id_s2_e5_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e6_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e6_comment" ).val());
+
+      var n = ($("#id_s2_e6_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e6_pr").val().length != 0)) {
+        $("#id_s2_e6_pr").css("background-color", "#f24858");
+        $("#id_s2_e6_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e6_pr").val().length == 0)) {
+        $("#id_s2_e6_pr").css("background-color", "white");
+        $("#id_s2_e6_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e7_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e7_comment" ).val());
+
+      var n = ($("#id_s2_e7_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e7_pr").val().length != 0)) {
+        $("#id_s2_e7_pr").css("background-color", "#f24858");
+        $("#id_s2_e7_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e7_pr").val().length == 0)) {
+        $("#id_s2_e7_pr").css("background-color", "white");
+        $("#id_s2_e7_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e8_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e8_comment" ).val());
+
+      var n = ($("#id_s2_e8_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e8_pr").val().length != 0)) {
+        $("#id_s2_e8_pr").css("background-color", "#f24858");
+        $("#id_s2_e8_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e8_pr").val().length == 0)) {
+        $("#id_s2_e8_pr").css("background-color", "white");
+        $("#id_s2_e8_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e9_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e9_comment" ).val());
+
+      var n = ($("#id_s2_e9_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e9_pr").val().length != 0)) {
+        $("#id_s2_e9_pr").css("background-color", "#f24858");
+        $("#id_s2_e9_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e9_pr").val().length == 0)) {
+        $("#id_s2_e9_pr").css("background-color", "white");
+        $("#id_s2_e9_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e10_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e10_comment" ).val());
+
+      var n = ($("#id_s2_e10_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e10_pr").val().length != 0)) {
+        $("#id_s2_e10_pr").css("background-color", "#f24858");
+        $("#id_s2_e10_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e10_pr").val().length == 0)) {
+        $("#id_s2_e10_pr").css("background-color", "white");
+        $("#id_s2_e10_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e11_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e11_comment" ).val());
+
+      var n = ($("#id_s2_e11_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e11_pr").val().length != 0)) {
+        $("#id_s2_e11_pr").css("background-color", "#f24858");
+        $("#id_s2_e11_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e11_pr").val().length == 0)) {
+        $("#id_s2_e11_pr").css("background-color", "white");
+        $("#id_s2_e11_pr").css("color", "black");
+      }
+    });
+
+
+
+
+  // tb 3////////////////
+
+  $("#id_s3_e1_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e1_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e1_spo2").val().length != 0)) {
+        $("#id_s3_e1_spo2").css("background-color", "#f24858");
+        $("#id_s3_e1_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e1_spo2").val().length == 0)) {
+        $("#id_s3_e1_spo2").css("background-color", "white");
+        $("#id_s3_e1_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e2_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e2_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e2_spo2").val().length != 0)) {
+        $("#id_s3_e2_spo2").css("background-color", "#f24858");
+        $("#id_s3_e2_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e2_spo2").val().length == 0)) {
+        $("#id_s3_e2_spo2").css("background-color", "white");
+        $("#id_s3_e2_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e3_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e3_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e3_spo2").val().length != 0)) {
+        $("#id_s3_e3_spo2").css("background-color", "#f24858");
+        $("#id_s3_e3_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e3_spo2").val().length == 0)) {
+        $("#id_s3_e3_spo2").css("background-color", "white");
+        $("#id_s3_e3_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e4_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e4_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e4_spo2").val().length != 0)) {
+        $("#id_s3_e4_spo2").css("background-color", "#f24858");
+        $("#id_s3_e4_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e4_spo2").val().length == 0)) {
+        $("#id_s3_e4_spo2").css("background-color", "white");
+        $("#id_s3_e4_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e5_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e5_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e5_spo2").val().length != 0)) {
+        $("#id_s3_e5_spo2").css("background-color", "#f24858");
+        $("#id_s3_e5_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e5_spo2").val().length == 0)) {
+        $("#id_s3_e5_spo2").css("background-color", "white");
+        $("#id_s3_e5_spo2").css("color", "black");
+      }
+    });
+
+
+  ////////////////////
+  $("#id_s3_e1_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e1_pr").val() - 35) / 35;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e1_pr").val().length != 0)) {
+        $("#id_s3_e1_pr").css("background-color", "#f24858");
+        $("#id_s3_e1_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e1_pr").val().length == 0)) {
+        $("#id_s3_e1_pr").css("background-color", "white");
+        $("#id_s3_e1_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e2_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e2_pr").val() - 60) / 60;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e2_pr").val().length != 0)) {
+        $("#id_s3_e2_pr").css("background-color", "#f24858");
+        $("#id_s3_e2_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e2_pr").val().length == 0)) {
+        $("#id_s3_e2_pr").css("background-color", "white");
+        $("#id_s3_e2_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e3_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e3_pr").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e3_pr").val().length != 0)) {
+        $("#id_s3_e3_pr").css("background-color", "#f24858");
+        $("#id_s3_e3_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e3_pr").val().length == 0)) {
+        $("#id_s3_e3_pr").css("background-color", "white");
+        $("#id_s3_e3_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e4_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e4_pr").val() - 200) / 200;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e4_pr").val().length != 0)) {
+        $("#id_s3_e4_pr").css("background-color", "#f24858");
+        $("#id_s3_e4_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e4_pr").val().length == 0)) {
+        $("#id_s3_e4_pr").css("background-color", "white");
+        $("#id_s3_e4_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e5_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e5_pr").val() - 240) / 240;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e5_pr").val().length != 0)) {
+        $("#id_s3_e5_pr").css("background-color", "#f24858");
+        $("#id_s3_e5_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e5_pr").val().length == 0)) {
+        $("#id_s3_e5_pr").css("background-color", "white");
+        $("#id_s3_e5_pr").css("color", "black");
+      }
+    });
+  // //////////////////////table 4
+  $("#id_s4_e1_comment")
+    .focusout(function () {
+      // alert($( "#id_s4_e1_comment" ).val());
+      if ($("#id_s4_e1_comment").val() >= 3) {
+        $("#id_s4_e1_comment").css("background-color", "#f24858");
+        $("#id_s4_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s4_e1_comment").val() == 1)) {
+        $("#id_s4_e1_comment").css("background-color", "white");
+        $("#id_s4_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s4_e1_comment").val() == 2)) {
+        $("#id_s4_e1_comment").css("background-color", 'yellow');
+        $("#id_s4_e1_comment").css("color", "black");
+      }
+    });
+
+
+</script>
+
+
+
+{% if reload or edit or edit_recal %}
+<script>
+
+  $("#id_s1_e1_comment")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+  if ($("#id_s1_e1_comment").val() >= 3) {
+    $("#id_s1_e1_comment").css("background-color", "#f24858");
+    $("#id_s1_e1_comment").css("color", "white");
+
+  }
+  else if (($("#id_s1_e1_comment").val() == 1)) {
+    $("#id_s1_e1_comment").css("background-color", "white");
+    $("#id_s1_e1_comment").css("color", "black");
+
+  }
+  else if (($("#id_s1_e1_comment").val() == 2)) {
+    $("#id_s1_e1_comment").css("background-color", 'yellow');
+    $("#id_s1_e1_comment").css("color", "black");
+  }
+
+
+
+  $("#id_s1_e2_comment")
+
+  // alert($( "#id_s1_e2_comment" ).val());
+  if ($("#id_s1_e2_comment").val() >= 3) {
+    $("#id_s1_e2_comment").css("background-color", "#f24858");
+    $("#id_s1_e2_comment").css("color", "white");
+
+  }
+  else if (($("#id_s1_e2_comment").val() == 1)) {
+    $("#id_s1_e2_comment").css("background-color", "white");
+    $("#id_s1_e2_comment").css("color", "black");
+
+  }
+  else if (($("#id_s1_e2_comment").val() == 2)) {
+    $("#id_s1_e2_comment").css("background-color", 'yellow');
+    $("#id_s1_e2_comment").css("color", "black");
+  }
+
+  // ///////////////////// table 2 
+
+  $("#id_s2_e1_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s2_e1_spo2").val() - 70) / 70;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e1_spo2").val().length != 0)) {
+    $("#id_s2_e1_spo2").css("background-color", "#f24858");
+    $("#id_s2_e1_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e1_spo2").val().length == 0)) {
+    $("#id_s2_e1_spo2").css("background-color", "white");
+    $("#id_s2_e1_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e2_spo2")
+
+  // alert($( "#id_s1_e2_comment" ).val());
+
+  var n = ($("#id_s2_e2_spo2").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e2_spo2").val().length != 0)) {
+    $("#id_s2_e2_spo2").css("background-color", "#f24858");
+    $("#id_s2_e2_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e2_spo2").val().length == 0)) {
+    $("#id_s2_e2_spo2").css("background-color", "white");
+    $("#id_s2_e2_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s2_e3_spo2")
+
+  // alert($( "#id_s1_e3_comment" ).val());
+
+  var n = ($("#id_s2_e3_spo2").val() - 80) / 80;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e3_spo2").val().length != 0)) {
+    $("#id_s2_e3_spo2").css("background-color", "#f24858");
+    $("#id_s2_e3_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e3_spo2").val().length == 0)) {
+    $("#id_s2_e3_spo2").css("background-color", "white");
+    $("#id_s2_e3_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s2_e4_spo2")
+
+  // alert($( "#id_s1_e4_comment" ).val());
+
+  var n = ($("#id_s2_e4_spo2").val() - 85) / 85;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e4_spo2").val().length != 0)) {
+    $("#id_s2_e4_spo2").css("background-color", "#f24858");
+    $("#id_s2_e4_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e4_spo2").val().length == 0)) {
+    $("#id_s2_e4_spo2").css("background-color", "white");
+    $("#id_s2_e4_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s2_e5_spo2")
+
+  // alert($( "#id_s1_e5_comment" ).val());
+
+  var n = ($("#id_s2_e5_spo2").val() - 88) / 88;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e5_spo2").val().length != 0)) {
+    $("#id_s2_e5_spo2").css("background-color", "#f24858");
+    $("#id_s2_e5_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e5_spo2").val().length == 0)) {
+    $("#id_s2_e5_spo2").css("background-color", "white");
+    $("#id_s2_e5_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e6_spo2")
+
+  // alert($( "#id_s1_e6_comment" ).val());
+
+  var n = ($("#id_s2_e6_spo2").val() - 90) / 90;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e6_spo2").val().length != 0)) {
+    $("#id_s2_e6_spo2").css("background-color", "#f24858");
+    $("#id_s2_e6_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e6_spo2").val().length == 0)) {
+    $("#id_s2_e6_spo2").css("background-color", "white");
+    $("#id_s2_e6_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e7_spo2")
+
+  // alert($( "#id_s1_e7_comment" ).val());
+
+  var n = ($("#id_s2_e7_spo2").val() - 92) / 92;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e7_spo2").val().length != 0)) {
+    $("#id_s2_e7_spo2").css("background-color", "#f24858");
+    $("#id_s2_e7_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e7_spo2").val().length == 0)) {
+    $("#id_s2_e7_spo2").css("background-color", "white");
+    $("#id_s2_e7_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e8_spo2")
+
+  // alert($( "#id_s1_e8_comment" ).val());
+
+  var n = ($("#id_s2_e8_spo2").val() - 94) / 94;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e8_spo2").val().length != 0)) {
+    $("#id_s2_e8_spo2").css("background-color", "#f24858");
+    $("#id_s2_e8_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e8_spo2").val().length == 0)) {
+    $("#id_s2_e8_spo2").css("background-color", "white");
+    $("#id_s2_e8_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e9_spo2")
+
+  // alert($( "#id_s1_e9_comment" ).val());
+
+  var n = ($("#id_s2_e9_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e9_spo2").val().length != 0)) {
+    $("#id_s2_e9_spo2").css("background-color", "#f24858");
+    $("#id_s2_e9_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e9_spo2").val().length == 0)) {
+    $("#id_s2_e9_spo2").css("background-color", "white");
+    $("#id_s2_e9_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e10_spo2")
+
+  // alert($( "#id_s1_e10_comment" ).val());
+
+  var n = ($("#id_s2_e10_spo2").val() - 98) / 98;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e10_spo2").val().length != 0)) {
+    $("#id_s2_e10_spo2").css("background-color", "#f24858");
+    $("#id_s2_e10_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e10_spo2").val().length == 0)) {
+    $("#id_s2_e10_spo2").css("background-color", "white");
+    $("#id_s2_e10_spo2").css("color", "black");
+  }
+
+
+  $("#id_s2_e11_spo2")
+
+  // alert($( "#id_s1_e11_comment" ).val());
+
+  var n = ($("#id_s2_e11_spo2").val() - 100) / 100;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e11_spo2").val().length != 0)) {
+    $("#id_s2_e11_spo2").css("background-color", "#f24858");
+    $("#id_s2_e11_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e11_spo2").val().length == 0)) {
+    $("#id_s2_e11_spo2").css("background-color", "white");
+    $("#id_s2_e11_spo2").css("color", "black");
+  }
+
+  ////////////////////////////////
+
+
+  $("#id_s2_e1_pr")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s2_e1_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e1_pr").val().length != 0)) {
+    $("#id_s2_e1_pr").css("background-color", "#f24858");
+    $("#id_s2_e1_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e1_pr").val().length == 0)) {
+    $("#id_s2_e1_pr").css("background-color", "white");
+    $("#id_s2_e1_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e2_pr")
+
+  // alert($( "#id_s1_e2_comment" ).val());
+
+  var n = ($("#id_s2_e2_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e2_pr").val().length != 0)) {
+    $("#id_s2_e2_pr").css("background-color", "#f24858");
+    $("#id_s2_e2_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e2_pr").val().length == 0)) {
+    $("#id_s2_e2_pr").css("background-color", "white");
+    $("#id_s2_e2_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e3_pr")
+
+  // alert($( "#id_s1_e3_comment" ).val());
+
+  var n = ($("#id_s2_e3_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e3_pr").val().length != 0)) {
+    $("#id_s2_e3_pr").css("background-color", "#f24858");
+    $("#id_s2_e3_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e3_pr").val().length == 0)) {
+    $("#id_s2_e3_pr").css("background-color", "white");
+    $("#id_s2_e3_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e4_pr")
+
+  // alert($( "#id_s1_e4_comment" ).val());
+
+  var n = ($("#id_s2_e4_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e4_pr").val().length != 0)) {
+    $("#id_s2_e4_pr").css("background-color", "#f24858");
+    $("#id_s2_e4_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e4_pr").val().length == 0)) {
+    $("#id_s2_e4_pr").css("background-color", "white");
+    $("#id_s2_e4_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e5_pr")
+
+  // alert($( "#id_s1_e5_comment" ).val());
+
+  var n = ($("#id_s2_e5_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e5_pr").val().length != 0)) {
+    $("#id_s2_e5_pr").css("background-color", "#f24858");
+    $("#id_s2_e5_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e5_pr").val().length == 0)) {
+    $("#id_s2_e5_pr").css("background-color", "white");
+    $("#id_s2_e5_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e6_pr")
+
+  // alert($( "#id_s1_e6_comment" ).val());
+
+  var n = ($("#id_s2_e6_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e6_pr").val().length != 0)) {
+    $("#id_s2_e6_pr").css("background-color", "#f24858");
+    $("#id_s2_e6_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e6_pr").val().length == 0)) {
+    $("#id_s2_e6_pr").css("background-color", "white");
+    $("#id_s2_e6_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e7_pr")
+
+  // alert($( "#id_s1_e7_comment" ).val());
+
+  var n = ($("#id_s2_e7_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e7_pr").val().length != 0)) {
+    $("#id_s2_e7_pr").css("background-color", "#f24858");
+    $("#id_s2_e7_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e7_pr").val().length == 0)) {
+    $("#id_s2_e7_pr").css("background-color", "white");
+    $("#id_s2_e7_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e8_pr")
+
+  // alert($( "#id_s1_e8_comment" ).val());
+
+  var n = ($("#id_s2_e8_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e8_pr").val().length != 0)) {
+    $("#id_s2_e8_pr").css("background-color", "#f24858");
+    $("#id_s2_e8_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e8_pr").val().length == 0)) {
+    $("#id_s2_e8_pr").css("background-color", "white");
+    $("#id_s2_e8_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e9_pr")
+
+  // alert($( "#id_s1_e9_comment" ).val());
+
+  var n = ($("#id_s2_e9_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e9_pr").val().length != 0)) {
+    $("#id_s2_e9_pr").css("background-color", "#f24858");
+    $("#id_s2_e9_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e9_pr").val().length == 0)) {
+    $("#id_s2_e9_pr").css("background-color", "white");
+    $("#id_s2_e9_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e10_pr")
+
+  // alert($( "#id_s1_e10_comment" ).val());
+
+  var n = ($("#id_s2_e10_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e10_pr").val().length != 0)) {
+    $("#id_s2_e10_pr").css("background-color", "#f24858");
+    $("#id_s2_e10_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e10_pr").val().length == 0)) {
+    $("#id_s2_e10_pr").css("background-color", "white");
+    $("#id_s2_e10_pr").css("color", "black");
+  }
+
+
+  $("#id_s2_e11_pr")
+
+  // alert($( "#id_s1_e11_comment" ).val());
+
+  var n = ($("#id_s2_e11_pr").val() - 75) / 75;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s2_e11_pr").val().length != 0)) {
+    $("#id_s2_e11_pr").css("background-color", "#f24858");
+    $("#id_s2_e11_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s2_e11_pr").val().length == 0)) {
+    $("#id_s2_e11_pr").css("background-color", "white");
+    $("#id_s2_e11_pr").css("color", "black");
+  }
+
+
+
+
+
+  // tb 3////////////////
+
+  $("#id_s3_e1_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s3_e1_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e1_spo2").val().length != 0)) {
+    $("#id_s3_e1_spo2").css("background-color", "#f24858");
+    $("#id_s3_e1_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e1_spo2").val().length == 0)) {
+    $("#id_s3_e1_spo2").css("background-color", "white");
+    $("#id_s3_e1_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s3_e2_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s3_e2_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e2_spo2").val().length != 0)) {
+    $("#id_s3_e2_spo2").css("background-color", "#f24858");
+    $("#id_s3_e2_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e2_spo2").val().length == 0)) {
+    $("#id_s3_e2_spo2").css("background-color", "white");
+    $("#id_s3_e2_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s3_e3_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s3_e3_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e3_spo2").val().length != 0)) {
+    $("#id_s3_e3_spo2").css("background-color", "#f24858");
+    $("#id_s3_e3_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e3_spo2").val().length == 0)) {
+    $("#id_s3_e3_spo2").css("background-color", "white");
+    $("#id_s3_e3_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s3_e4_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s3_e4_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e4_spo2").val().length != 0)) {
+    $("#id_s3_e4_spo2").css("background-color", "#f24858");
+    $("#id_s3_e4_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e4_spo2").val().length == 0)) {
+    $("#id_s3_e4_spo2").css("background-color", "white");
+    $("#id_s3_e4_spo2").css("color", "black");
+  }
+
+
+
+  $("#id_s3_e5_spo2")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s3_e5_spo2").val() - 96) / 96;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e5_spo2").val().length != 0)) {
+    $("#id_s3_e5_spo2").css("background-color", "#f24858");
+    $("#id_s3_e5_spo2").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e5_spo2").val().length == 0)) {
+    $("#id_s3_e5_spo2").css("background-color", "white");
+    $("#id_s3_e5_spo2").css("color", "black");
+  }
+
+
+
+  ////////////////////
+  $("#id_s3_e1_pr")
+
+  var n = ($("#id_s3_e1_pr").val() - 35) / 35;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e1_pr").val().length != 0)) {
+    $("#id_s3_e1_pr").css("background-color", "#f24858");
+    $("#id_s3_e1_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e1_pr").val().length == 0)) {
+    $("#id_s3_e1_pr").css("background-color", "white");
+    $("#id_s3_e1_pr").css("color", "black");
+  }
+
+
+  $("#id_s3_e2_pr")
+
+  var n = ($("#id_s3_e2_pr").val() - 60) / 60;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e2_pr").val().length != 0)) {
+    $("#id_s3_e2_pr").css("background-color", "#f24858");
+    $("#id_s3_e2_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e2_pr").val().length == 0)) {
+    $("#id_s3_e2_pr").css("background-color", "white");
+    $("#id_s3_e2_pr").css("color", "black");
+  }
+
+
+  $("#id_s3_e3_pr")
+
+  var n = ($("#id_s3_e3_pr").val() - 100) / 100;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e3_pr").val().length != 0)) {
+    $("#id_s3_e3_pr").css("background-color", "#f24858");
+    $("#id_s3_e3_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e3_pr").val().length == 0)) {
+    $("#id_s3_e3_pr").css("background-color", "white");
+    $("#id_s3_e3_pr").css("color", "black");
+  }
+
+
+  $("#id_s3_e4_pr")
+
+  var n = ($("#id_s3_e4_pr").val() - 200) / 200;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e4_pr").val().length != 0)) {
+    $("#id_s3_e4_pr").css("background-color", "#f24858");
+    $("#id_s3_e4_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e4_pr").val().length == 0)) {
+    $("#id_s3_e4_pr").css("background-color", "white");
+    $("#id_s3_e4_pr").css("color", "black");
+  }
+
+
+  $("#id_s3_e5_pr")
+
+  var n = ($("#id_s3_e5_pr").val() - 240) / 240;
+  if (n < 0) {
+    n = -n;
+  }
+  if (n > 0.03 && ($("#id_s3_e5_pr").val().length != 0)) {
+    $("#id_s3_e5_pr").css("background-color", "#f24858");
+    $("#id_s3_e5_pr").css("color", "white");
+  }
+  else if (n <= 0.03 || ($("#id_s3_e5_pr").val().length == 0)) {
+    $("#id_s3_e5_pr").css("background-color", "white");
+    $("#id_s3_e5_pr").css("color", "black");
+  }
+
+  // //////////////////////table 4
+  $("#id_s4_e1_comment")
+
+  // alert($( "#id_s4_e1_comment" ).val());
+  if ($("#id_s4_e1_comment").val() >= 3) {
+    $("#id_s4_e1_comment").css("background-color", "#f24858");
+    $("#id_s4_e1_comment").css("color", "white");
+
+  }
+  else if (($("#id_s4_e1_comment").val() == 1)) {
+    $("#id_s4_e1_comment").css("background-color", "white");
+    $("#id_s4_e1_comment").css("color", "black");
+
+  }
+  else if (($("#id_s4_e1_comment").val() == 2)) {
+    $("#id_s4_e1_comment").css("background-color", 'yellow');
+    $("#id_s4_e1_comment").css("color", "black");
+  }
+
+
+
+</script>
+{% endif %}

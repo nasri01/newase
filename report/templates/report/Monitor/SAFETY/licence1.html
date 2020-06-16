@@ -1,0 +1,1588 @@
+{% extends 'base-spo2.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: "B Zar";
+        src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Titr";
+        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Lotus";
+        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Nazanin";
+        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
+    }
+
+    .time {
+        font-family: "Times New Roman";
+    }
+
+    .tb-4 td {
+        padding: 0.02cm 0.1cm;
+
+    }
+
+    .tb-5 td,
+    th {
+        padding: 0.02cm 0.06cm;
+
+    }
+
+    .no-border {
+        padding-top: 0.1cm;
+        padding-bottom: 0.1cm;
+    }
+</style>
+
+<body style="text-align: right;font-size: 16pt;">
+
+    <div class="cover main" style="font-family:'B Lotus';">
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
+
+            <br>
+            <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+                گواهينامه کنترل کيفي ايمني دستگاه الكتريكي پزشكي
+            </h1>
+            <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
+                <tr>
+                    <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+                    </td>
+                    <td class="no-border"><span
+                            class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }}
+                        </span>تاريخ کنترل کيفي: </td>
+                    <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
+                    <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
+                    <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
+                    <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
+                    <td class="no-border"><span class="time">
+                            {% if form.device.property_number != None %}
+                            {{form.device.property_number}}
+                            {% endif %}
+                        </span>کداموال :</td>
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
+                    <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+                        کنترل کيفي: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+
+                </tr>
+
+            </table>
+            <div style="height:5.85cm;">
+                <div>موارد عدم شمول:</div>
+                <span>
+                    {{ form.totalcomment }}
+                </span>
+            </div>
+
+            <span style="font-weight: bold;">تجهيزات آزمون:</span>
+            <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-5">
+                <tr>
+                    <td>تاريخ انقضاء</td>
+                    <td>تاريخ کاليبراسيون</td>
+                    <td>شماره سریال</td>
+                    <td>مدل</td>
+                    <td>نام تجهيز</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev1.serial }}</td>
+                    <td>{{ form.cal_dev1.name }}</td>
+                    <td>{{ form.cal_dev1.type.name }}</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
+                    <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
+                    <td>{{ form.cal_dev2.serial }}</td>
+                    <td>{{ form.cal_dev2.name }}</td>
+                    <td>{{ form.cal_dev2.type.name }}</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
+                    <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
+                    <td>{{ form.cal_dev3.serial }}</td>
+                    <td>{{ form.cal_dev3.name }}</td>
+                    <td>{{ form.cal_dev3.type.name }}</td>
+                </tr>
+
+            </table>
+            <br>
+            <span style="font-weight: bold;" class="time">IEC 60601-1:2012 , IEC 62353:2014 </span>
+            <span style="font-weight: bold;">مراجع:استاندارد </span>
+            <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+                طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+                ملي يا بين المللي قابل رديابي است.</div>
+            <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+            <br>
+            <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+                است.</div>
+            <table style="margin: auto;text-align: center;font-weight: bold;">
+                <tr>
+                    <td style="width: 9cm;">مهر آزمايشگاه</td>
+                    <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+                </tr>
+                <tr>
+                    <img src="{% static 'img/spo2/stamp.jpg' %}"
+                        style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
+
+                    <td style="height: 3cm;">
+                        <!-- <div class="stmp"></div> -->
+            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
+                    </td>
+                    <td style="height: 3cm;position: relative;">
+                        <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+                        <!-- <div class="signature"></div> -->
+            <img style="width: 6cm; height:4cm; margin-right: 2cm;" src="https://{{ domain_name }}/static/img/signature.png">
+                    </td>
+                </tr>
+
+            </table>
+            <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51004</div>
+        </div>
+    </div>
+
+
+    <div class="page-1 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51004</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون الزامات ایمنی
+                <br>
+                در دستگاه های الكتريكي پزشكي
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;text-align: center;font-family: 'B Titr';font-size:18pt; ">
+                آزمون های کیفی
+            </div>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="min-width:5cm;">توضیحات</th>
+                        <th colspan="2">نتیجه</th>
+                        <th colspan="2" rowspan="2">عنوان آزمون</th>
+                        <th rowspan="2">ردیف</th>
+                    </tr>
+                    <tr>
+                        <th>REJ</th>
+                        <th>OK</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        {% if form.s0_e1_comment.id == 1%}
+                         <td></td>
+                        {% else %}
+                            <td>{{ form.s0_e1_comment }}</td>
+                        {% endif %}
+                        
+                        {% if form.s0_e1_comment.id == 1 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                        {% elif form.s0_e1_comment.id == 2 %}
+                            <td></td>
+                            <td></td>
+                        {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                        {% endif %}
+                        
+                        <td style="text-align: right;"><span>استحکام و عدم ترک</span></td>
+                        <td rowspan="2" style="text-align: right;"><span>شاسی/ بدنه</span></td>
+                        <td rowspan="2">1</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e2_comment.id == 1%}
+                            <td></td>
+                        {% else %}
+                            <td>{{ form.s0_e2_comment }}</td>
+                        {% endif %}
+                        
+                        {% if form.s0_e2_comment.id == 1 %}
+                            <td></td>
+                            <td>&#10004;</td>
+                        {% elif form.s0_e2_comment.id == 2 %}
+                            <td></td>
+                            <td></td>
+                        {% else %}
+                            <td>&#10004;</td>
+                            <td></td>
+                        {% endif %}
+    
+                        <td style="text-align: right;"><span>تمیزی و عاری از محلول ها</span></td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e3_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e3_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e3_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>استحکام و امنیت</span></td>
+                        <td style="text-align: right;"><span>نصب</span></td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e4_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e4_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e4_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>روانی چرخ ها</span></td>
+                        <td rowspan="2" style="text-align: right;"><span>چرخ ها / ترمزها</span></td>
+                        <td rowspan="2">3</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e5_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e5_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e5_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>عملکرد ترمز ها</span></td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e6_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e6_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e6_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e6_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>دوشاخه برق / پریز</span></td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e7_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e7_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e7_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e7_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>هادی یا کابل برق اصلی جداشدنی</span></td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e8_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e8_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e8_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e8_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>شلنگ / لوله ها</span></td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e9_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e9_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e9_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e9_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>کابل ها</span></td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e10_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e10_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e10_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e10_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>بست ها / اتصالات</span></td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e11_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e11_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e11_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e11_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>الکترودها / مبدل ها</span></td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e12_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e12_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e12_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e12_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>فیلترها</span></td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e13_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e13_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e13_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e13_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>کلیدها / کنترل ها</span></td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e14_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e14_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e14_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e14_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>موتور / پمپ / فن&nbsp;</span></td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e15_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e15_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e15_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e15_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>باتری / شارژر</span></td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e16_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e16_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e16_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e16_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>نشانگرها / نمایشگرها</span></td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e17_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e17_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e17_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e17_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span class="time">(Self-Test)</span> <span>خودآزمون
+                            </span></td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e18_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e18_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e18_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e18_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>تنظیمات زمان / تاریخ</span></td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e19_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e19_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e19_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e19_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>رابط شبکه / وایرلس</span></td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e20_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e20_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e20_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e20_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"> <span class="time">(Interlocks)</span><span>آلارم ها
+                                / هم وابستگی</span></td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e21_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e21_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e21_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e21_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>برچسب گذاری</span></td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e22_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e22_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e22_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e22_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td colspan="2" style="text-align: right;"><span>لوازم جانبی</span></td>
+                        <td>20</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+            <div>
+                <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 5</div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="page-2 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51004</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون الزامات ایمنی
+                <br>
+                در دستگاه های الكتريكي پزشكي
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;text-align: center;font-family: 'B Titr';font-size:18pt; ">
+                آزمون های کمی
+            </div>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 62353:2014</span>
+                <span> استاندارد </span>
+                <span class="time">5.3.2</span>
+                <span>و بند </span>
+                <span class="time"> IEC 60601-1:2012</span>
+                <span> استاندارد </span>
+                <span class="time">8.6.4</span>
+                <span>اندازه گیری مقاومت زمین (بند</span>
+                <span class="time">.1</span>
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                    <tr>
+                        <th rowspan="3">Setting</th>
+                        <th rowspan="3">Type of <br> ME EQUIPMENT</th>
+                        <th colspan="4">READING</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">Earth Resistance</th>
+                        <th rowspan="2">Permissible Range</th>
+                        <th colspan="2">Result</th>
+                    </tr>
+                    <tr>
+                        <th>Ok</th>
+                        <th>Rej</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="4" style="text-align: left;font-size:13pt; ">Protective Earth Resistance:
+                            Test current 25A or 1,5 times the highest RATED current of the relevant circuit(s) whichever
+                            is greater (±10 %)</td>
+                        <td style="font-size: 12pt;line-height: 0.95;">PERMANENTLY INSTALLED</td>
+                        <!-- <td><span>{{form.s1_e1_res}}</span></td> -->
+                        <td></td>
+                        <td>100 mΩ</td>
+                        <!-- {% if form.s1_e1_res <= 100 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %} -->
+                        <td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 12pt;line-height: 0.95;">with an APPLIANCE INLET</td>
+                        <!-- <td><span>{{form.s1_e2_res}}</span></td> -->
+                        <td></td>
+                        <td>100 mΩ</td>
+                        <!-- {% if form.s1_e2_res <= 100 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %} -->
+                        <td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 12pt;line-height: 0.95;">with a non-DETACHABLE POWER SUPPLY CORD</td>
+                        <!-- <td><span>{{form.s1_e3_res}}</span></td> -->
+                        <td></td>
+                        <td>200 mΩ</td>
+
+                        <!-- {% if form.s1_e3_res <= 200 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %} -->
+                        <td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 12pt;line-height: 0.95;">with a DETACHABLE POWER SUPPLY CORD</td>
+                        <td><span>{{form.s1_e4_res}}</span></td>
+                        <td>200 mΩ</td>
+
+                        {% if form.s1_e4_res <= 200 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-1:2012</span>
+                <span> استاندارد </span>
+                <span class="time">8.7.4.5</span>
+                <span> اندازه گیری جریان نشتی زمین (بند </span>
+                <span class="time">.2</span>
+            </div>
+
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                    <tr>
+                        <th colspan="3">Setting</th>
+                        <th colspan="2">Reading <br> [mA]</th>
+                        <th rowspan="2">Permissible <br> Range
+                            <br> [mA]
+                        </th>
+                        <th colspan="2">Result</th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="2">Mode</th>
+                        <th>Safety Analyzer</th>
+                        <th>AP-Earth</th>
+                        <th>No AP-Earth</th>
+                        <th>Ok</th>
+                        <th>Rej</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NORMAL CONDITION</td>
+                        <td>Device on</td>
+                        <td style="font-size: 12pt;line-height: 0.95;">Normal Polarity,
+                            Closed Neutral,
+                            Open Earth
+                        </td>
+                        <td>{{ form.s2_e1_aplc }}</td>
+                        <td>{{ form.s2_e1_noaplc }}</td>
+                        <td>5</td>
+                        {% if form.s2_e1_aplc > 5 or form.s2_e1_noaplc > 5 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>SINGLE FAULT CONDITION</td>
+                        <td>Device on</td>
+                        <td style="font-size: 12pt;line-height: 0.95;">Normal Polarity,
+                            Open Neutral,
+                            Open Earth
+
+                        </td>
+                        <td>{{ form.s2_e2_aplc }}</td>
+                        <td>{{ form.s2_e2_noaplc }}</td>
+                        <td>10</td>
+                        {% if form.s2_e2_aplc > 10 or form.s2_e2_noaplc > 10 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>{# todo condition #}
+            <br>
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-1:2012</span>
+                <span> استاندارد </span>
+                <span class="time">8.7.4.6</span>
+                <span> اندازه گیری جریان نشتی تماسی (بدنه) (بند </span>
+                <span class="time">.3</span>
+            </div>
+
+
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                    <tr>
+                        <th colspan="3">Setting</th>
+                        <th colspan="2">Reading <br> [mA]</th>
+                        <th rowspan="2">Permissible <br> Range
+                            <br> [mA]
+                        </th>
+                        <th colspan="2">Result</th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="2">Mode</th>
+                        <th>Safety Analyzer</th>
+                        <th>AP-Earth</th>
+                        <th>No AP-Earth</th>
+                        <th>Ok</th>
+                        <th>Rej</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">NORMAL CONDITION</td>
+                        <td style="width: 3cm;">Device on</td>
+                        <td rowspan="2" style="font-size: 12pt;line-height: 0.95;">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>{{ form.s3_e1_aplc }}</td>
+                        <td>{{ form.s3_e1_noaplc }}</td>
+                        <td rowspan="2">100</td>
+                        {% if form.s3_e1_aplc > 100 or form.s3_e1_noaplc > 100 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td>Device off</td>
+                        <td>{{ form.s3_e2_aplc }}</td>
+                        <td>{{ form.s3_e2_noaplc }}</td>
+                        {% if form.s3_e2_aplc > 100 or form.s3_e2_noaplc > 100 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td rowspan="4">SINGLE FAULT CONDITION</td>
+                        <td>Device on</td>
+                        <td rowspan="2" style="font-size: 12pt;line-height: 0.95;">Normal Polarity,
+                            Open Neutral,
+                            Closed Earth
+                        </td>
+                        <td>{{ form.s3_e3_aplc }}</td>
+                        <td>{{ form.s3_e3_noaplc }}</td>
+                        <td rowspan="4">500</td>
+                        {% if form.s3_e3_aplc > 500 or form.s3_e3_noaplc > 500 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td>Device off</td>
+                        <td>{{ form.s3_e4_aplc }}</td>
+                        <td>{{ form.s3_e4_noaplc }}</td>
+                        {% if form.s3_e4_aplc > 500 or form.s3_e4_noaplc > 500 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Device on</td>
+                        <td rowspan="2" style="font-size: 12pt;line-height: 0.95;">Normal Polarity,
+                            Closed Neutral,
+                            Open Earth
+                        </td>
+                        <td>{{ form.s3_e5_aplc }}</td>
+                        <td>{{ form.s3_e5_noaplc }}</td>
+                        {% if form.s3_e5_aplc > 500 or form.s3_e5_noaplc > 500 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Device off</td>
+                        <td>{{ form.s3_e6_aplc }}</td>
+                        <td>{{ form.s3_e6_noaplc }}</td>
+                        {% if form.s3_e6_aplc > 500 or form.s3_e6_noaplc > 500 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+            <div>
+                <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 5</div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="page-3 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51004</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون الزامات ایمنی
+                <br>
+                در دستگاه های الكتريكي پزشكي
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-1:2012</span>
+                <span> استاندارد </span>
+                <span class="time">8.7.4.7</span>
+                <span> اندازه گیری جریان نشتی بیمار (بند </span>
+                <span class="time">.4</span>
+            </div>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                    <tr>
+                        <th colspan="4">Setting</th>
+                        <th>Reading <br> [mA]</th>
+                        <th rowspan="2">Permissible Range<br>[&mu;A]</th>
+                        <th colspan="2">Result</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Mode</th>
+                        <th>Safety Analyzer</th>
+                        <th>AP</th>
+                        <th>AP-Earth</th>
+                        <th>Ok</th>
+                        <th>Rej</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td rowspan="7">NORMAL CONDITION</td>
+                        <td rowspan="7">Device on</td>
+                        <td rowspan="7">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s4_e1_lc}}</td>
+                        <td rowspan="6">10</td>
+                        {% if form.s4_e1_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s4_e2_lc}}</td>
+                        {% if form.s4_e2_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s4_e3_lc}}</td>
+                        {% if form.s4_e3_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s4_e4_lc}}</td>
+                        {% if form.s4_e4_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s4_e5_lc}}</td>
+                        {% if form.s4_e5_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Mains on AP</td>
+                        <td>{{form.s4_e6_lc}}</td>
+                        {% if form.s4_e6_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>{{form.s4_e7_lc}}</td>
+                        <td>50</td>
+                        {% if form.s4_e7_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td rowspan="14">SINGLE FAULT CONDITION</td>
+                        <td rowspan="14">Device on</td>
+                        <td rowspan="7">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s4_e8_lc}}</td>
+                        <td rowspan="6">50</td>
+                        {% if form.s4_e8_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s4_e9_lc}}</td>
+                        {% if form.s4_e9_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s4_e10_lc}}</td>
+                        {% if form.s4_e10_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s4_e11_lc}}</td>
+                        {% if form.s4_e11_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s4_e12_lc}}</td>
+                        {% if form.s4_e12_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Mains on AP</td>
+                        <td>{{form.s4_e13_lc}}</td>
+                        {% if form.s4_e13_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>{{form.s4_e14_lc}}</td>
+                        <td>100</td>
+                        {% if form.s4_e14_lc <= 100 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td rowspan="7">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s4_e15_lc}}</td>
+                        <td rowspan="6">50</td>
+                        {% if form.s4_e15_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s4_e16_lc}}</td>
+                        {% if form.s4_e16_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s4_e17_lc}}</td>
+                        {% if form.s4_e17_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s4_e18_lc}}</td>
+                        {% if form.s4_e18_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s4_e19_lc}}</td>
+                        {% if form.s4_e19_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Mains on AP</td>
+                        <td>{{form.s4_e20_lc}}</td>
+                        {% if form.s4_e20_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>{{form.s4_e21_lc}}</td>
+                        <td>100</td>
+                        {% if form.s4_e21_lc <= 100 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 4 از 5</div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="page-4 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51004</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون الزامات ایمنی
+                <br>
+                در دستگاه های الكتريكي پزشكي
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-1:2012 </span>
+                <span> استاندارد </span>
+                <span class="time">8.7.4.8</span>
+                <span> اندازه گیری جریان کمکی بیمار (بند </span>
+                <span class="time">.5</span>
+            </div>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                    <tr>
+                        <th colspan="4">Setting</th>
+                        <th>Reading <br> [mA]</th>
+                        <th rowspan="2">Permissible Range<br>[&mu;A]</th>
+                        <th colspan="2">Result</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Mode</th>
+                        <th>Safety Analyzer</th>
+                        <th>AP</th>
+                        <th>AP-Earth</th>
+                        <th>Ok</th>
+                        <th>Rej</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td rowspan="5">NORMAL CONDITION</td>
+                        <td rowspan="5">Device on</td>
+                        <td rowspan="5">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s5_e1_lc}}</td>
+                        <td rowspan="5">10</td>
+                        {% if form.s5_e1_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s5_e2_lc}}</td>
+                        {% if form.s5_e2_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s5_e3_lc}}</td>
+                        {% if form.s5_e3_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s5_e4_lc}}</td>
+                        {% if form.s5_e4_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s5_e5_lc}}</td>
+                        {% if form.s5_e5_lc <= 10 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td rowspan="10">SINGLE FAULT CONDITION</td>
+                        <td rowspan="10">Device on</td>
+                        <td rowspan="5">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s5_e6_lc}}</td>
+                        <td rowspan="5">50</td>
+                        {% if form.s5_e6_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s5_e7_lc}}</td>
+                        {% if form.s5_e7_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s5_e8_lc}}</td>
+                        {% if form.s5_e8_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s5_e9_lc}}</td>
+                        {% if form.s5_e9_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s5_e10_lc}}</td>
+                        {% if form.s5_e10_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td rowspan="5">Normal Polarity,
+                            Closed Neutral,
+                            Closed Earth
+                        </td>
+                        <td>RA</td>
+                        <td>{{form.s5_e11_lc}}</td>
+                        <td rowspan="5">50</td>
+                        {% if form.s5_e11_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>{{form.s5_e12_lc}}</td>
+                        {% if form.s5_e12_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>LL</td>
+                        <td>{{form.s5_e13_lc}}</td>
+                        {% if form.s5_e13_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>RL</td>
+                        <td>{{form.s5_e14_lc}}</td>
+                        {% if form.s5_e14_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>V1</td>
+                        <td>{{form.s5_e15_lc}}</td>
+                        {% if form.s5_e15_lc <= 50 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <div style="width:100%;direction: rtl; text-align: right;">
+                    <div style="margin-bottom: -5cm;" class="sign-2"><img src="http://{{domain_name}}{{ user_profile.signature.url }}" alt=""
+                        style="height: 6cm;">
+                    </div>
+            </div>
+            <div style="margin-top: -4.5cm;font-family:'B Zar' ">
+                <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
+                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: {{ user_profile.user.first_name }}
+                </div>
+            </div>
+
+
+
+
+            <div>
+                <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 5 از 5</div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+{% endblock %}

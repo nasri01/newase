@@ -1,0 +1,126 @@
+{% extends 'base3.html' %}
+{% load static %}
+
+{% block content %}
+<title>پنل کاربری مدیریت</title>
+
+
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'JalaliJSCalendar/skins/calendar-blue.css' %}"
+    title="Aqua" />
+<script src="{% static 'JalaliJSCalendar/jalali.js' %}"></script>
+<script src="{% static 'JalaliJSCalendar/calendar.js' %}"></script>
+<script src="{% static 'JalaliJSCalendar/calendar-setup.js'%}"></script>
+<script src="{% static 'JalaliJSCalendar/lang/calendar-fa.js' %}"></script>
+
+<div class="container-fluid">
+
+    <div class="row">
+            <div class="col-12" style="direction: rtl;">
+                <div class="data-box">
+
+                    <style>
+                        table.dataTable thead .sorting:after,
+                        table.dataTable thead .sorting:before,
+                        table.dataTable thead .sorting_asc:after,
+                        table.dataTable thead .sorting_asc:before,
+                        table.dataTable thead .sorting_asc_disabled:after,
+                        table.dataTable thead .sorting_asc_disabled:before,
+                        table.dataTable thead .sorting_desc:after,
+                        table.dataTable thead .sorting_desc:before,
+                        table.dataTable thead .sorting_desc_disabled:after,
+                        table.dataTable thead .sorting_desc_disabled:before {
+                            bottom: .5em;
+                        }
+                    </style>
+                    {% if data %}
+                    <table style="border-radius: 10px; width: 100%;" id="dtBasicExample"
+                        class="table table-striped table-bordered table-sm" cellspacing="0">
+                        <!--///////////////////////////////////-->
+                        <thead class="thead-light">
+                            <tr class="t-row">
+
+                                <th class="th-sm">{{table_header.2}}</th>
+                                <th class="th-sm">{{table_header.3}}</th>
+                                <th class="th-sm">{{table_header.4}}</th>
+                                <th class="th-sm">{{table_header.5}}</th>
+                                <th class="th-sm">{{table_header.6}}</th>
+                                <th class="th-sm">{{table_header.7}}</th>
+                                <th class="th-sm">{{table_header.8}}</th>
+                                <th class="th-sm">{{table_header.9}}</th>
+                                <th class="th-sm">{{table_header.10}}</th>
+                                <th class="th-sm">{{table_header.11}}</th>
+                                <th class="th-sm">{{table_header.12}}</th>
+                                <th class="th-sm">{{table_header.13}}</th>
+                                <th class="th-sm">{{table_header.14}}</th>
+                                <th class="th-sm">{{table_header.15}}</th>
+                                <th class="th-sm">PDF</th>
+
+                            </tr>
+                        </thead>
+                        {% for row` in table_rows %}
+
+                        <tr class="t-row">
+
+                            <td>{{row.0}}</td>
+                            <td>{{row.1}}</td>
+                            <td>{{row.2}}</td>
+                            <td>{{row.3}}</td>
+                            <td>{{row.4}}</td>
+                            <td>{{row.5}}</td>
+                            <td>{{row.6}}</td>
+                            <td>{{row.7}}</td>
+                            <td>{{row.8}}</td>
+                            <td>{{row.9}}</td>
+                            <td>{{row.10}}</td>
+                            <td>{{table_header.0}}</td>
+                            <td>{{row.11}}</td>
+
+                            <td>
+                                {{row.12}}
+                            </td>
+
+                            {% if i.11 != -1 %}
+                            <form method="GET" action="{% url 'view_report'%}">
+                                <td> <button type="submit" value="{{row.11}}" name="licence_num" class="btn"><img
+                                            src="{% static 'img/arrow-pointing-down.png' %}" class="download-icon"
+                                            alt="download-icon"></td>
+                            </form>
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div style="text-align:center;font-size: 25px;margin-top: 240px;font-weight: bold;">داده ای جهت
+                        نمایش
+                        وجود ندارد.</div>
+                    {% endif %}
+                </div>
+                <!-- end of data-box -->
+                <div class="row">
+
+                    <div class="col-md-12 col-lg-5">
+                        <div class="data-box-em">
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-7">
+                        <div class="chart-box">
+                            <div style="height: 5px;"></div>
+                            <h1
+                                style="text-align: center;font-size: 15pt;font-weight: bold;font-family:light-iransans;">
+                                نمودار وضعیت</h1>
+                            <canvas id="doughnutChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

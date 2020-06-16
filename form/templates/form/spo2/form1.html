@@ -1,0 +1,1423 @@
+{% load static %}
+{% load widget_tweaks %}
+
+
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='spo2' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاه پالس اکسی متری</h1>
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+
+            {% render_field form.device style="display:inline;width:50%;"  class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+
+
+<input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+            <label>دستگاه شماره 4 :</label>
+            <span class="ee">
+              {{form.cal_dev4}}
+            </span><br>
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+
+
+      <div style="font-weight: bold;direction: ltr;">
+
+        <br><br>
+        <span style="font-weight: bold;">
+          1.درستی SpO2(بند201.12.1.101.1استاندارد61:2011-2-ISO 80601)
+        </span>
+
+
+        <br><br>
+
+        <table style="direction: ltr;margin: auto;">
+          <thead>
+            <tr>
+              <th rowspan="2">DESCRIPTION OF TEST</th>
+              <th colspan="2">SETTING</th>
+              <th colspan="2">READING</th>
+            </tr>
+
+            <tr>
+
+              <th>SpO<sub>2</sub>(%)</th>
+              <th>PR(BPM)</th>
+              <th>SpO<sub>2</sub>(%)</th>
+              <th>PR(BPM)</th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="11">SpO<sub>2</sub>% ACCURACY</td>
+              <td>70</td>
+              <td>75</td>
+              <td>{{form.s2_e1_spo2}}</td>
+              <td>{{form.s2_e1_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>75</td>
+              <td>75</td>
+              <td>{{form.s2_e2_spo2}}</td>
+              <td>{{form.s2_e2_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>80</td>
+              <td>75</td>
+              <td>{{form.s2_e3_spo2}}</td>
+              <td>{{form.s2_e3_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>85</td>
+              <td>75</td>
+              <td>{{form.s2_e4_spo2}}</td>
+              <td>{{form.s2_e4_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>88</td>
+              <td>75</td>
+              <td>{{form.s2_e5_spo2}}</td>
+              <td>{{form.s2_e5_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;">SpO<sub>2</sub>% ACCURACY</td> -->
+              <td>90</td>
+              <td>75</td>
+              <td>{{form.s2_e6_spo2}}</td>
+              <td>{{form.s2_e6_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>92</td>
+              <td>75</td>
+              <td>{{form.s2_e7_spo2}}</td>
+              <td>{{form.s2_e7_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>94</td>
+              <td>75</td>
+              <td>{{form.s2_e8_spo2}}</td>
+              <td>{{form.s2_e8_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>96</td>
+              <td>75</td>
+              <td>{{form.s2_e9_spo2}}</td>
+              <td>{{form.s2_e9_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>98</td>
+              <td>75</td>
+              <td>{{form.s2_e10_spo2}}</td>
+              <td>{{form.s2_e10_pr}}</td>
+            </tr>
+
+            <tr>
+              <!-- <td style="border:none;"></td> -->
+              <td>100</td>
+              <td>75</td>
+              <td>{{form.s2_e11_spo2}}</td>
+              <td>{{form.s2_e11_pr}}</td>
+            </tr>
+          </tbody>
+
+        </table>
+
+
+        <br><br>
+
+
+        <span style="font-weight: bold;">
+          2.درستی نرخ پالس/ ضربان(بند201.12.1.104استانداردISO 80601-2-61:2011)
+        </span>
+        <br><br>
+        <table style="direction: ltr;margin: auto;overflow: scroll;">
+
+          <tr>
+            <th colspan="3">رنج تعیین شده نرخ پالس در دفترچه راهنمای دستگاه</th>
+            <th colspan="2">صحت نرخ پالس تعیین شده در دفترچه راهنمای دستگاه</th>
+          </tr>
+
+
+
+          <tr>
+            <td colspan="3">20-250 BPM</td>
+            <td colspan="2">At 20 bpm to 250 bpm : ± 3 bpm</td>
+          </tr>
+
+
+
+          <tr>
+            <th rowspan="2">DESCRIPTION OF TEST</th>
+            <th colspan="2">SETTING</th>
+            <th colspan="2">READING</th>
+          </tr>
+
+          <tr>
+            <th>SpO <sub>2</sub>(%)</th>
+            <th>PR(BMP)</th>
+            <th>SpO <sub>2</sub>(%)</th>
+            <th>PR(BMP)</th>
+
+          </tr>
+
+          <tr>
+            <td rowspan="5">Pulse rateACCURACY</td>
+            <td>96</td>
+            <td>35</td>
+            <td>{{form.s3_e1_spo2}}</td>
+            <td>{{form.s3_e1_pr}}</td>
+          </tr>
+
+          <tr>
+            <td>96</td>
+            <td>60</td>
+            <td>{{form.s3_e2_spo2}}</td>
+            <td>{{form.s3_e2_pr}}</td>
+          </tr>
+
+          <tr>
+            <td>96</td>
+            <td>100</td>
+            <td>{{form.s3_e3_spo2}}</td>
+            <td>{{form.s3_e3_pr}}</td>
+          </tr>
+
+          <tr>
+            <td>96</td>
+            <td>200</td>
+            <td>{{form.s3_e4_spo2}}</td>
+            <td>{{form.s3_e4_pr}}</td>
+          </tr>
+
+          <tr>
+            <td>96</td>
+            <td>240</td>
+            <td>{{form.s3_e5_spo2}}</td>
+            <td>{{form.s3_e5_pr}}</td>
+          </tr>
+
+        </table>
+
+        <span style="font-weight: bold;">
+          3- بررسی لوازم جانبی
+
+        </span>
+
+
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+          <tbody>
+            <tr>
+              <td rowspan="2"></td>
+              <td rowspan="2">Accessory</td>
+              <td rowspan="2">Model</td>
+              <td colspan="2">Result</td>
+              <td rowspan="2">Comment</td>
+            </tr>
+            <tr>
+              <td>Ok</td>
+              <td>Rej</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Spo2</td>
+              <td>{{ form.s3_e1_accessory}}</td>
+              <td>{{ form.s3_e1_status}}</td>
+
+              <td></td>
+              <td>{{ form.s3_e1_comment}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+        <br>
+
+        <span style="font-weight: bold;">
+          4- بررسی ظاهری دستگاه
+
+        </span>
+
+
+
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+          <tbody>
+            <tr>
+              <td rowspan="2">Function</td>
+              <td rowspan="2">Comment</td>
+              <td colspan="2">Result</td>
+            </tr>
+            <tr>
+              <td>Ok</td>
+              <td>Rej</td>
+            </tr>
+            <tr>
+              <td>Connection</td>
+              <td>{{ form.s4_e1_comment}}</td>
+              <td>{{ form.s4_e1_status}}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Keys and Controllers</td>
+              <td>{{ form.s4_e2_comment}}</td>
+              <td>{{ form.s4_e2_status}}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Indicators and display</td>
+              <td>{{ form.s4_e3_comment}}</td>
+              <td>{{ form.s4_e3_status}}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Battery</td>
+              <td>{{ form.s4_e4_comment}}</td>
+              <td>{{ form.s4_e4_status}}</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <span style="font-weight: bold;">
+          5-بررسی توان دستگاه
+
+        </span>
+
+
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 tb-4 time">
+          <tbody>
+            <tr>
+              <td colspan="2">Nominal Power</td>
+              <td colspan="2">Measured Power</td>
+              <td colspan="2">Result</td>
+            </tr>
+            <tr>
+              <td>V.A</td>
+              <td>Watt</td>
+              <td>Voltage<br>(V)</td>
+              <td>Current <br> (A)</td>
+              <td>Ok</td>
+              <td>REJ</td>
+
+            </tr>
+            <tr>
+              <td id="s5_e1_va"></td>
+              <td id="s5_e1_watt"></td>
+              <td>{{ form.s5_e1_v}}</td>
+              <td>{{ form.s5_e1_a}}</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+          </tbody>
+        </table>
+        <br>
+        <span style="font-weight: bold;">
+          6- زمين حفاظتی
+
+        </span>
+
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+          <tbody>
+            <tr style="font-weight: bold;">
+              <td colspan="2">Setting</td>
+              <td>Type</td>
+              <td colspan="5">READING</td>
+            </tr>
+            <tr>
+              <td rowspan="5">Protective Earth Resistance</td>
+              <td rowspan="5">Test current 25A</td>
+              <td rowspan="5">
+                <span style="font-weight: bold;">power supply cord</span>
+                <br><br>
+                Yes{{ form.s6_e1_type}}
+                <br>
+                No
+              </td>
+              <td rowspan="4">Earth Resistance</td>
+              <td rowspan="4">Permissible Error</td>
+              <td colspan="2" rowspan="3">Result</td>
+              <td rowspan="4">Comment</td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+              <td>Rej</td>
+              <td>Ok</td>
+            </tr>
+            <tr>
+              <td>{{ form.s6_e1_er}}</td>
+              <td>0.2</td>
+              <td>-</td>
+              <td>-</td>
+              <td>{{ form.s6_e1_comment}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <div style="font-weight: bold;direction: rtl;">
+
+
+          7- اندازه گيری جريان نشتی زمين
+        </div>
+
+
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+          <tbody>
+            <tr>
+              <td colspan="2">Setting</td>
+              <td colspan="2">Reading [mA]</td>
+              <td rowspan="2">Permissible Error [&mu;A]</td>
+              <td colspan="2">Result</td>
+              <td rowspan="2">Comment</td>
+            </tr>
+            <tr>
+              <td>Device</td>
+              <td>Safety Analyzer</td>
+              <td>AP-Earth</td>
+              <td>No AP-Earth</td>
+              <td>Ok</td>
+              <td>Rej</td>
+            </tr>
+            <tr>
+              <td>Device on</td>
+              <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
+              <td>{{ form.s7_e1_aplc}}</td>
+              <td>{{ form.s7_e1_noaplc}}</td>
+              <td>500</td>
+              <td></td>
+              <td></td>
+              <td>{{ form.s7_e1_comment }}</td>
+            </tr>
+            <tr>
+              <td>Device off</td>
+              <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
+              <td>{{ form.s7_e2_aplc}}</td>
+              <td>{{ form.s7_e2_noaplc}}</td>
+              <td>500</td>
+              <td></td>
+              <td></td>
+              <td>{{ form.s7_e2_comment }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+
+
+        <div style="font-weight: bold;direction: rtl;">
+
+
+          8- اندازه گيری جريان کمکی بيمار
+        </div>
+        {# TODO s8 ap type #}
+        <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 tb-4 time">
+          <tbody>
+            <tr>
+              <td colspan="4">Setting</td>
+              <td rowspan="2">Patient Auxiliary Current</td>
+              <td rowspan="2">Permissible Error</td>
+              <td colspan="2">Result</td>
+            </tr>
+            <tr>
+              <td>AP</td>
+              <td>AP Type&nbsp;</td>
+              <td>DUT Status</td>
+              <td>Analyzer Status</td>
+              <td>Rej</td>
+              <td>Ok</td>
+            </tr>
+            <tr>
+              <td>RA</td>
+              <td>-</td>
+              <td>Device ON</td>
+              <td>Norm Pol,No Earth, L2</td>
+              <td>-</td>
+              <td><span>N.A</span></td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>LA</td>
+              <td>-</td>
+              <td>Device ON</td>
+              <td>Norm Pol,No Earth, L2</td>
+              <td>-</td>
+              <td><span>N.A</span></td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>LL</td>
+              <td>-</td>
+              <td>Device ON</td>
+              <td>Norm Pol,No Earth, L2</td>
+              <td>-</td>
+              <td><span>N.A</span></td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--</div>-->
+        {#/////////////////////////////////////////////#}
+        <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='spo2' %}">
+            ذخیره نهایی
+          </button>
+
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li> پروب spo2دستگاه دردسترس نبوده و انجام آزمون با پروب دستگاه مشابه دیگر</li>
+              <li> عدم نمایش پیغام هشدار باتری بعد از قطع منبع تغذیه</li>
+              <li>عدم امکان اندازه گيري ضربان هاي کمتر از50 </li>
+              <li>عدم امکان اندازه گيري ضربان هاي کمتر از 70</li>
+              عدم شمول :
+
+              <li>خرابی پروپ SPO2</li>
+              <li>عدم امکان تست به علت اشکال درسوکت spo2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+
+      </div>
+
+
+      <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+<script>
+
+$("#id_s2_e1_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s2_e1_spo2").val() - 70) / 70;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e1_spo2").val().length != 0)) {
+        $("#id_s2_e1_spo2").css("background-color", "#f24858");
+        $("#id_s2_e1_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e1_spo2").val().length == 0)) {
+        $("#id_s2_e1_spo2").css("background-color", "white");
+        $("#id_s2_e1_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e2_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e2_comment" ).val());
+
+      var n = ($("#id_s2_e2_spo2").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e2_spo2").val().length != 0)) {
+        $("#id_s2_e2_spo2").css("background-color", "#f24858");
+        $("#id_s2_e2_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e2_spo2").val().length == 0)) {
+        $("#id_s2_e2_spo2").css("background-color", "white");
+        $("#id_s2_e2_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e3_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e3_comment" ).val());
+
+      var n = ($("#id_s2_e3_spo2").val() - 80) / 80;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e3_spo2").val().length != 0)) {
+        $("#id_s2_e3_spo2").css("background-color", "#f24858");
+        $("#id_s2_e3_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e3_spo2").val().length == 0)) {
+        $("#id_s2_e3_spo2").css("background-color", "white");
+        $("#id_s2_e3_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e4_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e4_comment" ).val());
+
+      var n = ($("#id_s2_e4_spo2").val() - 85) / 85;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e4_spo2").val().length != 0)) {
+        $("#id_s2_e4_spo2").css("background-color", "#f24858");
+        $("#id_s2_e4_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e4_spo2").val().length == 0)) {
+        $("#id_s2_e4_spo2").css("background-color", "white");
+        $("#id_s2_e4_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s2_e5_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e5_comment" ).val());
+
+      var n = ($("#id_s2_e5_spo2").val() - 88) / 88;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e5_spo2").val().length != 0)) {
+        $("#id_s2_e5_spo2").css("background-color", "#f24858");
+        $("#id_s2_e5_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e5_spo2").val().length == 0)) {
+        $("#id_s2_e5_spo2").css("background-color", "white");
+        $("#id_s2_e5_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e6_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e6_comment" ).val());
+
+      var n = ($("#id_s2_e6_spo2").val() - 90) / 90;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e6_spo2").val().length != 0)) {
+        $("#id_s2_e6_spo2").css("background-color", "#f24858");
+        $("#id_s2_e6_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e6_spo2").val().length == 0)) {
+        $("#id_s2_e6_spo2").css("background-color", "white");
+        $("#id_s2_e6_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e7_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e7_comment" ).val());
+
+      var n = ($("#id_s2_e7_spo2").val() - 92) / 92;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e7_spo2").val().length != 0)) {
+        $("#id_s2_e7_spo2").css("background-color", "#f24858");
+        $("#id_s2_e7_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e7_spo2").val().length == 0)) {
+        $("#id_s2_e7_spo2").css("background-color", "white");
+        $("#id_s2_e7_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e8_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e8_comment" ).val());
+
+      var n = ($("#id_s2_e8_spo2").val() - 94) / 94;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e8_spo2").val().length != 0)) {
+        $("#id_s2_e8_spo2").css("background-color", "#f24858");
+        $("#id_s2_e8_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e8_spo2").val().length == 0)) {
+        $("#id_s2_e8_spo2").css("background-color", "white");
+        $("#id_s2_e8_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e9_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e9_comment" ).val());
+
+      var n = ($("#id_s2_e9_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e9_spo2").val().length != 0)) {
+        $("#id_s2_e9_spo2").css("background-color", "#f24858");
+        $("#id_s2_e9_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e9_spo2").val().length == 0)) {
+        $("#id_s2_e9_spo2").css("background-color", "white");
+        $("#id_s2_e9_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e10_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e10_comment" ).val());
+
+      var n = ($("#id_s2_e10_spo2").val() - 98) / 98;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e10_spo2").val().length != 0)) {
+        $("#id_s2_e10_spo2").css("background-color", "#f24858");
+        $("#id_s2_e10_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e10_spo2").val().length == 0)) {
+        $("#id_s2_e10_spo2").css("background-color", "white");
+        $("#id_s2_e10_spo2").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e11_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e11_comment" ).val());
+
+      var n = ($("#id_s2_e11_spo2").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e11_spo2").val().length != 0)) {
+        $("#id_s2_e11_spo2").css("background-color", "#f24858");
+        $("#id_s2_e11_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e11_spo2").val().length == 0)) {
+        $("#id_s2_e11_spo2").css("background-color", "white");
+        $("#id_s2_e11_spo2").css("color", "black");
+      }
+    });
+  ////////////////////////////////
+
+
+  $("#id_s2_e1_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s2_e1_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e1_pr").val().length != 0)) {
+        $("#id_s2_e1_pr").css("background-color", "#f24858");
+        $("#id_s2_e1_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e1_pr").val().length == 0)) {
+        $("#id_s2_e1_pr").css("background-color", "white");
+        $("#id_s2_e1_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e2_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e2_comment" ).val());
+
+      var n = ($("#id_s2_e2_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e2_pr").val().length != 0)) {
+        $("#id_s2_e2_pr").css("background-color", "#f24858");
+        $("#id_s2_e2_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e2_pr").val().length == 0)) {
+        $("#id_s2_e2_pr").css("background-color", "white");
+        $("#id_s2_e2_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e3_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e3_comment" ).val());
+
+      var n = ($("#id_s2_e3_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e3_pr").val().length != 0)) {
+        $("#id_s2_e3_pr").css("background-color", "#f24858");
+        $("#id_s2_e3_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e3_pr").val().length == 0)) {
+        $("#id_s2_e3_pr").css("background-color", "white");
+        $("#id_s2_e3_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e4_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e4_comment" ).val());
+
+      var n = ($("#id_s2_e4_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e4_pr").val().length != 0)) {
+        $("#id_s2_e4_pr").css("background-color", "#f24858");
+        $("#id_s2_e4_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e4_pr").val().length == 0)) {
+        $("#id_s2_e4_pr").css("background-color", "white");
+        $("#id_s2_e4_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e5_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e5_comment" ).val());
+
+      var n = ($("#id_s2_e5_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e5_pr").val().length != 0)) {
+        $("#id_s2_e5_pr").css("background-color", "#f24858");
+        $("#id_s2_e5_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e5_pr").val().length == 0)) {
+        $("#id_s2_e5_pr").css("background-color", "white");
+        $("#id_s2_e5_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e6_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e6_comment" ).val());
+
+      var n = ($("#id_s2_e6_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e6_pr").val().length != 0)) {
+        $("#id_s2_e6_pr").css("background-color", "#f24858");
+        $("#id_s2_e6_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e6_pr").val().length == 0)) {
+        $("#id_s2_e6_pr").css("background-color", "white");
+        $("#id_s2_e6_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e7_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e7_comment" ).val());
+
+      var n = ($("#id_s2_e7_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e7_pr").val().length != 0)) {
+        $("#id_s2_e7_pr").css("background-color", "#f24858");
+        $("#id_s2_e7_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e7_pr").val().length == 0)) {
+        $("#id_s2_e7_pr").css("background-color", "white");
+        $("#id_s2_e7_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e8_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e8_comment" ).val());
+
+      var n = ($("#id_s2_e8_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e8_pr").val().length != 0)) {
+        $("#id_s2_e8_pr").css("background-color", "#f24858");
+        $("#id_s2_e8_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e8_pr").val().length == 0)) {
+        $("#id_s2_e8_pr").css("background-color", "white");
+        $("#id_s2_e8_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e9_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e9_comment" ).val());
+
+      var n = ($("#id_s2_e9_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e9_pr").val().length != 0)) {
+        $("#id_s2_e9_pr").css("background-color", "#f24858");
+        $("#id_s2_e9_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e9_pr").val().length == 0)) {
+        $("#id_s2_e9_pr").css("background-color", "white");
+        $("#id_s2_e9_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e10_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e10_comment" ).val());
+
+      var n = ($("#id_s2_e10_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e10_pr").val().length != 0)) {
+        $("#id_s2_e10_pr").css("background-color", "#f24858");
+        $("#id_s2_e10_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e10_pr").val().length == 0)) {
+        $("#id_s2_e10_pr").css("background-color", "white");
+        $("#id_s2_e10_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s2_e11_pr")
+    .focusout(function () {
+      // alert($( "#id_s1_e11_comment" ).val());
+
+      var n = ($("#id_s2_e11_pr").val() - 75) / 75;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s2_e11_pr").val().length != 0)) {
+        $("#id_s2_e11_pr").css("background-color", "#f24858");
+        $("#id_s2_e11_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s2_e11_pr").val().length == 0)) {
+        $("#id_s2_e11_pr").css("background-color", "white");
+        $("#id_s2_e11_pr").css("color", "black");
+      }
+    });
+
+
+
+
+  // tb 3////////////////
+
+  $("#id_s3_e1_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e1_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e1_spo2").val().length != 0)) {
+        $("#id_s3_e1_spo2").css("background-color", "#f24858");
+        $("#id_s3_e1_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e1_spo2").val().length == 0)) {
+        $("#id_s3_e1_spo2").css("background-color", "white");
+        $("#id_s3_e1_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e2_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e2_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e2_spo2").val().length != 0)) {
+        $("#id_s3_e2_spo2").css("background-color", "#f24858");
+        $("#id_s3_e2_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e2_spo2").val().length == 0)) {
+        $("#id_s3_e2_spo2").css("background-color", "white");
+        $("#id_s3_e2_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e3_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e3_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e3_spo2").val().length != 0)) {
+        $("#id_s3_e3_spo2").css("background-color", "#f24858");
+        $("#id_s3_e3_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e3_spo2").val().length == 0)) {
+        $("#id_s3_e3_spo2").css("background-color", "white");
+        $("#id_s3_e3_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e4_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e4_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e4_spo2").val().length != 0)) {
+        $("#id_s3_e4_spo2").css("background-color", "#f24858");
+        $("#id_s3_e4_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e4_spo2").val().length == 0)) {
+        $("#id_s3_e4_spo2").css("background-color", "white");
+        $("#id_s3_e4_spo2").css("color", "black");
+      }
+    });
+
+
+  $("#id_s3_e5_spo2")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s3_e5_spo2").val() - 96) / 96;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e5_spo2").val().length != 0)) {
+        $("#id_s3_e5_spo2").css("background-color", "#f24858");
+        $("#id_s3_e5_spo2").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e5_spo2").val().length == 0)) {
+        $("#id_s3_e5_spo2").css("background-color", "white");
+        $("#id_s3_e5_spo2").css("color", "black");
+      }
+    });
+
+
+  ////////////////////
+  $("#id_s3_e1_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e1_pr").val() - 35) / 35;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e1_pr").val().length != 0)) {
+        $("#id_s3_e1_pr").css("background-color", "#f24858");
+        $("#id_s3_e1_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e1_pr").val().length == 0)) {
+        $("#id_s3_e1_pr").css("background-color", "white");
+        $("#id_s3_e1_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e2_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e2_pr").val() - 60) / 60;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e2_pr").val().length != 0)) {
+        $("#id_s3_e2_pr").css("background-color", "#f24858");
+        $("#id_s3_e2_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e2_pr").val().length == 0)) {
+        $("#id_s3_e2_pr").css("background-color", "white");
+        $("#id_s3_e2_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e3_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e3_pr").val() - 100) / 100;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e3_pr").val().length != 0)) {
+        $("#id_s3_e3_pr").css("background-color", "#f24858");
+        $("#id_s3_e3_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e3_pr").val().length == 0)) {
+        $("#id_s3_e3_pr").css("background-color", "white");
+        $("#id_s3_e3_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e4_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e4_pr").val() - 200) / 200;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e4_pr").val().length != 0)) {
+        $("#id_s3_e4_pr").css("background-color", "#f24858");
+        $("#id_s3_e4_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e4_pr").val().length == 0)) {
+        $("#id_s3_e4_pr").css("background-color", "white");
+        $("#id_s3_e4_pr").css("color", "black");
+      }
+    });
+
+  $("#id_s3_e5_pr")
+    .focusout(function () {
+      var n = ($("#id_s3_e5_pr").val() - 240) / 240;
+      if (n < 0) {
+        n = -n;
+      }
+      if (n > 0.03 && ($("#id_s3_e5_pr").val().length != 0)) {
+        $("#id_s3_e5_pr").css("background-color", "#f24858");
+        $("#id_s3_e5_pr").css("color", "white");
+      }
+      else if (n <= 0.03 || ($("#id_s3_e5_pr").val().length == 0)) {
+        $("#id_s3_e5_pr").css("background-color", "white");
+        $("#id_s3_e5_pr").css("color", "black");
+      }
+    });
+
+    //////////////////////////table4
+
+    $("#id_s4_e1_comment")
+    .focusout(function () {
+      if ($("#id_s4_e1_comment").val() >= 3) {
+        $("#id_s4_e1_comment").css("background-color", "#f24858");
+        $("#id_s4_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s4_e1_comment").val() == 1)) {
+        $("#id_s4_e1_comment").css("background-color", "white");
+        $("#id_s4_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s4_e1_comment").val() == 2)) {
+        $("#id_s4_e1_comment").css("background-color", 'yellow');
+        $("#id_s4_e1_comment").css("color", "black");
+      }
+    });
+
+    $("#id_s4_e2_comment")
+    .focusout(function () {
+      if ($("#id_s4_e2_comment").val() >= 3) {
+        $("#id_s4_e2_comment").css("background-color", "#f24858");
+        $("#id_s4_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s4_e2_comment").val() == 1)) {
+        $("#id_s4_e2_comment").css("background-color", "white");
+        $("#id_s4_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s4_e2_comment").val() == 2)) {
+        $("#id_s4_e2_comment").css("background-color", 'yellow');
+        $("#id_s4_e2_comment").css("color", "black");
+      }
+    });
+
+    $("#id_s4_e3_comment")
+    .focusout(function () {
+      if ($("#id_s4_e3_comment").val() >= 3) {
+        $("#id_s4_e3_comment").css("background-color", "#f24858");
+        $("#id_s4_e3_comment").css("color", "white");
+
+      }
+      else if (($("#id_s4_e3_comment").val() == 1)) {
+        $("#id_s4_e3_comment").css("background-color", "white");
+        $("#id_s4_e3_comment").css("color", "black");
+
+      }
+      else if (($("#id_s4_e3_comment").val() == 2)) {
+        $("#id_s4_e3_comment").css("background-color", 'yellow');
+        $("#id_s4_e3_comment").css("color", "black");
+      }
+    });
+
+    $("#id_s4_e4_comment")
+    .focusout(function () {
+      if ($("#id_s4_e4_comment").val() >= 3) {
+        $("#id_s4_e4_comment").css("background-color", "#f24858");
+        $("#id_s4_e4_comment").css("color", "white");
+
+      }
+      else if (($("#id_s4_e4_comment").val() == 1)) {
+        $("#id_s4_e4_comment").css("background-color", "white");
+        $("#id_s4_e4_comment").css("color", "black");
+
+      }
+      else if (($("#id_s4_e4_comment").val() == 2)) {
+        $("#id_s4_e4_comment").css("background-color", 'yellow');
+        $("#id_s4_e4_comment").css("color", "black");
+      }
+    });
+
+    $("#id_s6_e1_er")
+    .focusout(function () {
+      if ($("#id_s6_e1_er").val() > 0.2 && ($("#id_s6_e1_er").val().length != 0)) {
+        $("#id_s6_e1_er").css("background-color", "#f24858");
+        $("#id_s6_e1_er").css("color", "white");
+
+        $("#id_s6_e1_comment").css("background-color", "#f24858");
+        $("#id_s6_e1_comment").css("color", "white");
+        $("#id_s6_e1_comment").val("2");
+
+      }
+      else if (($("#id_s6_e1_er").val() <= 0.2) || ($("#id_s6_e1_er").val().length == 0)) {
+        $("#id_s6_e1_er").css("background-color", "white");
+        $("#id_s6_e1_er").css("color", "black");
+
+        $("#id_s6_e1_comment").css("background-color", "white");
+        $("#id_s6_e1_comment").css("color", "black");
+        $("#id_s6_e1_comment").val("1");
+
+      }
+    });
+
+  ////////////////////////////table 7
+
+  $("#id_s7_e1_aplc")
+    .focusout(function () {
+      if (($("#id_s7_e1_aplc").val() > 500) && ($("#id_s7_e1_aplc").val().length != 0)) {
+        $("#id_s7_e1_aplc").css("background-color", "#f24858");
+        $("#id_s7_e1_aplc").css("color", "white");
+
+        $("#id_s7_e1_comment").css("background-color", "#f24858");
+        $("#id_s7_e1_comment").css("color", "white");
+        $("#id_s7_e1_comment").val("2");
+      }
+      else if (($("#id_s7_e1_aplc").val() <= 500) || ($("#id_s7_e1_aplc").val().length == 0)) {
+        $("#id_s7_e1_aplc").css("background-color", "white");
+        $("#id_s7_e1_aplc").css("color", "black");
+
+
+        $("#id_s7_e1_comment").css("background-color", "white");
+        $("#id_s7_e1_comment").css("color", "black");
+        $("#id_s7_e1_comment").val("1");
+      }
+
+    });
+
+
+
+  $("#id_s7_e1_noaplc")
+
+    .focusout(function () {
+
+      if (($("#id_s7_e1_noaplc").val() > 500) && ($("#id_s7_e1_noaplc").val().length != 0)) {
+        $("#id_s7_e1_noaplc").css("background-color", "#f24858");
+        $("#id_s7_e1_noaplc").css("color", "white");
+
+        $("#id_s7_e1_comment").css("background-color", "#f24858");
+        $("#id_s7_e1_comment").css("color", "white");
+        $("#id_s7_e1_comment").val("2");
+      }
+      else if (($("#id_s7_e1_noaplc").val() <= 500) || ($("#id_s7_e1_noaplc").val().length == 0)) {
+        $("#id_s7_e1_noaplc").css("background-color", "white");
+        $("#id_s7_e1_noaplc").css("color", "black");
+
+
+        $("#id_s7_e1_comment").css("background-color", "white");
+        $("#id_s7_e1_comment").css("color", "black");
+        $("#id_s7_e1_comment").val("1");
+      }
+
+    });
+  ////////////////////
+  $("#id_s7_e2_aplc")
+
+    .focusout(function () {
+
+      if (($("#id_s7_e2_aplc").val() > 500) && ($("#id_s7_e2_aplc").val().length != 0)) {
+        $("#id_s7_e2_aplc").css("background-color", "#f24858");
+        $("#id_s7_e2_aplc").css("color", "white");
+
+        $("#id_s7_e2_comment").css("background-color", "#f24858");
+        $("#id_s7_e2_comment").css("color", "white");
+        $("#id_s7_e2_comment").val("2");
+      }
+      else if (($("#id_s7_e2_aplc").val() <= 500) || ($("#id_s7_e2_aplc").val().length == 0)) {
+        $("#id_s7_e2_aplc").css("background-color", "white");
+        $("#id_s7_e2_aplc").css("color", "black");
+
+
+        $("#id_s7_e2_comment").css("background-color", "white");
+        $("#id_s7_e2_comment").css("color", "black");
+        $("#id_s7_e2_comment").val("1");
+      }
+
+    });
+
+
+
+  $("#id_s7_e2_noaplc")
+
+    .focusout(function () {
+
+      if (($("#id_s7_e2_noaplc").val() > 500) && ($("#id_s7_e2_noaplc").val().length != 0)) {
+        $("#id_s7_e2_noaplc").css("background-color", "#f24858");
+        $("#id_s7_e2_noaplc").css("color", "white");
+
+        $("#id_s7_e2_comment").css("background-color", "#f24858");
+        $("#id_s7_e2_comment").css("color", "white");
+        $("#id_s7_e2_comment").val("2");
+      }
+      else if (($("#id_s7_e2_noaplc").val() <= 500) || ($("#id_s7_e2_noaplc").val().length == 0)) {
+        $("#id_s7_e2_noaplc").css("background-color", "white");
+        $("#id_s7_e2_noaplc").css("color", "black");
+
+
+        $("#id_s7_e2_comment").css("background-color", "white");
+        $("#id_s7_e2_comment").css("color", "black");
+        $("#id_s7_e2_comment").val("1");
+      }
+
+    });
+
+</script>
+
+
+
+{% if reload or edit or edit_recal %}
+
+
+{% endif %}

@@ -1,0 +1,341 @@
+{% extends 'base-spo2.html' %}
+
+{% load static %}
+
+{% block content %}
+    <style>
+
+       @font-face {
+    font-family: "B Zar";
+    src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
+        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
+        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
+}
+
+       @font-face {
+        font-family: "B Titr";
+        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Lotus";
+        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Nazanin";
+        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
+    }
+        .time{
+            font-family: "Times New Roman";
+        }
+    .tb-4 td{
+        padding: 0.08cm 0.1cm;
+
+       }
+    .tb-5 td{
+        padding: 0.02cm 0.1cm;
+
+       }
+       .no-border-2 td{
+           border: none;
+       }
+    </style>
+
+    <body style="text-align: right;font-size: 16pt;">
+            <div style="font-family:'B Lotus';">
+                    <div style="margin-right: 1cm;margin-left: 1cm;height: 42cm;">
+                        
+                        <br>
+                        <table class="tb-1" style="margin: auto;width: 100%;text-align: center;font-weight: bold;border-bottom: 4px solid;">
+                            <tbody>
+                                <tr>
+                                    <td>تاریخ: / /</td>
+                                    <td style="font-family: 'B Titr';">
+                                            فرم ارائه خدمات كنترل كيفي و كاليبراسيون تجهيزات پزشكي
+                                    </td>
+                                    <td rowspan="2"><div class="logo"></div> </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="time">F40703</span>
+                                         شناسه مدرک:   
+                                    </td>
+                                    <td style="font-family: 'B Nazanin';">آزمايشگاه آزمون و كاليبراسيون تجهيزات پزشكي
+                                        <br>
+                                        <span class="time">ISO/IEC 17025</span>
+                                        مطابق استاندارد
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <div style="width: 100%;border:4px solid;padding: 0.25cm 1cm;font-size: 18pt;">
+                            <!-- <span style="margin: 0cm 0.5cm;">
+                            نمابر:............................
+                            </span> -->
+                            <span style="margin: 0cm 2cm;">
+                                    <!-- تلفن:...................................... -->
+                                    تلفن:
+                            </span>
+                            <span style="margin: 0cm 2cm;">
+                                    <!-- نام بيمارستان:..........................................................................  -->
+                                    نام بیمارستان:
+                                </span>
+                                <br>
+
+                            <span style="margin: 0cm 3.5cm;">
+                                    <!-- <span style="border-bottom: 2px dotted;">ام بيمارس</span> -->
+                                    <!-- نام بخش:................................ -->
+                                    نام بخش:
+                                    </span>
+                                    <span style="margin: 0cm 2cm;">
+                                            آدرس:
+                                           <!-- آدرس:...................................................................................... -->
+                                    </span>
+                                
+                     </div>
+                     <br>
+                        <table style="margin: auto;width: 100%;text-align: center;font-weight: bold;line-height: 0.9cm;" class="tb-5">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 15cm;">توضیحات</td>
+                                    <td>تعداد</td>
+                                    <td colspan="2" style="width: 5cm;">نام دستگاه</td>
+                                    <td>ردیف</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="time">SPO<sub>2</sub></td>
+                                    <td rowspan="4">
+                                        
+                                       <!-- <div style="width: 1cm;"> -->
+                                        <!-- <div style="transform: rotate(90deg);">مانیتور علائم حیاتی</div> -->
+                                    <!-- </div> -->
+                                    <!-- مانیتور علائم حیاتی -->
+                                            <div style="width: 100%;">
+                                    <div style="margin-left: 0.5cm;"  class="monitor" ></div>
+                                </div>
+                                    <!-- <svg height="2cm" width="1.5cm">
+                                            <text x="0" y="-5" fill="black" style="transform:rotate(45deg);">
+                                                    مانیتور علائم حیاتی
+                                            </text>
+                                          </svg> -->
+                                           
+                                    </td>
+                                    <td class="time">1</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="time">NIBP</td>
+                                    <td class="time">2</td>
+                                </tr>
+                                
+                                <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="time">ECG</td>
+                                        <td class="time">3</td>
+                                    </tr>
+                                    
+                                <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="time">Safety</td>
+                                        <td class="time">4</td>
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">الکتروشوک</td>
+                                            <td class="time">5</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2" class="time">AED</td>
+                                            <td class="time">6</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">الکتروکاردیوگراف</td>
+                                            <td class="time">7</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">پمپ تزریق</td>
+                                            <td class="time">8</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">پمپ سرنگ</td>
+                                            <td class="time">9</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">پالس اکسی متری</td>
+                                            <td class="time">10</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">فشار سنج</td>
+                                            <td class="time">11</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">ماشین بیهوشی</td>
+                                            <td class="time">12</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">ونتیلاتور</td>
+                                            <td class="time">13</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">ساکشن</td>
+                                            <td class="time">14</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">الکتروسرجری</td>
+                                            <td class="time">15</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">مانومتر اکسیژن</td>
+                                            <td class="time">16</td>
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">انکوباتور</td>
+                                            <td class="time">17</td>
+                                        </tr>
+                            </tbody>    
+                        </table>
+
+
+
+                        <div style="font-size: 20pt;">
+                                
+                                <span style="margin-right: 4cm;"> در آزمايشگاه&#9633;</span>
+                                <span style="margin-right: 4cm;"> در محل بیمارستان &#9633;</span>
+                                <span style="margin-right: 2cm;">ارائه خدمات:</span>
+
+                        </div>
+
+        
+                        <div style="font-size: 20pt;">
+                                شرح تحويل: گزارش دستگاههای کنترل شده در اختیار مسئول بخش/شیفت قرار گرفت.        
+                        
+                        </div>
+                        <div style="border:3px solid;padding: 0.25cm 2cm 0.25cm 2cm;font-size: 20pt;">
+                            <span>انجام شد:</span>
+                            <span style="margin-right: 0.25cm;">در تاريخ / / </span>
+                            <span>ضعیف &#9633;</span>
+                            <span>متوسط &#9633;</span>
+                            <span>خوب &#9633;</span>
+                            <span>عالی &#9633;</span>
+                            <span>ارائه خدمات كاليبراسيون به صورت </span>
+                            <br><br>
+                            <div style="width: 100%;text-align: left;">
+                                <div style="font-size: 16pt;">
+                                        نام و نام خانوادگي مسئول بخش/شیفت  
+                                        <br>
+                                        <span style="margin-left: 2cm;">
+                                        مهر و وامضاء     	
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 0.2cm;font-weight: bold;font-size: 18pt;">
+                            
+نظرات و پيشنهادات :
+
+<br><br><br>
+<!-- ...............................
+...................................................
+...................................................
+...................................................
+...................................................
+...................................................
+...................................................
+...................................................
+...................................................
+........ -->
+                        </div>
+
+
+
+                        <table class="no-border-2" style="width: 100%;font-size: 14pt;line-height: 0.4cm;">
+
+                            <tr>
+                                <td rowspan="4"><div class="sairan"></div> </td>
+                                <td style="text-align: right;">آدرس: اصفهان- خيابان کاوه– شرکت صنايع  الكترواپتيك صاايران </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">معاونت توسعه كيفيت و بهره وري  _   مديريت ارتباط با مشتريان         </td>
+                            </tr>
+                            <tr>
+                                    <td style="text-align: right;">
+                                        <span class="time">4923910-0311</span>
+                                        تلفن:
+                                        <span class="time">4922112</span>
+                                        تلفن گوياي صداي مشتري:
+                                        <span class="time">81465/313</span>
+                                        صندوق پستي:
+                                    </td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;">
+                                            <span class="time">Calibration@sairanmed.ir</span>
+                                            پست الکترونيکي:  
+                                        </td>
+                                    </tr>
+                        </table>
+
+                        <!-- <div style="transform: rotate(90deg);">afad,ad,</div> -->
+
+
+ 
+
+    </div>
+    </div>
+
+    
+
+    </body>
+{% endblock %}

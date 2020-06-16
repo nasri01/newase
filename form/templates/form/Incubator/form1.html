@@ -1,0 +1,1021 @@
+{% load static %}
+{% load widget_tweaks %}
+
+
+<link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+
+<form method="POST" class="post-form" id="myform">
+
+    {% csrf_token %}
+
+    <table class="table-bordered">
+        <!--////////////////////////////////////////////////////////////-->
+        <div class="data container-fluid">
+          {% if edit %}
+          <div class="alert alert-warning">
+               شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+        </div>
+          {% elif recal %}
+          <div class="alert alert-warning">
+               شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+        </div>
+          {% elif edit_recal %}
+          <div class="alert alert-warning">
+               شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+        </div>
+
+          {% endif %}
+<h1 class="header-t"  align="center" style="font-size: 20pt;font-weight: bold;">
+            گواهينامه کنترل کيفي ايمني و عملكردي دستگاه انكوباتور نوزاد
+</h1>
+
+
+            <div class="row" style="margin-right: 40px;">
+      <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+      	<span style="margin-right: 30px;"> نام دستگاه : </span>
+        <span class="ee">
+          {% render_field form.device class="mdb-select md-form colorful-select dropdown-primary" searchable="Search here.." %}
+        </span>
+
+
+        <!--
+      	<input type="text" style="display: inline-block;text-align: right;" class="form-control" name="product-name" value="abcde" disabled> -->
+      </div>
+      <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <span> شماره درخواست  : </span>
+        <span class="ee"> {{form.request}} </span>
+
+        <!--
+        <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+      </div>
+
+      <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+      <span> رطوبت محیطی : </span>
+        <span class="ee">
+            {{form.humidity}}
+        </span>
+
+        <!--
+        <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="Environmental-humidity" disabled> -->
+      </div>
+
+
+      <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+      <label style="margin-right: 17px;" > دمای محیطی : </label>
+                  <span class="ee"> {{form.temp}} </span>
+
+      <!--
+        <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="Environmental-humidity" disabled> -->
+      </div>
+
+      </div>
+
+
+
+
+
+
+
+	<!--</form>-->
+
+<br><br>
+
+
+<h2>تجهیزات آزمون : </h2>
+
+<div class="container">
+  <label>نام تجهیز :</label><br>
+  <label>دستگاه شماره 1 :</label>
+    <span class="ee">
+      {{form.cal_dev1}}
+    </span><br>
+  <label>دستگاه شماره 2 :</label>
+    <span class="ee">
+      {{form.cal_dev2}}
+    </span><br>
+
+</div>
+<br><br>
+
+<div style="font-weight: bold;">
+
+تستهای کیفی:
+        </div>
+<br>
+<br>
+
+        <table style="margin: auto;width: 100%;text-align: right;direction: ltr;" class="tb-1">
+                <tbody>
+                        <tr>
+                        <td colspan="2">مشخصات دستگاه مورد آزمون</td>
+                        </tr>
+                        <tr>
+                        <td>تاریخ درخواست:</td>
+                        <td>نام دستگاه:</td>
+                        </tr>
+                        <tr>
+                        <td>تاریخ کنترل کیفی:</td>
+                        <td>مدل:</td>
+                        </tr>
+                        <tr>
+                        <td>تاریخ صدور گواهی:</td>
+                        <td>مارک:</td>
+                        </tr>
+                        <tr>
+                        <td>محل استقرار:</td>
+                        <td>شماره سریال:</td>
+                        </tr>
+                        <tr>
+                        <td colspan="2" style="text-align: center;">مشخصات متقاضی</td>
+                        </tr>
+                        <tr>
+                        <td colspan="2">نام متقاضی:</td>
+                        </tr>
+                        <tr>
+                        <td colspan="2">نشانی و تلفن متقاضی:</td>
+                        </tr>
+                        <tr>
+                        <td colspan="2">محل انجام آزمون:</td>
+                        </tr>
+                        </tbody>
+        </table>
+
+
+<br><br>
+<span style="font-weight: bold;">
+                تست های کمی:
+</span>
+<br>
+            <span style="font-weight: bold;">کلاس دستگاه:</span>
+            {{ form.test_type }}
+
+
+<br><br>
+
+
+
+
+<br><br>
+
+
+<span style="font-weight: bold;">
+1. مقاومت زمین حفاظتی
+</span>
+    <div>
+                مقدار اندازه گیری شده: {{form.s1_e1_res}}
+    </div>
+<br>
+
+        <table style="margin: auto;width: 80%;text-align: center;direction: ltr;" class="tb-2">
+      <tbody>
+      <tr style="font-weight: bold;">
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">حد مجاز (Ω)</td>
+
+          </tr>
+            <tr style="font-weight: bold;">
+                <td class="time">Rej</td>
+                <td class="time">Ok</td>
+            </tr>
+        <tr>
+          <td>{{form.s1_e1_comment}}</td>
+          <td></td>
+          <td></td>
+          <td>0.2</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+<br><br>
+
+
+<span style="font-weight: bold;">
+2. جریان نشتی زمین</span>
+<br><br>
+        <table style="margin: auto;width: 90%;text-align: center;direction: ltr;" class="tb-2">
+          <tbody>
+
+              <tr style="font-weight: bold;">
+                <td rowspan="2">توضیحات</td>
+                <td colspan="2">نتیجه</td>
+                <td rowspan="2">مقدار مجاز (µa)</td>
+                <td rowspan="2">مقدار قرائت شده (µa)</td>
+                <td rowspan="2">شرایط کاری</td>
+                <td rowspan="2">حالت تست</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td class="time">Rej</td>
+                    <td class="time">Ok</td>
+                </tr>
+            <tr>
+              <td>{{form.s2_e1_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e1_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- روشن</td>
+              <td rowspan="6">عادی</td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e2_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e2_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- خاموش </td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e3_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e3_lc}}</td>
+              <td class="time" style="text-align: right;"> Standby -</td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e4_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e4_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e5_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e5_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- طی آنالیز ریتم</td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e6_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s2_e6_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- لحظۀ تخلیۀ شوک</td>
+            </tr>
+            <tr>
+              <td>{{form.s2_e7_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">1000</td>
+              <td>{{form.s2_e7_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+              <td>تک اشکالی</td>
+            </tr>
+
+          </tbody>
+        </table>
+<div>
+نکات: 1- در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F  به زمین متصل و از آن جدا می باشند نیز تکرار شود.            </div>
+<br><br>
+
+
+<span style="font-weight: bold;">3. جریان نشتی محفظه</span>
+<br><br>
+        <table style="margin: auto;width: 90%;text-align: center;direction: ltr;" class="tb-2">
+          <tbody>
+
+              <tr style="font-weight: bold;">
+                <td rowspan="2">توضیحات</td>
+                <td colspan="2">نتیجه</td>
+                <td rowspan="2">مقدار مجاز (µa)</td>
+                <td rowspan="2">مقدار قرائت شده (µa)</td>
+                <td rowspan="2">شرایط کاری</td>
+                <td rowspan="2">حالت تست</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td class="time">Rej</td>
+                    <td class="time">Ok</td>
+                </tr>
+            <tr>
+              <td>{{form.s3_e1_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e1_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- روشن</td>
+              <td rowspan="6">عادی</td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e2_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e2_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- خاموش </td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e3_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e3_lc}}</td>
+              <td class="time" style="text-align: right;"> Standby -</td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e4_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e4_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e5_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e5_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- طی آنالیز ریتم</td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e6_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td>{{form.s3_e6_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- لحظۀ تخلیۀ شوک</td>
+            </tr>
+            <tr>
+              <td>{{form.s3_e7_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td>{{form.s3_e7_lc}}</td>
+              <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه – قطع زمین حفاظتی</td>
+              <td>تک اشکالی</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+                <br>
+        <div>
+            نکات:1- در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F  به زمین متصل و از آن جدا می باشند نیز تکرار شود.
+        </div>
+
+        <br><br>
+
+    <span style="font-weight: bold;">
+4. جریان نشتی بیمار:
+    </span>
+        {{ form.s4_type }}
+<br><br>
+<table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+          <tbody>
+          <tr style="font-weight: bold;">
+                <td rowspan="3">توضیحات</td>
+                <td colspan="2">نتیجه</td>
+                <td style="direction: rtl;" colspan="4">مقدار مجاز (µa)</td>
+                <td rowspan="2" colspan="4">قسمت کاربردی و مقدار قرائت شده* (µa)</td>
+                <td rowspan="3">شرایط کاری</td>
+                <td rowspan="3">حالت تست</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td rowspan="2" class="time">Rej</td>
+                    <td rowspan="2" class="time">Ok</td>
+                    <td colspan="2" class="time">BF type</td>
+                    <td colspan="2" class="time">CF type</td>
+
+                </tr>
+                 <tr style="font-weight: bold;">
+                    <td style="padding: 0;" class="time">ac</td>
+                    <td style="padding: 0;" class="time">dc</td>
+                    <td style="padding: 0;" class="time">ac</td>
+                    <td style="padding: 0;" class="time">dc</td>
+                     <td style="padding: 0;" class="time">4</td>
+                    <td style="padding: 0;" class="time">3</td>
+                    <td style="padding: 0;" class="time">2</td>
+                    <td style="padding: 0;" class="time">1</td>
+                </tr>
+            <tr>
+              <td>{{form.s4_e1_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td >{% render_field form.s4_e1_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e1_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e1_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e1_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- روشن</td>
+              <td rowspan="8">عادی</td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e2_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e2_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e2_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e2_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e2_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- خاموش </td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e3_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e3_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e3_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e3_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e3_lc1 style="width:50px;"%}</td>
+              <td class="time" style="text-align: right;"> Standby -</td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e4_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e4_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e4_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e4_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e4_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e5_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e5_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e5_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e5_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e5_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">
+                  - طی شارژ تا
+                  <span class="time">E<sub>max</sub></span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e6_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e6_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e6_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e6_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e6_lc1 style="width:50px;"%}</td>
+                <td style="text-align: right;direction: rtl;">
+                  -  1دقیقه
+                    بعد شارژ کامل
+                    <br>
+                     تا
+
+                    <span class="time">E<sub>max</sub></span>
+
+                    یا دقیقا قبل
+                    <br>
+                    از
+
+                    <span class="time">disarm</span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e7_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e7_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e7_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e7_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e7_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- 1ثانیه بعد از تخلیه در بار 50 اهم به مدت 1 دقیقه</td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e8_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s4_e8_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e8_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e8_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e8_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- طی آنالیز ریتم</td>
+            </tr>
+            <tr>
+              <td>{{form.s4_e9_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td>{% render_field form.s4_e9_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e9_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e9_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e9_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+                <td rowspan="2">تک اشکالی</td>
+            </tr>
+
+            <tr>
+              <td>{{form.s4_e10_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td>{% render_field form.s4_e10_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e10_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e10_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s4_e10_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- قطع زمین حفاظتی</td>
+            </tr>
+
+
+          </tbody>
+
+        </table>
+                <br>
+        <div>
+*:قسمت کاربردی1: اکسترنال پدل،2: اینترنال پدل، 3: الکترودهای یکبار مصرف،4: لیدهای ECG        </div>
+        <br>
+
+
+   <span style="font-weight: bold;">
+5. جریان کمکی بیمار</span>
+        {{ form.s5_type }}
+<br><br>
+<table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+          <tbody>
+          <tr style="font-weight: bold;">
+                <td rowspan="3">توضیحات</td>
+                <td colspan="2">نتیجه</td>
+                <td style="direction: rtl;" colspan="4">مقدار مجاز (µa)</td>
+                <td rowspan="2" colspan="4">قسمت کاربردی و مقدار قرائت شده* (µa)</td>
+                <td rowspan="3">شرایط کاری</td>
+                <td rowspan="3">حالت تست</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td rowspan="2" class="time">Rej</td>
+                    <td rowspan="2" class="time">Ok</td>
+                    <td colspan="2" class="time">BF type</td>
+                    <td colspan="2" class="time">CF type</td>
+
+                </tr>
+                 <tr style="font-weight: bold;">
+                    <td style="padding: 0;" class="time">ac</td>
+                    <td style="padding: 0;" class="time">dc</td>
+                    <td style="padding: 0;" class="time">ac</td>
+                    <td style="padding: 0;" class="time">dc</td>
+                     <td style="padding: 0;" class="time">4</td>
+                    <td style="padding: 0;" class="time">3</td>
+                    <td style="padding: 0;" class="time">2</td>
+                    <td style="padding: 0;" class="time">1</td>
+                </tr>
+            <tr>
+              <td>{{form.s5_e1_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td >{% render_field form.s5_e1_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e1_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e1_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e1_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- روشن</td>
+              <td rowspan="8">عادی</td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e2_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e2_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e2_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e2_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e2_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- خاموش </td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e3_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e3_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e3_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e3_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e3_lc1 style="width:50px;"%}</td>
+              <td class="time" style="text-align: right;"> Standby -</td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e4_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e4_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e4_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e4_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e4_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e5_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e5_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e5_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e5_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e5_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">
+                  - طی شارژ تا
+                  <span class="time">E<sub>max</sub></span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e6_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e6_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e6_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e6_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e6_lc1 style="width:50px;"%}</td>
+                <td style="text-align: right;direction: rtl;">
+                  -  1دقیقه
+                    بعد شارژ کامل
+                    <br>
+                     تا
+
+                    <span class="time">E<sub>max</sub></span>
+
+                    یا دقیقا قبل
+                    <br>
+                    از
+
+                    <span class="time">disarm</span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e7_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e7_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e7_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e7_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e7_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- 1ثانیه بعد از تخلیه در بار 50 اهم به مدت 1 دقیقه</td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e8_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">100</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td class="time">10</td>
+              <td>{% render_field form.s5_e8_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e8_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e8_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e8_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- طی آنالیز ریتم</td>
+            </tr>
+            <tr>
+              <td>{{form.s5_e9_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td>{% render_field form.s5_e9_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e9_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e9_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e9_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+                <td rowspan="2">تک اشکالی</td>
+            </tr>
+
+            <tr>
+              <td>{{form.s5_e10_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">500</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td class="time">50</td>
+              <td>{% render_field form.s5_e10_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e10_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e10_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s5_e10_lc1 style="width:50px;"%}</td>
+              <td style="text-align: right;direction: rtl;">- قطع زمین حفاظتی</td>
+            </tr>
+
+
+          </tbody>
+
+        </table>
+                <br>
+        <div>
+*:قسمت کاربردی1: اکسترنال پدل،2: اینترنال پدل، 3: الکترودهای یکبار مصرف،4: لیدهای ECG        </div>
+        <br>
+            <span style="font-weight: bold;">
+            6. جریان نشتی  بیمار (قسمت کاربردی ایزوله و اعمال ولتاژ خارجی)</span>
+        {{ form.s6_type }}
+<br><br>
+<table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+          <tbody>
+          <tr>
+                <td rowspan="2" style="text-align: center;">توضیحات</td>
+                <td colspan="2" style="text-align: center;">نتیجه</td>
+                <td style="direction: rtl;" colspan="2" style="text-align: center;">مقدار مجاز (µa)</td>
+                <td colspan="4" style="text-align: center;">قسمت کاربردی و مقدار قرائت شده* (µa)</td>
+                <td rowspan="2" style="text-align: center;">شرایط کاری</td>
+                <td rowspan="2" style="text-align: center;">حالت تست</td>
+              </tr>
+                <tr class="time">
+                    <td>Rej</td>
+                    <td>Ok</td>
+                    <td>BF type</td>
+                    <td>CF type</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>1</td>
+                </tr>
+            <tr>
+              <td>{{form.s6_e1_comment}}</td>
+              <td></td>
+              <td></td>
+              <td class="time">5000</td>
+              <td class="time">100</td>
+              <td>{% render_field form.s6_e1_lc4 style="width:50px;"%}</td>
+              <td>{% render_field form.s6_e1_lc3 style="width:50px;"%}</td>
+              <td>{% render_field form.s6_e1_lc2 style="width:50px;"%}</td>
+              <td>{% render_field form.s6_e1_lc1 style="width:50px;"%}</td>
+              <td>اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>
+              <td>تک اشکالی</td>
+          </tbody>
+
+        </table>
+        <div><br>
+*:قسمت کاربردی1: اکسترنال پدل،2: اینترنال پدل، 3: الکترودهای یکبار مصرف،4: لیدهای ECG
+        </div>
+<br><br>
+            <div style="font-weight: bold;font-size: 18pt;">
+            تستهای کمی:
+        </div>
+
+            <span style="font-weight: bold;">
+            1. زمان شارژ براي دفيبريلاتورهاي AED و با کاربرد غیردائم
+
+            </span>
+<br><br>
+        <table style="margin: auto;width: 85%;text-align: center;direction: ltr;" class="tb-2">
+          <tbody>
+          <tr style="font-weight: bold;">
+                <td colspan="2">نتیجه</td>
+                <td rowspan="2">زمان مجاز (ثانیه)</td>
+                  <td rowspan="2">زمان اندازه گیری شده (ثانیه) (از فعال سازی آشکارساز تشخیص ریتم تا آماده شدن دستگاه برای دشارژ دربیشترین انرژی)</td>
+                <td rowspan="2">وضعیت باتری</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td class="time">Rej</td>
+                    <td class="time">Ok</td>
+
+                </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="time">35</td>
+              <td>{{ form.s11_e1_t }}</td>
+              <td>با %90 ولتاژ نامي </td>
+
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="time">35</td>
+              <td>{{ form.s11_e2_t }}</td>
+              <td>باتری ای که 6 بار در بیشترین انرژی تخلیه شده</td>
+
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="time">40</td>
+              <td>{{ form.s11_e3_t }}</td>
+              <td>باتری ای که 15 بار در بیشترین انرژی تخلیه شده</td>
+
+            </tr>
+          </tbody>
+
+        </table>
+<br><br>
+
+         <span style="font-weight: bold;">
+2. زمان قبل از disarm :
+            </span>
+<br><br>
+                <table style="margin: auto;width: 90%;text-align: center;direction: ltr;" class="tb-4">
+          <tbody>
+          <tr style="font-weight: bold;">
+                  <td rowspan="2">توضیحات</td>
+                <td colspan="2">نتیجه</td>
+                <td rowspan="2" class="time">**T<sub>C</sub> (sec)</td>
+                <td rowspan="2" class="time">*T<sub>1</sub> (sec)</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td class="time">Rej</td>
+                    <td class="time">Ok</td>
+
+                </tr>
+            <tr>
+              <td>{{ form.s12_e1_comment }}</td>
+              <td></td>
+              <td></td>
+                  <td class="time">30&lt;T&lt;120</td>
+              <td>{{ form.s12_e1_t }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+            *: زمان اندازه گیری شده قبل از disarm
+
+            <br>
+<br><br>
+
+         <span style="font-weight: bold;">
+	3. دتکتور تشخیص ریتم
+
+            </span>
+<br><br>
+                <table style="margin: auto;width: 90%;text-align: center;direction: ltr;" class="tb-4 time">
+          <tbody>
+          <tr style="font-weight: bold;">
+                <td colspan="2" style="font-family: 'B Nazanin';">نتیجه</td>
+                <td rowspan="2" style="font-family: 'B Nazanin';">انرژی اندازه گیری شده توسط تستر(J) </td>
+                <td rowspan="2" style="font-family: 'B Nazanin';">نوع سیگنال</td>
+              </tr>
+                <tr style="font-weight: bold;">
+                    <td>Rej</td>
+                    <td>Ok</td>
+                </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>{{ form.s13_e1_e }}</td>
+              <td>Ventricular Tachycardia</td>
+            </tr>
+          <tr>
+              <td></td>
+              <td></td>
+              <td>{{ form.s13_e2_e }}</td>
+              <td>Ventricular Fibrillation</td>
+            </tr>
+          <tr>
+              <td></td>
+              <td>{{ form.s13_e3_e }}</td>
+              <td>Non Shockable</td>
+              <td>Normal Sinus Rhythm</td>
+            </tr>
+          </tbody>
+
+        </table>
+
+<br><br>
+
+	<!--</div>-->
+{#/////////////////////////////////////////////#}
+    <br>
+
+
+
+                        {% render_field form.status style="display:inline-block;width:100%;" %} 
+
+
+            {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+
+
+        {% if edit %}
+        <button type="submit" name="record_number" value="{{record_number}}" class="btn btn-primary" onclick='this.form.action="{% url 'save_edit_router' formtype='AED' %}";'>
+        ذخیره نهایی اصلاح
+        </button>
+        {% elif recal %}
+        <button type="submit" name="ref_record_number" value="{{ref_record_number}}" class="btn btn-primary"  onclick='this.form.action="{% url 'save_recal_router' formtype='AED' %}";'>
+        ذخیره نهایی ریکالیبراسیون
+        </button>
+        {% elif edit_recal %}
+        <button type="submit" name="record_number" value="{{record_number}}" class="btn btn-primary"  onclick='this.form.action="{% url 'save_recal_edit_router' formtype='AED' %}";'>
+        ذخیره نهایی ویرایش ریکالیبراسیون
+        </button>
+
+        {% else %}{# normal save #}
+        <button type="submit"  class="btn btn-primary" onclick='this.form.action="{% url 'save_router' formtype='AED' %}";' >
+         ذخیره نهایی فرم
+        </button>
+        {% endif %}
+
+
+        </div>
+
+
+        <!--//////////////////////////////////////////////////////////-->
+
+    </table>
+
+</form>
+
+
+{##}
+{#<span id="e11">a</span>#}
+
+
+</script>
+          <script>
+
+     var t=document.getElementById("txt");
+           {#t.firstChild.nodeValue="humidity is normal.";#}
+
+        {#document.write('ss');#}
+    document.getElementById("eee").addEventListener("click",function () {
+       var humidity=document.getElementById("id_humidity").value;
+
+       if( humidity> 20 && humidity < 40){
+           t.firstChild.nodeValue="humidity is normal.";
+           t.firstChild.nodeValue+=humidity;
+
+           {#document.write("humidity is normal. ");#}
+           {#document.write(humidity);#}
+       }
+       else if (humidity >=40){
+           t.firstChild.nodeValue="humidity is high.";
+           t.firstChild.nodeValue+=humidity;
+
+           {#document.write("humidity is high. ");#}
+           {#document.write(humidity);#}
+
+       }
+       else {
+           t.firstChild.nodeValue="humidity is low.";
+           t.firstChild.nodeValue+=humidity;
+           {#document.write("humidity is low. ");#}
+           {#document.write(humidity);#}
+
+       }
+       })
+</script>

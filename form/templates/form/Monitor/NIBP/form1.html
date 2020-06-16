@@ -1,0 +1,3093 @@
+{% load static %}
+{% load widget_tweaks %}
+
+
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='MonitorNIBP' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+
+  {% csrf_token %}
+
+  <table class="table-bordered">
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاه مانیتور علائم حیاتی ماژولNIBP
+
+      </h1>
+
+
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+            {% render_field form.device style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+  
+  
+     <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+
+
+      <div style="font-weight: bold;">
+        1. آزمون حدود خطای فشارسنج ناشی از شرایط محیطی</div>
+      <br>
+      <br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+        <thead>
+          <tr>
+            <th rowspan="2">Mode</th>
+            <th colspan="2">Setting</th>
+            <th rowspan="2">Setpoint [mmHg]</th>
+            <th rowspan="2">Simulator Pressure [mmHg]</th>
+            <th rowspan="2">NIBP Pressure [mmHg]</th>
+            <th rowspan="2">Permissible Error [mmHg]</th>
+            <th colspan="2">Result</th>
+          </tr>
+          <tr>
+            <th>Cuff</th>
+            <th>NIBP</th>
+            <th>OK</th>
+            <th>REJ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Adult</td>
+            <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Standard</td>
+            <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Manometer</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_nibpp }}</td>
+            <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">±3 mmHg or 3% of reading</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+
+          </tr>
+
+
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+
+
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+
+          <tr>
+            <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Hospital</td>
+            <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Monometer</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_simp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_nibpp }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+
+      <br><br>
+      <span style="font-weight: bold;">
+        2. آزمون کارایی کلی سیستم</span>
+
+
+      <br><br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+        <thead>
+          <tr>
+            <th rowspan="2">Mode</th>
+            <th rowspan="2">Pressure Setting</th>
+            <th>Pressure Reading</th>
+            <th>Pressure Error</th>
+            <th>Pressure Reading</th>
+            <th>Pressure Error</th>
+            <th>Pressure Reading</th>
+            <th>Pressure Error</th>
+
+          </tr>
+          <tr>
+            <th>1st</th>
+            <th>1st</th>
+            <th>2st</th>
+            <th>2st</th>
+            <th>3st</th>
+            <th>3st</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4">Adult</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">60/30</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e1_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e1_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e1_td3"></td>
+
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80/50</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e2_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e2_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e2_td3"></td>
+
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120/80</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e3_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e3_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e3_td3"></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200/150</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e4_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e4_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e4_td3"></td>
+          </tr>
+          <tr>
+            <td rowspan="2">NEO/PED</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">35/15</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e5_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e5_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e5_td3"></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">100/70</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr1 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e6_td1"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr2 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e6_td2"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr3 }}</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="id_s2_e6_td3"></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <button type="button" class="btn btn-info" id='cal' style="margin:10px 50px 20px 10px;">محاسبه</button>
+      <br>
+
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 time">
+        <thead>
+          <tr>
+            <th rowspan="2">Pressure</th>
+            <th rowspan="2">Error Sum</th>
+            <th><span style="border-top: 1px solid black;">x</span></th>
+            <th>Permissible Error</th>
+            <th>SD</th>
+            <th>Permissible Error</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Systolic</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="systolic_error"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="avg_systolic_error"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤(±5 mmHg)</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="systolic_SD"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤8 mmHg</td>
+
+          </tr>
+          <tr>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Diastolic</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="diasystolic_error"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="avg_diasystolic_error"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤(±5 mmHg)</td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;" id="diasystolic_SD"></td>
+            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤8 mmHg</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <br><br>
+
+
+      <!--</div>-->
+      {#/////////////////////////////////////////////#}
+      <br>
+
+
+
+      <div class="row">
+        <div class="col-md-6">
+
+
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+
+
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='MonitorNIBP' %}">
+            ذخیره نهایی
+          </button>
+
+
+
+
+        </div>
+        <div class="col-md-6">
+
+          <div class="help-box" role="alert">
+            <ul>
+              <li>
+                بيش از حد بودن مقادیر فشارهاي Diastolic 
+              </li>
+              <li>
+                بيش از حد بودن مقادیرفشارهاي Systolic
+              </li>
+              <li>
+                بیش ازحد بودن مقادیر فشارهاي استاتيك
+              </li>
+              <li>
+                بيش از حد بودن مقادیر فشارهاي دینامیک
+              </li>
+              <li>
+                بیش از حد بودن مقدار نشتی NIBP
+              </li>
+              <li>
+                خارج از رنج بودن میزان نشتی به علت نشتی در اتصالات وکاف - قابل قبول بودن میزان فشار های دینامیک
+              </li>
+              <li>
+                خارج از رنج بودن میزان نشتی به علت نشتی در اتصالات وکاف - قابل قبول بودن میزان فشار های استاتیک
+              </li>
+              <li>
+                عدم اندازه گیری مقادیر فشار بالا
+              </li>
+              <li>
+                عدم اندازه گیری مقادیر فشار
+              </li>
+              <li>
+                نشتی کاف واتصالات
+              </li>
+              <li>
+                عدم استفاده از کاف مناسب
+              </li>
+              <li>
+                مناسب نبودن كانكتور اتصال كاف به دستگاه
+              </li>
+              <li>
+                قابل استفاده نبودن شلنگ و كاف دستگاه
+              </li>
+                  ></ul>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+
+
+<script>
+  /////////////////table0
+  $("#id_s0_e1_comment")
+    .focusout(function () {
+      if ($("#id_s0_e1_comment").val() >= 3) {
+        $("#id_s0_e1_comment").css("background-color", "#f24858");
+        $("#id_s0_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 1)) {
+        $("#id_s0_e1_comment").css("background-color", "white");
+        $("#id_s0_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 2)) {
+        $("#id_s0_e1_comment").css("background-color", 'yellow');
+        $("#id_s0_e1_comment").css("color", "black");
+      }
+    });
+  /////
+
+  $("#id_s0_e2_comment")
+    .focusout(function () {
+      if ($("#id_s0_e2_comment").val() >= 3) {
+        $("#id_s0_e2_comment").css("background-color", "#f24858");
+        $("#id_s0_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 1)) {
+        $("#id_s0_e2_comment").css("background-color", "white");
+        $("#id_s0_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 2)) {
+        $("#id_s0_e2_comment").css("background-color", 'yellow');
+        $("#id_s0_e2_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e3_comment")
+    .focusout(function () {
+      if ($("#id_s0_e3_comment").val() >= 3) {
+        $("#id_s0_e3_comment").css("background-color", "#f24858");
+        $("#id_s0_e3_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 1)) {
+        $("#id_s0_e3_comment").css("background-color", "white");
+        $("#id_s0_e3_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 2)) {
+        $("#id_s0_e3_comment").css("background-color", 'yellow');
+        $("#id_s0_e3_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e4_comment")
+    .focusout(function () {
+      if ($("#id_s0_e4_comment").val() >= 3) {
+        $("#id_s0_e4_comment").css("background-color", "#f24858");
+        $("#id_s0_e4_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 1)) {
+        $("#id_s0_e4_comment").css("background-color", "white");
+        $("#id_s0_e4_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 2)) {
+        $("#id_s0_e4_comment").css("background-color", 'yellow');
+        $("#id_s0_e4_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e5_comment")
+    .focusout(function () {
+      if ($("#id_s0_e5_comment").val() >= 3) {
+        $("#id_s0_e5_comment").css("background-color", "#f24858");
+        $("#id_s0_e5_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 1)) {
+        $("#id_s0_e5_comment").css("background-color", "white");
+        $("#id_s0_e5_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 2)) {
+        $("#id_s0_e5_comment").css("background-color", 'yellow');
+        $("#id_s0_e5_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e6_comment")
+    .focusout(function () {
+      if ($("#id_s0_e6_comment").val() >= 3) {
+        $("#id_s0_e6_comment").css("background-color", "#f24858");
+        $("#id_s0_e6_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 1)) {
+        $("#id_s0_e6_comment").css("background-color", "white");
+        $("#id_s0_e6_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 2)) {
+        $("#id_s0_e6_comment").css("background-color", 'yellow');
+        $("#id_s0_e6_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e7_comment")
+    .focusout(function () {
+      if ($("#id_s0_e7_comment").val() >= 3) {
+        $("#id_s0_e7_comment").css("background-color", "#f24858");
+        $("#id_s0_e7_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 1)) {
+        $("#id_s0_e7_comment").css("background-color", "white");
+        $("#id_s0_e7_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 2)) {
+        $("#id_s0_e7_comment").css("background-color", 'yellow');
+        $("#id_s0_e7_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e8_comment")
+    .focusout(function () {
+      if ($("#id_s0_e8_comment").val() >= 3) {
+        $("#id_s0_e8_comment").css("background-color", "#f24858");
+        $("#id_s0_e8_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 1)) {
+        $("#id_s0_e8_comment").css("background-color", "white");
+        $("#id_s0_e8_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 2)) {
+        $("#id_s0_e8_comment").css("background-color", 'yellow');
+        $("#id_s0_e8_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e9_comment")
+    .focusout(function () {
+      if ($("#id_s0_e9_comment").val() >= 3) {
+        $("#id_s0_e9_comment").css("background-color", "#f24858");
+        $("#id_s0_e9_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 1)) {
+        $("#id_s0_e9_comment").css("background-color", "white");
+        $("#id_s0_e9_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 2)) {
+        $("#id_s0_e9_comment").css("background-color", 'yellow');
+        $("#id_s0_e9_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e10_comment")
+    .focusout(function () {
+      if ($("#id_s0_e10_comment").val() >= 3) {
+        $("#id_s0_e10_comment").css("background-color", "#f24858");
+        $("#id_s0_e10_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 1)) {
+        $("#id_s0_e10_comment").css("background-color", "white");
+        $("#id_s0_e10_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 2)) {
+        $("#id_s0_e10_comment").css("background-color", 'yellow');
+        $("#id_s0_e10_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e11_comment")
+    .focusout(function () {
+      if ($("#id_s0_e11_comment").val() >= 3) {
+        $("#id_s0_e11_comment").css("background-color", "#f24858");
+        $("#id_s0_e11_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 1)) {
+        $("#id_s0_e11_comment").css("background-color", "white");
+        $("#id_s0_e11_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 2)) {
+        $("#id_s0_e11_comment").css("background-color", 'yellow');
+        $("#id_s0_e11_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e12_comment")
+    .focusout(function () {
+      if ($("#id_s0_e12_comment").val() >= 3) {
+        $("#id_s0_e12_comment").css("background-color", "#f24858");
+        $("#id_s0_e12_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 1)) {
+        $("#id_s0_e12_comment").css("background-color", "white");
+        $("#id_s0_e12_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 2)) {
+        $("#id_s0_e12_comment").css("background-color", 'yellow');
+        $("#id_s0_e12_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e13_comment")
+    .focusout(function () {
+      if ($("#id_s0_e13_comment").val() >= 3) {
+        $("#id_s0_e13_comment").css("background-color", "#f24858");
+        $("#id_s0_e13_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 1)) {
+        $("#id_s0_e13_comment").css("background-color", "white");
+        $("#id_s0_e13_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 2)) {
+        $("#id_s0_e13_comment").css("background-color", 'yellow');
+        $("#id_s0_e13_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e14_comment")
+    .focusout(function () {
+      if ($("#id_s0_e14_comment").val() >= 3) {
+        $("#id_s0_e14_comment").css("background-color", "#f24858");
+        $("#id_s0_e14_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 1)) {
+        $("#id_s0_e14_comment").css("background-color", "white");
+        $("#id_s0_e14_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 2)) {
+        $("#id_s0_e14_comment").css("background-color", 'yellow');
+        $("#id_s0_e14_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e15_comment")
+    .focusout(function () {
+      if ($("#id_s0_e15_comment").val() >= 3) {
+        $("#id_s0_e15_comment").css("background-color", "#f24858");
+        $("#id_s0_e15_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 1)) {
+        $("#id_s0_e15_comment").css("background-color", "white");
+        $("#id_s0_e15_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 2)) {
+        $("#id_s0_e15_comment").css("background-color", 'yellow');
+        $("#id_s0_e15_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e16_comment")
+    .focusout(function () {
+      if ($("#id_s0_e16_comment").val() >= 3) {
+        $("#id_s0_e16_comment").css("background-color", "#f24858");
+        $("#id_s0_e16_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 1)) {
+        $("#id_s0_e16_comment").css("background-color", "white");
+        $("#id_s0_e16_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 2)) {
+        $("#id_s0_e16_comment").css("background-color", 'yellow');
+        $("#id_s0_e16_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e17_comment")
+    .focusout(function () {
+      if ($("#id_s0_e17_comment").val() >= 3) {
+        $("#id_s0_e17_comment").css("background-color", "#f24858");
+        $("#id_s0_e17_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 1)) {
+        $("#id_s0_e17_comment").css("background-color", "white");
+        $("#id_s0_e17_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 2)) {
+        $("#id_s0_e17_comment").css("background-color", 'yellow');
+        $("#id_s0_e17_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e18_comment")
+    .focusout(function () {
+      if ($("#id_s0_e18_comment").val() >= 3) {
+        $("#id_s0_e18_comment").css("background-color", "#f24858");
+        $("#id_s0_e18_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 1)) {
+        $("#id_s0_e18_comment").css("background-color", "white");
+        $("#id_s0_e18_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 2)) {
+        $("#id_s0_e18_comment").css("background-color", 'yellow');
+        $("#id_s0_e18_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e19_comment")
+    .focusout(function () {
+      if ($("#id_s0_e19_comment").val() >= 3) {
+        $("#id_s0_e19_comment").css("background-color", "#f24858");
+        $("#id_s0_e19_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 1)) {
+        $("#id_s0_e19_comment").css("background-color", "white");
+        $("#id_s0_e19_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 2)) {
+        $("#id_s0_e19_comment").css("background-color", 'yellow');
+        $("#id_s0_e19_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e20_comment")
+    .focusout(function () {
+      if ($("#id_s0_e20_comment").val() >= 3) {
+        $("#id_s0_e20_comment").css("background-color", "#f24858");
+        $("#id_s0_e20_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 1)) {
+        $("#id_s0_e20_comment").css("background-color", "white");
+        $("#id_s0_e20_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 2)) {
+        $("#id_s0_e20_comment").css("background-color", 'yellow');
+        $("#id_s0_e20_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e21_comment")
+    .focusout(function () {
+      if ($("#id_s0_e21_comment").val() >= 3) {
+        $("#id_s0_e21_comment").css("background-color", "#f24858");
+        $("#id_s0_e21_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 1)) {
+        $("#id_s0_e21_comment").css("background-color", "white");
+        $("#id_s0_e21_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 2)) {
+        $("#id_s0_e21_comment").css("background-color", 'yellow');
+        $("#id_s0_e21_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e22_comment")
+    .focusout(function () {
+      if ($("#id_s0_e22_comment").val() >= 3) {
+        $("#id_s0_e22_comment").css("background-color", "#f24858");
+        $("#id_s0_e22_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 1)) {
+        $("#id_s0_e22_comment").css("background-color", "white");
+        $("#id_s0_e22_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 2)) {
+        $("#id_s0_e22_comment").css("background-color", 'yellow');
+        $("#id_s0_e22_comment").css("color", "black");
+      }
+    });
+  /////
+
+  /////////////////////////// table1
+
+  $("#id_s1_e1_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e1_nibpp").val() - $("#id_s1_e1_simp").val()) / $("#id_s1_e1_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e1_nibpp").val() - $("#id_s1_e1_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e1_nibpp").val().length != 0)) {
+        $("#id_s1_e1_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e1_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e1_nibpp").val().length == 0)) {
+        $("#id_s1_e1_nibpp").css("background-color", "white");
+        $("#id_s1_e1_nibpp").css("color", "black");
+
+      }
+    });
+
+
+  $("#id_s1_e2_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e2_nibpp").val() - $("#id_s1_e2_simp").val()) / $("#id_s1_e2_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e2_nibpp").val() - $("#id_s1_e2_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e2_nibpp").val().length != 0)) {
+        $("#id_s1_e2_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e2_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e2_nibpp").val().length == 0)) {
+        $("#id_s1_e2_nibpp").css("background-color", "white");
+        $("#id_s1_e2_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e3_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e3_nibpp").val() - $("#id_s1_e3_simp").val()) / $("#id_s1_e3_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e3_nibpp").val() - $("#id_s1_e3_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e3_nibpp").val().length != 0)) {
+        $("#id_s1_e3_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e3_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e3_nibpp").val().length == 0)) {
+        $("#id_s1_e3_nibpp").css("background-color", "white");
+        $("#id_s1_e3_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e4_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e4_nibpp").val() - $("#id_s1_e4_simp").val()) / $("#id_s1_e4_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e4_nibpp").val() - $("#id_s1_e4_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e4_nibpp").val().length != 0)) {
+        $("#id_s1_e4_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e4_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e4_nibpp").val().length == 0)) {
+        $("#id_s1_e4_nibpp").css("background-color", "white");
+        $("#id_s1_e4_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e5_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e5_nibpp").val() - $("#id_s1_e5_simp").val()) / $("#id_s1_e5_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e5_nibpp").val() - $("#id_s1_e5_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e5_nibpp").val().length != 0)) {
+        $("#id_s1_e5_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e5_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e5_nibpp").val().length == 0)) {
+        $("#id_s1_e5_nibpp").css("background-color", "white");
+        $("#id_s1_e5_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e6_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e6_nibpp").val() - $("#id_s1_e6_simp").val()) / $("#id_s1_e6_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e6_nibpp").val() - $("#id_s1_e6_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e6_nibpp").val().length != 0)) {
+        $("#id_s1_e6_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e6_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e6_nibpp").val().length == 0)) {
+        $("#id_s1_e6_nibpp").css("background-color", "white");
+        $("#id_s1_e6_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e7_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e7_nibpp").val() - $("#id_s1_e7_simp").val()) / $("#id_s1_e7_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e7_nibpp").val() - $("#id_s1_e7_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e7_nibpp").val().length != 0)) {
+        $("#id_s1_e7_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e7_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e7_nibpp").val().length == 0)) {
+        $("#id_s1_e7_nibpp").css("background-color", "white");
+        $("#id_s1_e7_nibpp").css("color", "black");
+
+      }
+    });
+
+  $("#id_s1_e8_nibpp")
+    .focusout(function () {
+      // alert($( "#id_s1_e1_comment" ).val());
+
+      var n = ($("#id_s1_e8_nibpp").val() - $("#id_s1_e8_simp").val()) / $("#id_s1_e8_simp").val();
+      if (n < 0) {
+        n = -n;
+      }
+      var n2 = ($("#id_s1_e8_nibpp").val() - $("#id_s1_e8_simp").val());
+      if (n2 < 0) {
+        n2 = -n2;
+      }
+      if (n > 0.03 && n2 > 3 && ($("#id_s1_e8_nibpp").val().length != 0)) {
+        $("#id_s1_e8_nibpp").css("background-color", "#f24858");
+        $("#id_s1_e8_nibpp").css("color", "white");
+      }
+      else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e8_nibpp").val().length == 0)) {
+        $("#id_s1_e8_nibpp").css("background-color", "white");
+        $("#id_s1_e8_nibpp").css("color", "black");
+
+      }
+    });
+  // ///////////////////////////table 2
+
+
+
+
+
+  // id='id_s2_e1_td1'
+  $("#id_s2_e1_pr1")
+    .focusout(function () {
+      // alert($( "#id_s2_e1_comment" ).val());
+      var k = $("#id_s2_e1_pr1").val().split('/');
+      var a = k[0] - 60;
+      var b = k[1] - 30;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e1_td1").text(a + '/' + b);
+      //   if($( "#id_s2_e1_pr1" ).val() <=0  && ($( "#id_s2_e1_pr1").val().length !=0)){
+      //     $("#id_s2_e1_pr1").css("background-color", "#f24858");
+      //   $("#id_s2_e1_pr1").css("color", "white");
+
+      //   $("#id_s2_e1_comment").css("background-color", "#f24858");
+      //   $("#id_s2_e1_comment").css("color", "white");
+      //   $("#id_s2_e1_comment").val("2");
+
+      // }
+      //   else if(($( "#id_s2_e1_pr1").val() >0) || ($( "#id_s2_e1_pr1").val().length ==0)) {
+      //     $("#id_s2_e1_pr1").css("background-color", "white");
+      //   $("#id_s2_e1_pr1").css("color", "black");
+
+      //   $("#id_s2_e1_comment").css("background-color", "white");
+      //   $("#id_s2_e1_comment").css("color", "black");
+      //   $("#id_s2_e1_comment").val("1");
+
+      // }
+    });
+
+
+  $("#id_s2_e1_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e1_pr2").val().split('/');
+      var a = k[0] - 60;
+      var b = k[1] - 30;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e1_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e1_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e1_pr3").val().split('/');
+      var a = k[0] - 60;
+      var b = k[1] - 30;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e1_td3").text(a + '/' + b);
+    });
+  /////////////////////////////////////////////
+  $("#id_s2_e2_pr1")
+    .focusout(function () {
+      var k = $("#id_s2_e2_pr1").val().split('/');
+      var a = k[0] - 80;
+      var b = k[1] - 50;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e2_td1").text(a + '/' + b);
+    });
+  $("#id_s2_e2_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e2_pr2").val().split('/');
+      var a = k[0] - 80;
+      var b = k[1] - 50;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e2_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e2_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e2_pr3").val().split('/');
+      var a = k[0] - 80;
+      var b = k[1] - 50;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e2_td3").text(a + '/' + b);
+    });
+  ////////////
+  $("#id_s2_e3_pr1")
+    .focusout(function () {
+      var k = $("#id_s2_e3_pr1").val().split('/');
+      var a = k[0] - 120;
+      var b = k[1] - 80;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e3_td1").text(a + '/' + b);
+    });
+  $("#id_s2_e3_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e3_pr2").val().split('/');
+      var a = k[0] - 120;
+      var b = k[1] - 80;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e3_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e3_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e3_pr3").val().split('/');
+      var a = k[0] - 120;
+      var b = k[1] - 80;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e3_td3").text(a + '/' + b);
+    });
+  ////////////
+
+  $("#id_s2_e4_pr1")
+    .focusout(function () {
+      var k = $("#id_s2_e4_pr1").val().split('/');
+      var a = k[0] - 200;
+      var b = k[1] - 150;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e4_td1").text(a + '/' + b);
+    });
+  $("#id_s2_e4_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e4_pr2").val().split('/');
+      var a = k[0] - 200;
+      var b = k[1] - 150;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e4_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e4_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e4_pr3").val().split('/');
+      var a = k[0] - 200;
+      var b = k[1] - 150;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e4_td3").text(a + '/' + b);
+    });
+  ////////////
+
+  $("#id_s2_e5_pr1")
+    .focusout(function () {
+      var k = $("#id_s2_e5_pr1").val().split('/');
+      var a = k[0] - 35;
+      var b = k[1] - 15;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e5_td1").text(a + '/' + b);
+    });
+  $("#id_s2_e5_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e5_pr2").val().split('/');
+      var a = k[0] - 35;
+      var b = k[1] - 15;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e5_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e5_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e5_pr3").val().split('/');
+      var a = k[0] - 35;
+      var b = k[1] - 15;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e5_td3").text(a + '/' + b);
+    });
+  ////////////
+
+  $("#id_s2_e6_pr1")
+    .focusout(function () {
+      var k = $("#id_s2_e6_pr1").val().split('/');
+      var a = k[0] - 100;
+      var b = k[1] - 70;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e6_td1").text(a + '/' + b);
+    });
+  $("#id_s2_e6_pr2")
+    .focusout(function () {
+      var k = $("#id_s2_e6_pr2").val().split('/');
+      var a = k[0] - 100;
+      var b = k[1] - 70;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e6_td2").text(a + '/' + b);
+    });
+  $("#id_s2_e6_pr3")
+    .focusout(function () {
+      var k = $("#id_s2_e6_pr3").val().split('/');
+      var a = k[0] - 100;
+      var b = k[1] - 70;
+      if (a < 0)
+        a = -a;
+      if (b < 0)
+        b = -b;
+
+      $("#id_s2_e6_td3").text(a + '/' + b);
+    });
+  ////////////
+  $("#cal").click(function () {
+    var systolic_error = 0;
+    var diasystolic_error = 0;
+
+    var k = $("#id_s2_e1_pr1").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e1_pr2").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e1_pr3").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+
+    var k = $("#id_s2_e2_pr1").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e2_pr2").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e2_pr3").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e3_pr1").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e3_pr2").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e3_pr3").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e4_pr1").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e4_pr2").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e4_pr3").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e5_pr1").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e5_pr2").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e5_pr3").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e6_pr1").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e6_pr2").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e6_pr3").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+
+    avg_systolic_error = systolic_error / 18;
+    avg_diasystolic_error = diasystolic_error / 18;
+
+    if ($("#avg_systolic_error").text() > 5) {
+      $("#avg_systolic_error").css('background-color', '#cc4252');
+      $("#avg_systolic_error").css('color', 'white');
+
+    }
+
+    if ($("#avg_diasystolic_error").text() > 5) {
+
+      $("#avg_diasystolic_error").css('background-color', '#cc4252');
+      $("#avg_diasystolic_error").css('color', 'white');
+
+    }
+
+
+    if ($("#avg_systolic_error").text() <= 5) {
+      $("#avg_systolic_error").css('background-color', 'white');
+      $("#avg_systolic_error").css('color', 'black');
+
+    }
+
+    if ($("#avg_diasystolic_error").text() <= 5) {
+
+      $("#avg_diasystolic_error").css('background-color', 'white');
+      $("#avg_diasystolic_error").css('color', 'black');
+
+    }
+    var SD1 = 0;
+    var SD2 = 0;
+
+    /////////////////////////////////////////////
+
+
+    var k = $("#id_s2_e1_pr1").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e1_pr2").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e1_pr3").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+
+    var k = $("#id_s2_e2_pr1").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e2_pr2").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e2_pr3").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    /////////
+    var k = $("#id_s2_e3_pr1").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    var k = $("#id_s2_e3_pr2").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e3_pr3").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+    var k = $("#id_s2_e4_pr1").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e4_pr2").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e4_pr3").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+    var k = $("#id_s2_e5_pr1").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e5_pr2").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    var k = $("#id_s2_e5_pr3").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////
+    var k = $("#id_s2_e6_pr1").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e6_pr2").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e6_pr3").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    SD1 = SD1 / 18;
+    SD2 = SD2 / 18;
+    SD1 = Math.sqrt(SD1);
+    SD2 = Math.sqrt(SD2);
+
+
+
+    SD1 = SD1 * 100;
+    SD2 = SD2 * 100;
+    SD1 = parseInt(SD1);
+    SD2 = parseInt(SD2);
+    SD1 = SD1 / 100;
+    SD2 = SD2 / 100;
+
+    $("#systolic_SD").text(SD1);
+    $("#diasystolic_SD").text(SD2);
+    /**/
+
+
+    avg_systolic_error = avg_systolic_error * 100;
+    avg_diasystolic_error = avg_diasystolic_error * 100;
+
+    avg_systolic_error = parseInt(avg_systolic_error);
+    avg_diasystolic_error = parseInt(avg_diasystolic_error);
+    avg_systolic_error = avg_systolic_error / 100;
+    avg_diasystolic_error = avg_diasystolic_error / 100;
+
+    $("#systolic_error").text(systolic_error);
+    $("#avg_systolic_error").text(avg_systolic_error);
+    $("#diasystolic_error").text(diasystolic_error);
+    $("#avg_diasystolic_error").text(avg_diasystolic_error);
+    /**/
+
+
+    if ($("#systolic_SD").text() > 8) {
+
+      $("#systolic_SD").css('background-color', '#cc4252');
+      $("#systolic_SD").css('color', 'white');
+
+    }
+
+
+    if ($("#diasystolic_SD").text() > 8) {
+
+      $("#diasystolic_SD").css('background-color', '#cc4252');
+      $("#diasystolic_SD").css('color', 'white');
+
+    }
+
+
+    if ($("#systolic_SD").text() <= 8) {
+      $("#systolic_SD").css('background-color', 'white');
+      $("#systolic_SD").css('color', 'black');
+
+    }
+    if ($("#diasystolic_SD").text() <= 8) {
+      $("#diasystolic_SD").css('background-color', 'white');
+      $("#diasystolic_SD").css('color', 'black');
+
+    }
+
+
+  });
+</script>
+
+
+
+{% if reload or edit or edit_recal %}
+<script>
+  /////////////////table0
+  $("#id_s0_e1_comment")
+
+  if ($("#id_s0_e1_comment").val() >= 3) {
+    $("#id_s0_e1_comment").css("background-color", "#f24858");
+    $("#id_s0_e1_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e1_comment").val() == 1)) {
+    $("#id_s0_e1_comment").css("background-color", "white");
+    $("#id_s0_e1_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e1_comment").val() == 2)) {
+    $("#id_s0_e1_comment").css("background-color", 'yellow');
+    $("#id_s0_e1_comment").css("color", "black");
+  }
+
+  /////
+
+  $("#id_s0_e2_comment")
+
+  if ($("#id_s0_e2_comment").val() >= 3) {
+    $("#id_s0_e2_comment").css("background-color", "#f24858");
+    $("#id_s0_e2_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e2_comment").val() == 1)) {
+    $("#id_s0_e2_comment").css("background-color", "white");
+    $("#id_s0_e2_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e2_comment").val() == 2)) {
+    $("#id_s0_e2_comment").css("background-color", 'yellow');
+    $("#id_s0_e2_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e3_comment")
+
+  if ($("#id_s0_e3_comment").val() >= 3) {
+    $("#id_s0_e3_comment").css("background-color", "#f24858");
+    $("#id_s0_e3_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e3_comment").val() == 1)) {
+    $("#id_s0_e3_comment").css("background-color", "white");
+    $("#id_s0_e3_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e3_comment").val() == 2)) {
+    $("#id_s0_e3_comment").css("background-color", 'yellow');
+    $("#id_s0_e3_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e4_comment")
+
+  if ($("#id_s0_e4_comment").val() >= 3) {
+    $("#id_s0_e4_comment").css("background-color", "#f24858");
+    $("#id_s0_e4_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e4_comment").val() == 1)) {
+    $("#id_s0_e4_comment").css("background-color", "white");
+    $("#id_s0_e4_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e4_comment").val() == 2)) {
+    $("#id_s0_e4_comment").css("background-color", 'yellow');
+    $("#id_s0_e4_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e5_comment")
+
+  if ($("#id_s0_e5_comment").val() >= 3) {
+    $("#id_s0_e5_comment").css("background-color", "#f24858");
+    $("#id_s0_e5_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e5_comment").val() == 1)) {
+    $("#id_s0_e5_comment").css("background-color", "white");
+    $("#id_s0_e5_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e5_comment").val() == 2)) {
+    $("#id_s0_e5_comment").css("background-color", 'yellow');
+    $("#id_s0_e5_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e6_comment")
+
+  if ($("#id_s0_e6_comment").val() >= 3) {
+    $("#id_s0_e6_comment").css("background-color", "#f24858");
+    $("#id_s0_e6_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e6_comment").val() == 1)) {
+    $("#id_s0_e6_comment").css("background-color", "white");
+    $("#id_s0_e6_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e6_comment").val() == 2)) {
+    $("#id_s0_e6_comment").css("background-color", 'yellow');
+    $("#id_s0_e6_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e7_comment")
+
+  if ($("#id_s0_e7_comment").val() >= 3) {
+    $("#id_s0_e7_comment").css("background-color", "#f24858");
+    $("#id_s0_e7_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e7_comment").val() == 1)) {
+    $("#id_s0_e7_comment").css("background-color", "white");
+    $("#id_s0_e7_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e7_comment").val() == 2)) {
+    $("#id_s0_e7_comment").css("background-color", 'yellow');
+    $("#id_s0_e7_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e8_comment")
+
+  if ($("#id_s0_e8_comment").val() >= 3) {
+    $("#id_s0_e8_comment").css("background-color", "#f24858");
+    $("#id_s0_e8_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e8_comment").val() == 1)) {
+    $("#id_s0_e8_comment").css("background-color", "white");
+    $("#id_s0_e8_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e8_comment").val() == 2)) {
+    $("#id_s0_e8_comment").css("background-color", 'yellow');
+    $("#id_s0_e8_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e9_comment")
+
+  if ($("#id_s0_e9_comment").val() >= 3) {
+    $("#id_s0_e9_comment").css("background-color", "#f24858");
+    $("#id_s0_e9_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e9_comment").val() == 1)) {
+    $("#id_s0_e9_comment").css("background-color", "white");
+    $("#id_s0_e9_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e9_comment").val() == 2)) {
+    $("#id_s0_e9_comment").css("background-color", 'yellow');
+    $("#id_s0_e9_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e10_comment")
+
+  if ($("#id_s0_e10_comment").val() >= 3) {
+    $("#id_s0_e10_comment").css("background-color", "#f24858");
+    $("#id_s0_e10_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e10_comment").val() == 1)) {
+    $("#id_s0_e10_comment").css("background-color", "white");
+    $("#id_s0_e10_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e10_comment").val() == 2)) {
+    $("#id_s0_e10_comment").css("background-color", 'yellow');
+    $("#id_s0_e10_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e11_comment")
+
+  if ($("#id_s0_e11_comment").val() >= 3) {
+    $("#id_s0_e11_comment").css("background-color", "#f24858");
+    $("#id_s0_e11_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e11_comment").val() == 1)) {
+    $("#id_s0_e11_comment").css("background-color", "white");
+    $("#id_s0_e11_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e11_comment").val() == 2)) {
+    $("#id_s0_e11_comment").css("background-color", 'yellow');
+    $("#id_s0_e11_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e12_comment")
+
+  if ($("#id_s0_e12_comment").val() >= 3) {
+    $("#id_s0_e12_comment").css("background-color", "#f24858");
+    $("#id_s0_e12_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e12_comment").val() == 1)) {
+    $("#id_s0_e12_comment").css("background-color", "white");
+    $("#id_s0_e12_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e12_comment").val() == 2)) {
+    $("#id_s0_e12_comment").css("background-color", 'yellow');
+    $("#id_s0_e12_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e13_comment")
+
+  if ($("#id_s0_e13_comment").val() >= 3) {
+    $("#id_s0_e13_comment").css("background-color", "#f24858");
+    $("#id_s0_e13_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e13_comment").val() == 1)) {
+    $("#id_s0_e13_comment").css("background-color", "white");
+    $("#id_s0_e13_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e13_comment").val() == 2)) {
+    $("#id_s0_e13_comment").css("background-color", 'yellow');
+    $("#id_s0_e13_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e14_comment")
+
+  if ($("#id_s0_e14_comment").val() >= 3) {
+    $("#id_s0_e14_comment").css("background-color", "#f24858");
+    $("#id_s0_e14_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e14_comment").val() == 1)) {
+    $("#id_s0_e14_comment").css("background-color", "white");
+    $("#id_s0_e14_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e14_comment").val() == 2)) {
+    $("#id_s0_e14_comment").css("background-color", 'yellow');
+    $("#id_s0_e14_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e15_comment")
+
+  if ($("#id_s0_e15_comment").val() >= 3) {
+    $("#id_s0_e15_comment").css("background-color", "#f24858");
+    $("#id_s0_e15_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e15_comment").val() == 1)) {
+    $("#id_s0_e15_comment").css("background-color", "white");
+    $("#id_s0_e15_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e15_comment").val() == 2)) {
+    $("#id_s0_e15_comment").css("background-color", 'yellow');
+    $("#id_s0_e15_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e16_comment")
+
+  if ($("#id_s0_e16_comment").val() >= 3) {
+    $("#id_s0_e16_comment").css("background-color", "#f24858");
+    $("#id_s0_e16_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e16_comment").val() == 1)) {
+    $("#id_s0_e16_comment").css("background-color", "white");
+    $("#id_s0_e16_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e16_comment").val() == 2)) {
+    $("#id_s0_e16_comment").css("background-color", 'yellow');
+    $("#id_s0_e16_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e17_comment")
+
+  if ($("#id_s0_e17_comment").val() >= 3) {
+    $("#id_s0_e17_comment").css("background-color", "#f24858");
+    $("#id_s0_e17_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e17_comment").val() == 1)) {
+    $("#id_s0_e17_comment").css("background-color", "white");
+    $("#id_s0_e17_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e17_comment").val() == 2)) {
+    $("#id_s0_e17_comment").css("background-color", 'yellow');
+    $("#id_s0_e17_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e18_comment")
+
+  if ($("#id_s0_e18_comment").val() >= 3) {
+    $("#id_s0_e18_comment").css("background-color", "#f24858");
+    $("#id_s0_e18_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e18_comment").val() == 1)) {
+    $("#id_s0_e18_comment").css("background-color", "white");
+    $("#id_s0_e18_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e18_comment").val() == 2)) {
+    $("#id_s0_e18_comment").css("background-color", 'yellow');
+    $("#id_s0_e18_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e19_comment")
+
+  if ($("#id_s0_e19_comment").val() >= 3) {
+    $("#id_s0_e19_comment").css("background-color", "#f24858");
+    $("#id_s0_e19_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e19_comment").val() == 1)) {
+    $("#id_s0_e19_comment").css("background-color", "white");
+    $("#id_s0_e19_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e19_comment").val() == 2)) {
+    $("#id_s0_e19_comment").css("background-color", 'yellow');
+    $("#id_s0_e19_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e20_comment")
+
+  if ($("#id_s0_e20_comment").val() >= 3) {
+    $("#id_s0_e20_comment").css("background-color", "#f24858");
+    $("#id_s0_e20_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e20_comment").val() == 1)) {
+    $("#id_s0_e20_comment").css("background-color", "white");
+    $("#id_s0_e20_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e20_comment").val() == 2)) {
+    $("#id_s0_e20_comment").css("background-color", 'yellow');
+    $("#id_s0_e20_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e21_comment")
+
+  if ($("#id_s0_e21_comment").val() >= 3) {
+    $("#id_s0_e21_comment").css("background-color", "#f24858");
+    $("#id_s0_e21_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e21_comment").val() == 1)) {
+    $("#id_s0_e21_comment").css("background-color", "white");
+    $("#id_s0_e21_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e21_comment").val() == 2)) {
+    $("#id_s0_e21_comment").css("background-color", 'yellow');
+    $("#id_s0_e21_comment").css("color", "black");
+  }
+
+  /////
+  $("#id_s0_e22_comment")
+
+  if ($("#id_s0_e22_comment").val() >= 3) {
+    $("#id_s0_e22_comment").css("background-color", "#f24858");
+    $("#id_s0_e22_comment").css("color", "white");
+
+  }
+  else if (($("#id_s0_e22_comment").val() == 1)) {
+    $("#id_s0_e22_comment").css("background-color", "white");
+    $("#id_s0_e22_comment").css("color", "black");
+
+  }
+  else if (($("#id_s0_e22_comment").val() == 2)) {
+    $("#id_s0_e22_comment").css("background-color", 'yellow');
+    $("#id_s0_e22_comment").css("color", "black");
+  }
+
+  /////
+
+  /////////////////////////// table1
+
+  $("#id_s1_e1_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e1_nibpp").val() - $("#id_s1_e1_simp").val()) / $("#id_s1_e1_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e1_nibpp").val() - $("#id_s1_e1_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e1_nibpp").val().length != 0)) {
+    $("#id_s1_e1_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e1_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e1_nibpp").val().length == 0)) {
+    $("#id_s1_e1_nibpp").css("background-color", "white");
+    $("#id_s1_e1_nibpp").css("color", "black");
+
+  }
+
+
+
+  $("#id_s1_e2_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e2_nibpp").val() - $("#id_s1_e2_simp").val()) / $("#id_s1_e2_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e2_nibpp").val() - $("#id_s1_e2_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e2_nibpp").val().length != 0)) {
+    $("#id_s1_e2_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e2_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e2_nibpp").val().length == 0)) {
+    $("#id_s1_e2_nibpp").css("background-color", "white");
+    $("#id_s1_e2_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e3_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e3_nibpp").val() - $("#id_s1_e3_simp").val()) / $("#id_s1_e3_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e3_nibpp").val() - $("#id_s1_e3_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e3_nibpp").val().length != 0)) {
+    $("#id_s1_e3_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e3_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e3_nibpp").val().length == 0)) {
+    $("#id_s1_e3_nibpp").css("background-color", "white");
+    $("#id_s1_e3_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e4_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e4_nibpp").val() - $("#id_s1_e4_simp").val()) / $("#id_s1_e4_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e4_nibpp").val() - $("#id_s1_e4_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e4_nibpp").val().length != 0)) {
+    $("#id_s1_e4_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e4_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e4_nibpp").val().length == 0)) {
+    $("#id_s1_e4_nibpp").css("background-color", "white");
+    $("#id_s1_e4_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e5_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e5_nibpp").val() - $("#id_s1_e5_simp").val()) / $("#id_s1_e5_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e5_nibpp").val() - $("#id_s1_e5_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e5_nibpp").val().length != 0)) {
+    $("#id_s1_e5_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e5_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e5_nibpp").val().length == 0)) {
+    $("#id_s1_e5_nibpp").css("background-color", "white");
+    $("#id_s1_e5_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e6_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e6_nibpp").val() - $("#id_s1_e6_simp").val()) / $("#id_s1_e6_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e6_nibpp").val() - $("#id_s1_e6_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e6_nibpp").val().length != 0)) {
+    $("#id_s1_e6_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e6_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e6_nibpp").val().length == 0)) {
+    $("#id_s1_e6_nibpp").css("background-color", "white");
+    $("#id_s1_e6_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e7_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e7_nibpp").val() - $("#id_s1_e7_simp").val()) / $("#id_s1_e7_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e7_nibpp").val() - $("#id_s1_e7_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e7_nibpp").val().length != 0)) {
+    $("#id_s1_e7_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e7_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e7_nibpp").val().length == 0)) {
+    $("#id_s1_e7_nibpp").css("background-color", "white");
+    $("#id_s1_e7_nibpp").css("color", "black");
+
+  }
+
+
+  $("#id_s1_e8_nibpp")
+
+  // alert($( "#id_s1_e1_comment" ).val());
+
+  var n = ($("#id_s1_e8_nibpp").val() - $("#id_s1_e8_simp").val()) / $("#id_s1_e8_simp").val();
+  if (n < 0) {
+    n = -n;
+  }
+  var n2 = ($("#id_s1_e8_nibpp").val() - $("#id_s1_e8_simp").val());
+  if (n2 < 0) {
+    n2 = -n2;
+  }
+  if (n > 0.03 && n2 > 3 && ($("#id_s1_e8_nibpp").val().length != 0)) {
+    $("#id_s1_e8_nibpp").css("background-color", "#f24858");
+    $("#id_s1_e8_nibpp").css("color", "white");
+  }
+  else if (n <= 0.03 || n2 <= 3 || ($("#id_s1_e8_nibpp").val().length == 0)) {
+    $("#id_s1_e8_nibpp").css("background-color", "white");
+    $("#id_s1_e8_nibpp").css("color", "black");
+
+  }
+
+  // ///////////////////////////table 2
+
+
+
+
+
+  // id='id_s2_e1_td1'
+  $("#id_s2_e1_pr1")
+
+  // alert($( "#id_s2_e1_comment" ).val());
+  var k = $("#id_s2_e1_pr1").val().split('/');
+  var a = k[0] - 60;
+  var b = k[1] - 30;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e1_td1").text(a + '/' + b);
+  //   if($( "#id_s2_e1_pr1" ).val() <=0  && ($( "#id_s2_e1_pr1").val().length !=0)){
+  //     $("#id_s2_e1_pr1").css("background-color", "#f24858");
+  //   $("#id_s2_e1_pr1").css("color", "white");
+
+  //   $("#id_s2_e1_comment").css("background-color", "#f24858");
+  //   $("#id_s2_e1_comment").css("color", "white");
+  //   $("#id_s2_e1_comment").val("2");
+
+  // }
+  //   else if(($( "#id_s2_e1_pr1").val() >0) || ($( "#id_s2_e1_pr1").val().length ==0)) {
+  //     $("#id_s2_e1_pr1").css("background-color", "white");
+  //   $("#id_s2_e1_pr1").css("color", "black");
+
+  //   $("#id_s2_e1_comment").css("background-color", "white");
+  //   $("#id_s2_e1_comment").css("color", "black");
+  //   $("#id_s2_e1_comment").val("1");
+
+  // }
+
+
+
+  $("#id_s2_e1_pr2")
+
+  var k = $("#id_s2_e1_pr2").val().split('/');
+  var a = k[0] - 60;
+  var b = k[1] - 30;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e1_td2").text(a + '/' + b);
+
+  $("#id_s2_e1_pr3")
+
+  var k = $("#id_s2_e1_pr3").val().split('/');
+  var a = k[0] - 60;
+  var b = k[1] - 30;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e1_td3").text(a + '/' + b);
+
+  /////////////////////////////////////////////
+  $("#id_s2_e2_pr1")
+
+  var k = $("#id_s2_e2_pr1").val().split('/');
+  var a = k[0] - 80;
+  var b = k[1] - 50;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e2_td1").text(a + '/' + b);
+
+  $("#id_s2_e2_pr2")
+
+  var k = $("#id_s2_e2_pr2").val().split('/');
+  var a = k[0] - 80;
+  var b = k[1] - 50;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e2_td2").text(a + '/' + b);
+
+  $("#id_s2_e2_pr3")
+
+  var k = $("#id_s2_e2_pr3").val().split('/');
+  var a = k[0] - 80;
+  var b = k[1] - 50;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e2_td3").text(a + '/' + b);
+
+  ////////////
+  $("#id_s2_e3_pr1")
+
+  var k = $("#id_s2_e3_pr1").val().split('/');
+  var a = k[0] - 120;
+  var b = k[1] - 80;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e3_td1").text(a + '/' + b);
+
+  $("#id_s2_e3_pr2")
+
+  var k = $("#id_s2_e3_pr2").val().split('/');
+  var a = k[0] - 120;
+  var b = k[1] - 80;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e3_td2").text(a + '/' + b);
+
+  $("#id_s2_e3_pr3")
+
+  var k = $("#id_s2_e3_pr3").val().split('/');
+  var a = k[0] - 120;
+  var b = k[1] - 80;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e3_td3").text(a + '/' + b);
+
+  ////////////
+
+  $("#id_s2_e4_pr1")
+
+  var k = $("#id_s2_e4_pr1").val().split('/');
+  var a = k[0] - 200;
+  var b = k[1] - 150;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e4_td1").text(a + '/' + b);
+
+  $("#id_s2_e4_pr2")
+
+  var k = $("#id_s2_e4_pr2").val().split('/');
+  var a = k[0] - 200;
+  var b = k[1] - 150;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e4_td2").text(a + '/' + b);
+
+  $("#id_s2_e4_pr3")
+
+  var k = $("#id_s2_e4_pr3").val().split('/');
+  var a = k[0] - 200;
+  var b = k[1] - 150;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e4_td3").text(a + '/' + b);
+
+  ////////////
+
+  $("#id_s2_e5_pr1")
+
+  var k = $("#id_s2_e5_pr1").val().split('/');
+  var a = k[0] - 35;
+  var b = k[1] - 15;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e5_td1").text(a + '/' + b);
+
+  $("#id_s2_e5_pr2")
+
+  var k = $("#id_s2_e5_pr2").val().split('/');
+  var a = k[0] - 35;
+  var b = k[1] - 15;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e5_td2").text(a + '/' + b);
+
+  $("#id_s2_e5_pr3")
+
+  var k = $("#id_s2_e5_pr3").val().split('/');
+  var a = k[0] - 35;
+  var b = k[1] - 15;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e5_td3").text(a + '/' + b);
+
+  ////////////
+
+  $("#id_s2_e6_pr1")
+
+  var k = $("#id_s2_e6_pr1").val().split('/');
+  var a = k[0] - 100;
+  var b = k[1] - 70;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e6_td1").text(a + '/' + b);
+
+  $("#id_s2_e6_pr2")
+
+  var k = $("#id_s2_e6_pr2").val().split('/');
+  var a = k[0] - 100;
+  var b = k[1] - 70;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e6_td2").text(a + '/' + b);
+
+  $("#id_s2_e6_pr3")
+
+  var k = $("#id_s2_e6_pr3").val().split('/');
+  var a = k[0] - 100;
+  var b = k[1] - 70;
+  if (a < 0)
+    a = -a;
+  if (b < 0)
+    b = -b;
+
+  $("#id_s2_e6_td3").text(a + '/' + b);
+
+  ////////////
+  $("#cal").click(function () {
+    var systolic_error = 0;
+    var diasystolic_error = 0;
+
+    var k = $("#id_s2_e1_pr1").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e1_pr2").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e1_pr3").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+
+    var k = $("#id_s2_e2_pr1").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e2_pr2").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e2_pr3").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e3_pr1").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e3_pr2").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e3_pr3").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e4_pr1").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e4_pr2").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e4_pr3").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e5_pr1").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e5_pr2").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e5_pr3").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    /////////////////////////////////////////////
+
+    var k = $("#id_s2_e6_pr1").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e6_pr2").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+    var k = $("#id_s2_e6_pr3").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    systolic_error += a;
+    diasystolic_error += b;
+
+
+    avg_systolic_error = systolic_error / 18;
+    avg_diasystolic_error = diasystolic_error / 18;
+
+    if ($("#avg_systolic_error").text() > 5) {
+      $("#avg_systolic_error").css('background-color', '#cc4252');
+      $("#avg_systolic_error").css('color', 'white');
+
+    }
+
+    if ($("#avg_diasystolic_error").text() > 5) {
+
+      $("#avg_diasystolic_error").css('background-color', '#cc4252');
+      $("#avg_diasystolic_error").css('color', 'white');
+
+    }
+
+
+    if ($("#avg_systolic_error").text() <= 5) {
+      $("#avg_systolic_error").css('background-color', 'white');
+      $("#avg_systolic_error").css('color', 'black');
+
+    }
+
+    if ($("#avg_diasystolic_error").text() <= 5) {
+
+      $("#avg_diasystolic_error").css('background-color', 'white');
+      $("#avg_diasystolic_error").css('color', 'black');
+
+    }
+    var SD1 = 0;
+    var SD2 = 0;
+
+    /////////////////////////////////////////////
+
+
+    var k = $("#id_s2_e1_pr1").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e1_pr2").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e1_pr3").val().split('/');
+    var a = k[0] - 60;
+    var b = k[1] - 30;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+
+    var k = $("#id_s2_e2_pr1").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e2_pr2").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e2_pr3").val().split('/');
+    var a = k[0] - 80;
+    var b = k[1] - 50;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    /////////
+    var k = $("#id_s2_e3_pr1").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    var k = $("#id_s2_e3_pr2").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e3_pr3").val().split('/');
+    var a = k[0] - 120;
+    var b = k[1] - 80;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+    var k = $("#id_s2_e4_pr1").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e4_pr2").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e4_pr3").val().split('/');
+    var a = k[0] - 200;
+    var b = k[1] - 150;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////////////
+    var k = $("#id_s2_e5_pr1").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e5_pr2").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    var k = $("#id_s2_e5_pr3").val().split('/');
+    var a = k[0] - 35;
+    var b = k[1] - 15;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+    ///////////
+    var k = $("#id_s2_e6_pr1").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e6_pr2").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    var k = $("#id_s2_e6_pr3").val().split('/');
+    var a = k[0] - 100;
+    var b = k[1] - 70;
+    if (a < 0)
+      a = -a;
+    if (b < 0)
+      b = -b;
+    SD1 += (a - avg_systolic_error) * (a - avg_systolic_error);
+    SD2 += (b - avg_diasystolic_error) * (b - avg_diasystolic_error);
+
+    SD1 = SD1 / 18;
+    SD2 = SD2 / 18;
+    SD1 = Math.sqrt(SD1);
+    SD2 = Math.sqrt(SD2);
+
+
+
+    SD1 = SD1 * 100;
+    SD2 = SD2 * 100;
+    SD1 = parseInt(SD1);
+    SD2 = parseInt(SD2);
+    SD1 = SD1 / 100;
+    SD2 = SD2 / 100;
+
+    $("#systolic_SD").text(SD1);
+    $("#diasystolic_SD").text(SD2);
+    /**/
+
+
+    avg_systolic_error = avg_systolic_error * 100;
+    avg_diasystolic_error = avg_diasystolic_error * 100;
+
+    avg_systolic_error = parseInt(avg_systolic_error);
+    avg_diasystolic_error = parseInt(avg_diasystolic_error);
+    avg_systolic_error = avg_systolic_error / 100;
+    avg_diasystolic_error = avg_diasystolic_error / 100;
+
+    $("#systolic_error").text(systolic_error);
+    $("#avg_systolic_error").text(avg_systolic_error);
+    $("#diasystolic_error").text(diasystolic_error);
+    $("#avg_diasystolic_error").text(avg_diasystolic_error);
+    /**/
+
+
+    if ($("#systolic_SD").text() > 8) {
+
+      $("#systolic_SD").css('background-color', '#cc4252');
+      $("#systolic_SD").css('color', 'white');
+
+    }
+
+
+    if ($("#diasystolic_SD").text() > 8) {
+
+      $("#diasystolic_SD").css('background-color', '#cc4252');
+      $("#diasystolic_SD").css('color', 'white');
+
+    }
+
+
+    if ($("#systolic_SD").text() <= 8) {
+      $("#systolic_SD").css('background-color', 'white');
+      $("#systolic_SD").css('color', 'black');
+
+    }
+    if ($("#diasystolic_SD").text() <= 8) {
+      $("#diasystolic_SD").css('background-color', 'white');
+      $("#diasystolic_SD").css('color', 'black');
+
+    }
+
+
+
+</script>
+{% endif %}

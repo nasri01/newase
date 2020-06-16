@@ -1,0 +1,1920 @@
+{% load static %}
+{% load widget_tweaks %}
+<div
+    style="text-align: center ;padding: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: white;border-radius: 10px;position: fixed;left: 40px;bottom: 15px;z-index: 100;">
+    <div style="display:block;width:100%;">
+    <a href="{% url 'admin:acc_accessory_add'%}" target="_blank">
+        <button class="btn btn-danger" style="display:block;width:100%;" > افزودن لوازم جانبی </button>
+    </a>  
+    </div>
+    <div style="height: 10px;">
+    </div>
+    <a href="{% url 'admin:acc_comment_add'%}" target="_blank">
+        <button class="btn btn-secondary" style="display:block;width:100%;" > افزودن کامنت </button>
+    </a>
+    <div style="height: 10px;"></div>
+    <button class="btn btn-info" type="submit" form="myform" formaction="{% url 'reload' formtype='InfusionPump' %}"
+      formnovalidate>بارگزاری مجدد فرم</button>
+  </div>
+<form method="POST" class="post-form" id="myform">
+ 
+  {% csrf_token %}
+
+  <table class="table-bordered">
+
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+    <!--////////////////////////////////////////////////////////////-->
+    <div class="data container-fluid">
+      {% if edit %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+      </div>
+      {% elif recal %}
+      <div class="alert alert-warning">
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+      {% elif edit_recal %}
+      <div class="alert alert-warning">
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+      </div>
+
+      {% endif %}
+      <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+        گواهينامه کنترل کيفي دستگاه پمپ تزریق
+      </h1>
+
+
+
+
+      <div class="row" style="margin-right: 40px;">
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+          <span style="margin-right: 30px;"> نام دستگاه : </span>
+          <span>
+
+
+            {% render_field form.device style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+
+          </span>
+          <br>
+          <!-- / -->
+
+          <span style="margin-right: 17px;"> شماره درخواست : </span>
+          <span class="ee">
+            {% render_field form.request  class="search-a" style="display:inline;width:50%;"%}
+
+          </span>
+          <br>
+          <span style="margin-right: 17px;"> رطوبت محیطی : </span>
+          <br>
+          <span class="ee">
+            {% render_field form.humidity style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+          <br>
+          <!-- / -->
+          <label style="margin-right: 17px;"> دمای محیطی : </label>
+          <br>
+          <span class="ee">
+            {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
+
+          </span>
+
+
+          <!--
+  
+  
+    <input type="text" style="display: inline-block;text-align: right;" class="form-control" name="request-number" disabled> -->
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+          <h2 style="font-family: light-iransans">تجهیزات آزمون : </h2>
+
+          <div class="container">
+            <label>نام تجهیز :</label><br>
+            <label>دستگاه شماره 1 :</label>
+            <span class="ee">
+              {{form.cal_dev1}}
+            </span><br>
+            <label>دستگاه شماره 2 :</label>
+            <span class="ee">
+              {{form.cal_dev2}}
+            </span><br>
+            <label>دستگاه شماره 3 :</label>
+            <span class="ee">
+              {{form.cal_dev3}}
+            </span><br>
+            <label>دستگاه شماره 4 :</label>
+            <span class="ee">
+              {{form.cal_dev4}}
+            </span><br>
+
+          </div>
+          <br><br>
+
+
+
+        </div>
+
+      </div>
+
+
+      <!--</form>-->
+
+      <br><br>
+
+
+
+      <div style="font-weight: bold;font-size: 18px;">
+
+        تستهای کیفی:
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1">
+        <tbody>
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">عنوان بررسی</td>
+            <td rowspan="2">ردیف</td>
+          </tr>
+          <tr>
+            <td class="time">Rej</td>
+            <td class="time">Ok</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e1_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>بدنه / شاسی</span></td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e2_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>نصب</span></td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e3_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">چرخ ها / ترمزها</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e4_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">دوشاخه برق</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e5_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>سیم برق</span></td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e6_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">استرین ریلیف</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e7_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>اتصالات و کانکتورها</span></td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e8_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>کنترل ها و سوئیچ ها</span></td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e9_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">باطری</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e10_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">نشانگرها و نمایشگرها</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e11_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="time" style="text-align: right;">Self-Test</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e12_comment}}</td>
+            <td>-</td>
+            <td><span>-</span></td>
+            <td style="text-align: right;">تنظیمات زمان و تاریخ</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e13_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">اینترفیس بی سیم و شبکه</td>
+            <td>13</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e14_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">آلارم ها</td>
+            <td>14</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e15_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;">سیگنالهای صوتی</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e16_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>آلارم مربوط به درب باز/ ست تزریق با بارگذاری غلط</span></td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e17_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>مکانیسم (های) قطع فلو</span></td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e18_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>مخزن خالی</span></td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e19_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>انسداد</span></td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e20_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>کامل بودن تزریق</span></td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e21_comment}}</td>
+            <td>-</td>
+            <td><span>-</span></td>
+            <td style="text-align: right;"><span>سیستم احضار پرستار</span></td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e22_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>برچسب</span></td>
+            <td>22</td>
+          </tr>
+          <tr>
+            <td>{{form.s0_e23_comment}}</td>
+            <td>-</td>
+            <td>-</td>
+            <td style="text-align: right;"><span>اکسسوری ها</span></td>
+            <td>23</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <span style="font-weight: bold;font-size: 18px;">
+        تست های کمی:
+      </span>
+      <br>
+      <span style="font-weight: bold;">کلاس دستگاه:</span>
+      <div style="width: 20%;">
+        {{ form.test_type }}
+      </div>
+
+      <br><br>
+      <div style="font-weight: bold;">
+        مقدار اندازه گیری شده: {{ form.s1_res }}اهم
+      </div>
+      <br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-4">
+        <tbody>
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">حد مجاز (Ω)</td>
+            <td rowspan="2">نوع کابل</td>
+
+          </tr>
+          <tr>
+            <td class="time">Rej</td>
+            <td class="time">Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s1_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">0.1</td>
+            <td>جدا شدنی</td>
+          </tr>
+          <tr>
+            <td>{{ form.s1_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">0.2</td>
+            <td>جدا نشدنی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+      <br>
+
+
+      <div style="font-weight: bold;">
+
+        2. جریان نشتی زمین </div>
+      <br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-2">
+        <tbody>
+
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">مقدار مجاز (µa)</td>
+            <td rowspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="2">شرایط کاری</td>
+            <td rowspan="2">حالت تست</td>
+          </tr>
+          <tr>
+            <td class="time">Rej</td>
+            <td class="time">Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s2_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s2_e1_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- روشن</td>
+            <td rowspan="4">عادی</td>
+          </tr>
+          <tr>
+            <td>{{ form.s2_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s2_e2_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- خاموش </td>
+          </tr>
+          <tr>
+            <td>{{ form.s2_e3_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s2_e3_lc }}</td>
+            <td style="text-align: right;" class="time"> Standby -</td>
+          </tr>
+          <tr>
+            <td>{{ form.s2_e4_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s2_e4_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+          </tr>
+          <tr>
+            <td>{{ form.s2_e5_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">1000</td>
+            <td>{{ form.s2_e5_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+            <td>تک اشکالی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+      <br>
+      <div>
+        1) در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F به زمین متصل و از آن جدا
+        می باشند نیز تکرار شود.
+      </div>
+      <br>
+
+
+      <br>
+      <span style="font-weight: bold;">
+        3. جریان نشتی محفظه</span>
+
+
+      <br><br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-2">
+        <tbody>
+
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td rowspan="2">مقدار مجاز (µa)</td>
+            <td rowspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="2">شرایط کاری</td>
+            <td rowspan="2">حالت تست</td>
+          </tr>
+          <tr>
+            <td class="time">Rej</td>
+            <td class="time">Ok</td>
+          </tr>
+          <tr>
+            <td>{{ form.s3_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td>{{ form.s3_e1_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- روشن</td>
+            <td rowspan="4">عادی</td>
+          </tr>
+          <tr>
+            <td>{{ form.s3_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td>{{ form.s3_e2_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- خاموش </td>
+          </tr>
+          <tr>
+            <td>{{ form.s3_e3_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td>{{ form.s3_e3_lc }}</td>
+            <td style="text-align: right;" class="time"> Standby -</td>
+          </tr>
+          <tr>
+            <td>{{ form.s3_e4_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">100</td>
+            <td>{{ form.s3_e4_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+          </tr>
+          <tr>
+            <td>{{ form.s3_e5_comment }}</td>
+            <td></td>
+            <td></td>
+            <td class="time">500</td>
+            <td>{{ form.s3_e5_lc }}</td>
+            <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه<br> – قطع زمین حفاظتی</td>
+            <td>تک اشکالی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+      <br>
+      <div>
+        نکات:
+      </div>
+      <div style="margin-right: 1cm;">
+        1- در هریک از شرایط کاری فوق در صورت امکان باید تست در حالتی که قسمتهای کاربردی نوع F به زمین متصل و از آن جدا
+        می باشند نیز تکرار شود.
+      </div>
+
+
+      <br><br>
+
+
+      <span style="font-weight: bold;">
+        4. جریان نشتی بیمار </span>
+      <br><br>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-5">
+        <tbody>
+
+          <tr>
+            <td rowspan="3">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td colspan="6">مقدار مجاز (µa)</td>
+            <td rowspan="2" colspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="3">شرایط کاری</td>
+            <td rowspan="3">حالت تست</td>
+          </tr>
+          <tr class="time">
+            <td rowspan="2">Rej</td>
+            <td rowspan="2">Ok</td>
+            <td colspan="2">B type</td>
+            <td colspan="2">BF type</td>
+            <td colspan="2">CF type</td>
+
+          </tr>
+          <tr class="time">
+            <td>ac</td>
+            <td>dc</td>
+            <td>ac</td>
+            <td>dc</td>
+            <td>ac</td>
+            <td>dc</td>
+            <td>ac</td>
+            <td>dc</td>
+          </tr>
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>{% render_field form.s4_e1_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e1_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;direction: rtl;">- روشن</td>
+            <td rowspan="4">عادی</td>
+          </tr>
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e2_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>{% render_field form.s4_e2_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e2_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;direction: rtl;">- خاموش </td>
+          </tr>
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e3_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>{% render_field form.s4_e3_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e3_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;"> Standby -</td>
+          </tr>
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e4_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>{% render_field form.s4_e4_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e4_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;direction: rtl;">- پلاریته معکوس</td>
+          </tr>
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e5_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>500</td>
+            <td>50</td>
+            <td>500</td>
+            <td>50</td>
+            <td>50</td>
+            <td>50</td>
+            <td>{% render_field form.s4_e5_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e5_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>500</td>
+            <td>50</td>
+            <td>500</td>
+            <td>50</td>
+            <td>50</td>
+            <td>50</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;direction: rtl;">- قطع یکی از سیمهای تغذیه</td>
+            <td rowspan="2">تک اشکالی</td>
+          </tr>
+
+          <tr class="time">
+            {% comment %} <td>{{ form.s4_e6_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>100</td>
+            <td>10</td>
+            <td>100</td>
+            <td>10</td>
+            <td>10</td>
+            <td>10</td>
+            <td>{% render_field form.s4_e6_aclc style="width:50px;"%}</td>
+            <td>{% render_field form.s4_e6_dclc style="width:50px;"%}</td> {% endcomment %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>500</td>
+            <td>50</td>
+            <td>500</td>
+            <td>50</td>
+            <td>50</td>
+            <td>50</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td style="text-align: right;direction: rtl;">- قطع زمین حفاظتی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <br><br>
+
+
+      <span style="font-weight: bold;">
+        5. جریان نشتی بیمار </span>
+      <br><br>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-5">
+        <tbody>
+
+          <tr>
+            <td rowspan="2">توضیحات</td>
+            <td colspan="2">نتیجه</td>
+            <td colspan="2">مقدار مجاز (µa)</td>
+            <td colspan="2">مقدار قرائت شده (µa)</td>
+            <td rowspan="2">شرایط کاری</td>
+            <td rowspan="2">حالت تست</td>
+          </tr>
+          <tr class="time">
+            <td>Rej</td>
+            <td>Ok</td>
+            <td>BF type</td>
+            <td>CF type</td>
+            <td>BF type</td>
+            <td>CF type</td>
+
+          </tr>
+          <tr class="time">
+            <td>{{ form.s5_e1_comment }}</td>
+            <td></td>
+            <td></td>
+            <td>5000</td>
+            <td>100</td>
+            <td>{% render_field form.s5_e1_bflc style="width:50px;"%}</td>
+            <td>{% render_field form.s5_e1_cflc style="width:50px;"%}</td>
+            <td>اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>
+            <td>تک اشکالی</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+      <br><br>
+
+      <div style="font-weight:bold; ">
+        6) صحت فلو:
+      </div>
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 tb-4">
+        <tbody>
+          <tr>
+            <td rowspan="2">فلوی تنظیمی
+              <br>
+              <span class="time">(mL/hr)</span>
+            </td>
+            <td rowspan="2">فلوی اندازه گیری شده</td>
+            <td rowspan="2">مقدار خطا (%)</td>
+            <td colspan="2">نتیجه</td>
+          </tr>
+          <tr>
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>50mL/hr </td>
+            <td>{{form.s6_e1_mf}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+          </tr>
+          <tr>
+            <td>100mL/hr</td>
+            <td>{{form.s6_e2_mf}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <div style="font-weight: bold;">
+        7) فشار ماکزیمم
+      </div>
+
+      <table style="margin: auto;width: 100%;text-align: center;direction: ltr;" class="tb-1 tb-4">
+        <tbody>
+          <tr>
+            <td rowspan="2">فلوی تنظیمی
+              <br>
+              <span class="time">(mL/hr)</span>
+            </td>
+            <td rowspan="2">فشار ماکزیمم اندازه گیری شده</td>
+            <td rowspan="2">
+              مقدار مجاز
+
+            </td>
+            <td colspan="2">نتیجه</td>
+          </tr>
+          <tr>
+            <td>Rej</td>
+            <td>Ok</td>
+          </tr>
+          <tr>
+            <td>10mL/hr</td>
+            <td>{{form.s7_e1_mmf}}</td>
+            <td> <span class="time">P&lt;20psi</span></td>
+            <td></td>
+            <td></td>
+
+          </tr>
+          <tr>
+            <td>100mL/hr</td>
+            <td>{{form.s7_e2_mmf}}</td>
+            <td> <span class="time">P&lt;20psi</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+
+      <div style="font-weight: bold;">
+        8) فعال شدن آلارم آشکارساز هوا با تزریق
+        <span>100μL</span>
+        <span> هوا </span>
+      </div>
+      <div style="margin-right: 30px;">
+        نتیجه
+        :
+        <span>{{ form.s8_e1_status }}</span>
+      </div>
+
+
+
+      <!--</div>-->
+      {#/////////////////////////////////////////////#}
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          {% render_field form.status style="display:inline-block;width:100%;" %}
+          <br>
+          <br>
+          {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
+          {% if edit %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='InfusionPump' %}">
+            ذخیره نهایی
+          </button>
+
+        </div>
+        <div class="col-md-6">
+          <div class="help-box" role="alert">
+            <ul>
+              <li>
+                خارج از رنج استاندارد بودن صحت فلودر ml/hr100
+              </li>
+              <li>
+                خارج از رنج استاندارد بودن صحت فلودر ml/hr50
+              </li>
+              <li>
+                خارج از رنج استاندارد بودن ماکزیمم فشار انسداد در ml/hr100
+              </li>
+              <li>
+                خارج از رنج استاندارد بودن ماکزیمم فشار انسداد در ml/hr50
+              </li>
+              <li>
+                عدم فعال شدن آلارم آشکارسازی هوا
+              </li>
+              <li>
+                نمایش پيغام occl دستگاه بعد از يک دقيقه
+              </li>
+              <li>
+                قابل تست نبودن دستگاه به علت اشکال فنی
+              </li>
+              <li>
+                قابل تست نبودنOCCL دستگاه به علت اشکال فنی
+              </li>
+              <li>
+                خارج از رنج استاندارد بودن صحت فلودر ml/hr100و ml/hr50
+              </li>
+              <li>
+                خارج از رنج استاندارد بودن ماکزیمم فشار انسداد در ml/hr100و ml/hr50
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+
+    </div>
+
+
+    <!--//////////////////////////////////////////////////////////-->
+
+  </table>
+
+</form>
+`
+<script>
+
+
+  /////////////////table 0
+  $("#id_s0_e1_comment")
+    .focusout(function () {
+      if ($("#id_s0_e1_comment").val() >= 3) {
+        $("#id_s0_e1_comment").css("background-color", "#f24858");
+        $("#id_s0_e1_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 1)) {
+        $("#id_s0_e1_comment").css("background-color", "white");
+        $("#id_s0_e1_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e1_comment").val() == 2)) {
+        $("#id_s0_e1_comment").css("background-color", 'yellow');
+        $("#id_s0_e1_comment").css("color", "black");
+      }
+    });
+  /////
+
+  $("#id_s0_e2_comment")
+    .focusout(function () {
+      if ($("#id_s0_e2_comment").val() >= 3) {
+        $("#id_s0_e2_comment").css("background-color", "#f24858");
+        $("#id_s0_e2_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 1)) {
+        $("#id_s0_e2_comment").css("background-color", "white");
+        $("#id_s0_e2_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e2_comment").val() == 2)) {
+        $("#id_s0_e2_comment").css("background-color", 'yellow');
+        $("#id_s0_e2_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e3_comment")
+    .focusout(function () {
+      if ($("#id_s0_e3_comment").val() >= 3) {
+        $("#id_s0_e3_comment").css("background-color", "#f24858");
+        $("#id_s0_e3_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 1)) {
+        $("#id_s0_e3_comment").css("background-color", "white");
+        $("#id_s0_e3_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e3_comment").val() == 2)) {
+        $("#id_s0_e3_comment").css("background-color", 'yellow');
+        $("#id_s0_e3_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e4_comment")
+    .focusout(function () {
+      if ($("#id_s0_e4_comment").val() >= 3) {
+        $("#id_s0_e4_comment").css("background-color", "#f24858");
+        $("#id_s0_e4_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 1)) {
+        $("#id_s0_e4_comment").css("background-color", "white");
+        $("#id_s0_e4_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e4_comment").val() == 2)) {
+        $("#id_s0_e4_comment").css("background-color", 'yellow');
+        $("#id_s0_e4_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e5_comment")
+    .focusout(function () {
+      if ($("#id_s0_e5_comment").val() >= 3) {
+        $("#id_s0_e5_comment").css("background-color", "#f24858");
+        $("#id_s0_e5_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 1)) {
+        $("#id_s0_e5_comment").css("background-color", "white");
+        $("#id_s0_e5_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e5_comment").val() == 2)) {
+        $("#id_s0_e5_comment").css("background-color", 'yellow');
+        $("#id_s0_e5_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e6_comment")
+    .focusout(function () {
+      if ($("#id_s0_e6_comment").val() >= 3) {
+        $("#id_s0_e6_comment").css("background-color", "#f24858");
+        $("#id_s0_e6_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 1)) {
+        $("#id_s0_e6_comment").css("background-color", "white");
+        $("#id_s0_e6_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e6_comment").val() == 2)) {
+        $("#id_s0_e6_comment").css("background-color", 'yellow');
+        $("#id_s0_e6_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e7_comment")
+    .focusout(function () {
+      if ($("#id_s0_e7_comment").val() >= 3) {
+        $("#id_s0_e7_comment").css("background-color", "#f24858");
+        $("#id_s0_e7_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 1)) {
+        $("#id_s0_e7_comment").css("background-color", "white");
+        $("#id_s0_e7_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e7_comment").val() == 2)) {
+        $("#id_s0_e7_comment").css("background-color", 'yellow');
+        $("#id_s0_e7_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e8_comment")
+    .focusout(function () {
+      if ($("#id_s0_e8_comment").val() >= 3) {
+        $("#id_s0_e8_comment").css("background-color", "#f24858");
+        $("#id_s0_e8_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 1)) {
+        $("#id_s0_e8_comment").css("background-color", "white");
+        $("#id_s0_e8_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e8_comment").val() == 2)) {
+        $("#id_s0_e8_comment").css("background-color", 'yellow');
+        $("#id_s0_e8_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e9_comment")
+    .focusout(function () {
+      if ($("#id_s0_e9_comment").val() >= 3) {
+        $("#id_s0_e9_comment").css("background-color", "#f24858");
+        $("#id_s0_e9_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 1)) {
+        $("#id_s0_e9_comment").css("background-color", "white");
+        $("#id_s0_e9_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e9_comment").val() == 2)) {
+        $("#id_s0_e9_comment").css("background-color", 'yellow');
+        $("#id_s0_e9_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e10_comment")
+    .focusout(function () {
+      if ($("#id_s0_e10_comment").val() >= 3) {
+        $("#id_s0_e10_comment").css("background-color", "#f24858");
+        $("#id_s0_e10_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 1)) {
+        $("#id_s0_e10_comment").css("background-color", "white");
+        $("#id_s0_e10_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e10_comment").val() == 2)) {
+        $("#id_s0_e10_comment").css("background-color", 'yellow');
+        $("#id_s0_e10_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e11_comment")
+    .focusout(function () {
+      if ($("#id_s0_e11_comment").val() >= 3) {
+        $("#id_s0_e11_comment").css("background-color", "#f24858");
+        $("#id_s0_e11_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 1)) {
+        $("#id_s0_e11_comment").css("background-color", "white");
+        $("#id_s0_e11_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e11_comment").val() == 2)) {
+        $("#id_s0_e11_comment").css("background-color", 'yellow');
+        $("#id_s0_e11_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e12_comment")
+    .focusout(function () {
+      if ($("#id_s0_e12_comment").val() >= 3) {
+        $("#id_s0_e12_comment").css("background-color", "#f24858");
+        $("#id_s0_e12_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 1)) {
+        $("#id_s0_e12_comment").css("background-color", "white");
+        $("#id_s0_e12_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e12_comment").val() == 2)) {
+        $("#id_s0_e12_comment").css("background-color", 'yellow');
+        $("#id_s0_e12_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e13_comment")
+    .focusout(function () {
+      if ($("#id_s0_e13_comment").val() >= 3) {
+        $("#id_s0_e13_comment").css("background-color", "#f24858");
+        $("#id_s0_e13_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 1)) {
+        $("#id_s0_e13_comment").css("background-color", "white");
+        $("#id_s0_e13_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e13_comment").val() == 2)) {
+        $("#id_s0_e13_comment").css("background-color", 'yellow');
+        $("#id_s0_e13_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e14_comment")
+    .focusout(function () {
+      if ($("#id_s0_e14_comment").val() >= 3) {
+        $("#id_s0_e14_comment").css("background-color", "#f24858");
+        $("#id_s0_e14_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 1)) {
+        $("#id_s0_e14_comment").css("background-color", "white");
+        $("#id_s0_e14_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e14_comment").val() == 2)) {
+        $("#id_s0_e14_comment").css("background-color", 'yellow');
+        $("#id_s0_e14_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e15_comment")
+    .focusout(function () {
+      if ($("#id_s0_e15_comment").val() >= 3) {
+        $("#id_s0_e15_comment").css("background-color", "#f24858");
+        $("#id_s0_e15_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 1)) {
+        $("#id_s0_e15_comment").css("background-color", "white");
+        $("#id_s0_e15_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e15_comment").val() == 2)) {
+        $("#id_s0_e15_comment").css("background-color", 'yellow');
+        $("#id_s0_e15_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e16_comment")
+    .focusout(function () {
+      if ($("#id_s0_e16_comment").val() >= 3) {
+        $("#id_s0_e16_comment").css("background-color", "#f24858");
+        $("#id_s0_e16_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 1)) {
+        $("#id_s0_e16_comment").css("background-color", "white");
+        $("#id_s0_e16_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e16_comment").val() == 2)) {
+        $("#id_s0_e16_comment").css("background-color", 'yellow');
+        $("#id_s0_e16_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e17_comment")
+    .focusout(function () {
+      if ($("#id_s0_e17_comment").val() >= 3) {
+        $("#id_s0_e17_comment").css("background-color", "#f24858");
+        $("#id_s0_e17_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 1)) {
+        $("#id_s0_e17_comment").css("background-color", "white");
+        $("#id_s0_e17_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e17_comment").val() == 2)) {
+        $("#id_s0_e17_comment").css("background-color", 'yellow');
+        $("#id_s0_e17_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e18_comment")
+    .focusout(function () {
+      if ($("#id_s0_e18_comment").val() >= 3) {
+        $("#id_s0_e18_comment").css("background-color", "#f24858");
+        $("#id_s0_e18_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 1)) {
+        $("#id_s0_e18_comment").css("background-color", "white");
+        $("#id_s0_e18_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e18_comment").val() == 2)) {
+        $("#id_s0_e18_comment").css("background-color", 'yellow');
+        $("#id_s0_e18_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e19_comment")
+    .focusout(function () {
+      if ($("#id_s0_e19_comment").val() >= 3) {
+        $("#id_s0_e19_comment").css("background-color", "#f24858");
+        $("#id_s0_e19_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 1)) {
+        $("#id_s0_e19_comment").css("background-color", "white");
+        $("#id_s0_e19_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e19_comment").val() == 2)) {
+        $("#id_s0_e19_comment").css("background-color", 'yellow');
+        $("#id_s0_e19_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e20_comment")
+    .focusout(function () {
+      if ($("#id_s0_e20_comment").val() >= 3) {
+        $("#id_s0_e20_comment").css("background-color", "#f24858");
+        $("#id_s0_e20_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 1)) {
+        $("#id_s0_e20_comment").css("background-color", "white");
+        $("#id_s0_e20_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e20_comment").val() == 2)) {
+        $("#id_s0_e20_comment").css("background-color", 'yellow');
+        $("#id_s0_e20_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e21_comment")
+    .focusout(function () {
+      if ($("#id_s0_e21_comment").val() >= 3) {
+        $("#id_s0_e21_comment").css("background-color", "#f24858");
+        $("#id_s0_e21_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 1)) {
+        $("#id_s0_e21_comment").css("background-color", "white");
+        $("#id_s0_e21_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e21_comment").val() == 2)) {
+        $("#id_s0_e21_comment").css("background-color", 'yellow');
+        $("#id_s0_e21_comment").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s0_e22_comment")
+    .focusout(function () {
+      if ($("#id_s0_e22_comment").val() >= 3) {
+        $("#id_s0_e22_comment").css("background-color", "#f24858");
+        $("#id_s0_e22_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 1)) {
+        $("#id_s0_e22_comment").css("background-color", "white");
+        $("#id_s0_e22_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e22_comment").val() == 2)) {
+        $("#id_s0_e22_comment").css("background-color", 'yellow');
+        $("#id_s0_e22_comment").css("color", "black");
+      }
+    });
+  /////
+
+  $("#id_s0_e23_comment")
+    .focusout(function () {
+      if ($("#id_s0_e23_comment").val() >= 3) {
+        $("#id_s0_e23_comment").css("background-color", "#f24858");
+        $("#id_s0_e23_comment").css("color", "white");
+
+      }
+      else if (($("#id_s0_e23_comment").val() == 1)) {
+        $("#id_s0_e23_comment").css("background-color", "white");
+        $("#id_s0_e23_comment").css("color", "black");
+
+      }
+      else if (($("#id_s0_e23_comment").val() == 2)) {
+        $("#id_s0_e23_comment").css("background-color", 'yellow');
+        $("#id_s0_e23_comment").css("color", "black");
+      }
+    });
+  /////
+
+
+
+
+  /////////////////////table 1
+  $("#id_s1_res")
+    .focusout(function () {
+      if ($("#id_s1_res").val() > 0.1 && ($("#id_s1_res").val().length != 0)) {
+        $("#id_s1_res").css("background-color", "#f24858");
+        $("#id_s1_res").css("color", "white");
+
+        $("#id_s1_e1_comment").css("background-color", "#f24858");
+        $("#id_s1_e1_comment").css("color", "white");
+        $("#id_s1_e1_comment").val("2");
+
+      }
+      else if (($("#id_s1_res").val() <= 0.1) || ($("#id_s1_res").val().length == 0)) {
+        $("#id_s1_res").css("background-color", "white");
+        $("#id_s1_res").css("color", "black");
+
+        $("#id_s1_e1_comment").css("background-color", "white");
+        $("#id_s1_e1_comment").css("color", "black");
+        $("#id_s1_e1_comment").val("1");
+
+      }
+
+      if ($("#id_s1_res").val() > 0.2 && ($("#id_s1_res").val().length != 0)) {
+        $("#id_s1_res").css("background-color", "#f24858");
+        $("#id_s1_res").css("color", "white");
+
+        $("#id_s1_e2_comment").css("background-color", "#f24858");
+        $("#id_s1_e2_comment").css("color", "white");
+        $("#id_s1_e2_comment").val("2");
+
+      }
+      else if (($("#id_s1_res").val() <= 0.2) || ($("#id_s1_res").val().length == 0)) {
+        $("#id_s1_res").css("background-color", "white");
+        $("#id_s1_res").css("color", "black");
+
+        $("#id_s1_e2_comment").css("background-color", "white");
+        $("#id_s1_e2_comment").css("color", "black");
+        $("#id_s1_e2_comment").val("1");
+
+      }
+    });
+  // /////////////////////////////table 2
+
+  $("#id_s2_e1_lc")
+    .focusout(function () {
+      if ($("#id_s2_e1_lc").val() > 500 && ($("#id_s2_e1_lc").val().length != 0)) {
+        $("#id_s2_e1_lc").css("background-color", "#f24858");
+        $("#id_s2_e1_lc").css("color", "white");
+
+        $("#id_s2_e1_comment").css("background-color", "#f24858");
+        $("#id_s2_e1_comment").css("color", "white");
+        $("#id_s2_e1_comment").val("2");
+
+      }
+      else if (($("#id_s2_e1_lc").val() <= 500) || ($("#id_s2_e1_lc").val().length == 0)) {
+        $("#id_s2_e1_lc").css("background-color", "white");
+        $("#id_s2_e1_lc").css("color", "black");
+
+        $("#id_s2_e1_comment").css("background-color", "white");
+        $("#id_s2_e1_comment").css("color", "black");
+        $("#id_s2_e1_comment").val("1");
+
+      }
+    });
+
+
+
+  $("#id_s2_e2_lc")
+    .focusout(function () {
+      if ($("#id_s2_e2_lc").val() > 500 && ($("#id_s2_e2_lc").val().length != 0)) {
+        $("#id_s2_e2_lc").css("background-color", "#f24858");
+        $("#id_s2_e2_lc").css("color", "white");
+
+        $("#id_s2_e2_comment").css("background-color", "#f24858");
+        $("#id_s2_e2_comment").css("color", "white");
+        $("#id_s2_e2_comment").val("2");
+
+      }
+      else if (($("#id_s2_e2_lc").val() <= 500) || ($("#id_s2_e2_lc").val().length == 0)) {
+        $("#id_s2_e2_lc").css("background-color", "white");
+        $("#id_s2_e2_lc").css("color", "black");
+
+        $("#id_s2_e2_comment").css("background-color", "white");
+        $("#id_s2_e2_comment").css("color", "black");
+        $("#id_s2_e2_comment").val("1");
+
+      }
+    });
+
+  $("#id_s2_e3_lc")
+    .focusout(function () {
+      if ($("#id_s2_e3_lc").val() > 500 && ($("#id_s2_e3_lc").val().length != 0)) {
+        $("#id_s2_e3_lc").css("background-color", "#f24858");
+        $("#id_s2_e3_lc").css("color", "white");
+
+        $("#id_s2_e3_comment").css("background-color", "#f24858");
+        $("#id_s2_e3_comment").css("color", "white");
+        $("#id_s2_e3_comment").val("2");
+
+      }
+      else if (($("#id_s2_e3_lc").val() <= 500) || ($("#id_s2_e3_lc").val().length == 0)) {
+        $("#id_s2_e3_lc").css("background-color", "white");
+        $("#id_s2_e3_lc").css("color", "black");
+
+        $("#id_s2_e3_comment").css("background-color", "white");
+        $("#id_s2_e3_comment").css("color", "black");
+        $("#id_s2_e3_comment").val("1");
+
+      }
+    });
+
+
+  $("#id_s2_e4_lc")
+    .focusout(function () {
+      if ($("#id_s2_e4_lc").val() > 500 && ($("#id_s2_e4_lc").val().length != 0)) {
+        $("#id_s2_e4_lc").css("background-color", "#f24858");
+        $("#id_s2_e4_lc").css("color", "white");
+
+        $("#id_s2_e4_comment").css("background-color", "#f24858");
+        $("#id_s2_e4_comment").css("color", "white");
+        $("#id_s2_e4_comment").val("2");
+
+      }
+      else if (($("#id_s2_e4_lc").val() <= 500) || ($("#id_s2_e4_lc").val().length == 0)) {
+        $("#id_s2_e4_lc").css("background-color", "white");
+        $("#id_s2_e4_lc").css("color", "black");
+
+        $("#id_s2_e4_comment").css("background-color", "white");
+        $("#id_s2_e4_comment").css("color", "black");
+        $("#id_s2_e4_comment").val("1");
+
+      }
+    });
+
+  $("#id_s2_e5_lc")
+    .focusout(function () {
+      if ($("#id_s2_e5_lc").val() > 1000 && ($("#id_s2_e5_lc").val().length != 0)) {
+        $("#id_s2_e5_lc").css("background-color", "#f24858");
+        $("#id_s2_e5_lc").css("color", "white");
+
+        $("#id_s2_e5_comment").css("background-color", "#f24858");
+        $("#id_s2_e5_comment").css("color", "white");
+        $("#id_s2_e5_comment").val("2");
+
+      }
+      else if (($("#id_s2_e5_lc").val() <= 1000) || ($("#id_s2_e5_lc").val().length == 0)) {
+        $("#id_s2_e5_lc").css("background-color", "white");
+        $("#id_s2_e5_lc").css("color", "black");
+
+        $("#id_s2_e5_comment").css("background-color", "white");
+        $("#id_s2_e5_comment").css("color", "black");
+        $("#id_s2_e5_comment").val("1");
+
+      }
+    });
+
+
+  // ////////////////////////////////////////table 3
+
+  $("#id_s3_e1_lc")
+    .focusout(function () {
+      if ($("#id_s3_e1_lc").val() > 100 && ($("#id_s3_e1_lc").val().length != 0)) {
+        $("#id_s3_e1_lc").css("background-color", "#f24858");
+        $("#id_s3_e1_lc").css("color", "white");
+
+        $("#id_s3_e1_comment").css("background-color", "#f24858");
+        $("#id_s3_e1_comment").css("color", "white");
+        $("#id_s3_e1_comment").val("2");
+
+      }
+      else if (($("#id_s3_e1_lc").val() <= 100) || ($("#id_s3_e1_lc").val().length == 0)) {
+        $("#id_s3_e1_lc").css("background-color", "white");
+        $("#id_s3_e1_lc").css("color", "black");
+
+        $("#id_s3_e1_comment").css("background-color", "white");
+        $("#id_s3_e1_comment").css("color", "black");
+        $("#id_s3_e1_comment").val("1");
+
+      }
+    });
+
+
+
+  $("#id_s3_e2_lc")
+    .focusout(function () {
+      if ($("#id_s3_e2_lc").val() > 100 && ($("#id_s3_e2_lc").val().length != 0)) {
+        $("#id_s3_e2_lc").css("background-color", "#f24858");
+        $("#id_s3_e2_lc").css("color", "white");
+
+        $("#id_s3_e2_comment").css("background-color", "#f24858");
+        $("#id_s3_e2_comment").css("color", "white");
+        $("#id_s3_e2_comment").val("2");
+
+      }
+      else if (($("#id_s3_e2_lc").val() <= 100) || ($("#id_s3_e2_lc").val().length == 0)) {
+        $("#id_s3_e2_lc").css("background-color", "white");
+        $("#id_s3_e2_lc").css("color", "black");
+
+        $("#id_s3_e2_comment").css("background-color", "white");
+        $("#id_s3_e2_comment").css("color", "black");
+        $("#id_s3_e2_comment").val("1");
+
+      }
+    });
+
+  $("#id_s3_e3_lc")
+    .focusout(function () {
+      if ($("#id_s3_e3_lc").val() > 100 && ($("#id_s3_e3_lc").val().length != 0)) {
+        $("#id_s3_e3_lc").css("background-color", "#f24858");
+        $("#id_s3_e3_lc").css("color", "white");
+
+        $("#id_s3_e3_comment").css("background-color", "#f24858");
+        $("#id_s3_e3_comment").css("color", "white");
+        $("#id_s3_e3_comment").val("2");
+
+      }
+      else if (($("#id_s3_e3_lc").val() <= 100) || ($("#id_s3_e3_lc").val().length == 0)) {
+        $("#id_s3_e3_lc").css("background-color", "white");
+        $("#id_s3_e3_lc").css("color", "black");
+
+        $("#id_s3_e3_comment").css("background-color", "white");
+        $("#id_s3_e3_comment").css("color", "black");
+        $("#id_s3_e3_comment").val("1");
+
+      }
+    });
+
+
+  $("#id_s3_e4_lc")
+    .focusout(function () {
+      if ($("#id_s3_e4_lc").val() > 100 && ($("#id_s3_e4_lc").val().length != 0)) {
+        $("#id_s3_e4_lc").css("background-color", "#f24858");
+        $("#id_s3_e4_lc").css("color", "white");
+
+        $("#id_s3_e4_comment").css("background-color", "#f24858");
+        $("#id_s3_e4_comment").css("color", "white");
+        $("#id_s3_e4_comment").val("2");
+
+      }
+      else if (($("#id_s3_e4_lc").val() <= 100) || ($("#id_s3_e4_lc").val().length == 0)) {
+        $("#id_s3_e4_lc").css("background-color", "white");
+        $("#id_s3_e4_lc").css("color", "black");
+
+        $("#id_s3_e4_comment").css("background-color", "white");
+        $("#id_s3_e4_comment").css("color", "black");
+        $("#id_s3_e4_comment").val("1");
+
+      }
+    });
+
+  $("#id_s3_e5_lc")
+    .focusout(function () {
+      if ($("#id_s3_e5_lc").val() > 500 && ($("#id_s3_e5_lc").val().length != 0)) {
+        $("#id_s3_e5_lc").css("background-color", "#f24858");
+        $("#id_s3_e5_lc").css("color", "white");
+
+        $("#id_s3_e5_comment").css("background-color", "#f24858");
+        $("#id_s3_e5_comment").css("color", "white");
+        $("#id_s3_e5_comment").val("2");
+
+      }
+      else if (($("#id_s3_e5_lc").val() <= 500) || ($("#id_s3_e5_lc").val().length == 0)) {
+        $("#id_s3_e5_lc").css("background-color", "white");
+        $("#id_s3_e5_lc").css("color", "black");
+
+        $("#id_s3_e5_comment").css("background-color", "white");
+        $("#id_s3_e5_comment").css("color", "black");
+        $("#id_s3_e5_comment").val("1");
+
+      }
+    });
+  // /////////////////////table 4
+
+  var f = $("#id_s4_type").val();
+
+  if (f == 3) {
+    var a1 = 10;
+    var b1 = 100;
+    var c1 = 50;
+    var d1 = 500;
+  }
+  else {
+
+    var a1 = 10;
+    var b1 = 10;
+    var c1 = 50;
+    var d1 = 50;
+  }
+
+
+  // var c_1_check;
+  $("#id_s4_e1_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e1_aclc").val() > b1 && ($("#id_s4_e1_aclc").val().length != 0)) {
+        $("#id_s4_e1_aclc").css("background-color", "#f24858");
+        $("#id_s4_e1_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e1_aclc").val() <= b1) || ($("#id_s4_e1_aclc").val().length == 0)) {
+        $("#id_s4_e1_aclc").css("background-color", "white");
+        $("#id_s4_e1_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e1_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e1_dclc").val() > a1 && ($("#id_s4_e1_dclc").val().length != 0)) {
+        $("#id_s4_e1_dclc").css("background-color", "#f24858");
+        $("#id_s4_e1_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e1_dclc").val() <= a1) || ($("#id_s4_e1_dclc").val().length == 0)) {
+        $("#id_s4_e1_dclc").css("background-color", "white");
+        $("#id_s4_e1_dclc").css("color", "black");
+      }
+    });
+  /////
+  $("#id_s4_e2_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e2_aclc").val() > b1 && ($("#id_s4_e2_aclc").val().length != 0)) {
+        $("#id_s4_e2_aclc").css("background-color", "#f24858");
+        $("#id_s4_e2_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e2_aclc").val() <= b1) || ($("#id_s4_e2_aclc").val().length == 0)) {
+        $("#id_s4_e2_aclc").css("background-color", "white");
+        $("#id_s4_e2_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e2_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e2_dclc").val() > a1 && ($("#id_s4_e2_dclc").val().length != 0)) {
+        $("#id_s4_e2_dclc").css("background-color", "#f24858");
+        $("#id_s4_e2_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e2_dclc").val() <= a1) || ($("#id_s4_e2_dclc").val().length == 0)) {
+        $("#id_s4_e2_dclc").css("background-color", "white");
+        $("#id_s4_e2_dclc").css("color", "black");
+      }
+    });
+
+
+  $("#id_s4_e3_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e3_aclc").val() > b1 && ($("#id_s4_e3_aclc").val().length != 0)) {
+        $("#id_s4_e3_aclc").css("background-color", "#f24858");
+        $("#id_s4_e3_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e3_aclc").val() <= b1) || ($("#id_s4_e3_aclc").val().length == 0)) {
+        $("#id_s4_e3_aclc").css("background-color", "white");
+        $("#id_s4_e3_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e3_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e3_dclc").val() > a1 && ($("#id_s4_e3_dclc").val().length != 0)) {
+        $("#id_s4_e3_dclc").css("background-color", "#f24858");
+        $("#id_s4_e3_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e3_dclc").val() <= a1) || ($("#id_s4_e3_dclc").val().length == 0)) {
+        $("#id_s4_e3_dclc").css("background-color", "white");
+        $("#id_s4_e3_dclc").css("color", "black");
+      }
+    });
+
+
+
+
+  $("#id_s4_e4_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e4_aclc").val() > b1 && ($("#id_s4_e4_aclc").val().length != 0)) {
+        $("#id_s4_e4_aclc").css("background-color", "#f24858");
+        $("#id_s4_e4_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e4_aclc").val() <= b1) || ($("#id_s4_e4_aclc").val().length == 0)) {
+        $("#id_s4_e4_aclc").css("background-color", "white");
+        $("#id_s4_e4_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e4_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e4_dclc").val() > a1 && ($("#id_s4_e4_dclc").val().length != 0)) {
+        $("#id_s4_e4_dclc").css("background-color", "#f24858");
+        $("#id_s4_e4_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e4_dclc").val() <= a1) || ($("#id_s4_e4_dclc").val().length == 0)) {
+        $("#id_s4_e4_dclc").css("background-color", "white");
+        $("#id_s4_e4_dclc").css("color", "black");
+      }
+    });
+
+  ////
+
+
+  $("#id_s4_e5_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e5_aclc").val() > d1 && ($("#id_s4_e5_aclc").val().length != 0)) {
+        $("#id_s4_e5_aclc").css("background-color", "#f24858");
+        $("#id_s4_e5_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e5_aclc").val() <= d1) || ($("#id_s4_e5_aclc").val().length == 0)) {
+        $("#id_s4_e5_aclc").css("background-color", "white");
+        $("#id_s4_e5_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e5_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e5_dclc").val() > c1 && ($("#id_s4_e5_dclc").val().length != 0)) {
+        $("#id_s4_e5_dclc").css("background-color", "#f24858");
+        $("#id_s4_e5_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e5_dclc").val() <= c1) || ($("#id_s4_e5_dclc").val().length == 0)) {
+        $("#id_s4_e5_dclc").css("background-color", "white");
+        $("#id_s4_e5_dclc").css("color", "black");
+      }
+    });
+
+
+
+  $("#id_s4_e6_aclc")
+    .focusout(function () {
+      if ($("#id_s4_e6_aclc").val() > b1 && ($("#id_s4_e6_aclc").val().length != 0)) {
+        $("#id_s4_e6_aclc").css("background-color", "#f24858");
+        $("#id_s4_e6_aclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e6_aclc").val() <= b1) || ($("#id_s4_e6_aclc").val().length == 0)) {
+        $("#id_s4_e6_aclc").css("background-color", "white");
+        $("#id_s4_e6_aclc").css("color", "black");
+      }
+    });
+
+  $("#id_s4_e6_dclc")
+    .focusout(function () {
+      if ($("#id_s4_e6_dclc").val() > a1 && ($("#id_s4_e6_dclc").val().length != 0)) {
+        $("#id_s4_e6_dclc").css("background-color", "#f24858");
+        $("#id_s4_e6_dclc").css("color", "white");
+
+      }
+      else if (($("#id_s4_e6_dclc").val() <= a1) || ($("#id_s4_e6_dclc").val().length == 0)) {
+        $("#id_s4_e6_dclc").css("background-color", "white");
+        $("#id_s4_e6_dclc").css("color", "black");
+      }
+    });
+
+
+
+
+  // ///////////////////////////// table 6
+    var reject_1 = 0;
+    var reject_2 = 0;
+
+  $("#id_s5_e1_bflc")
+    .focusout(function () {
+      if ($("#id_s5_e1_bflc").val() > 5000 && ($("#id_s5_e1_bflc").val().length != 0)) {
+        $("#id_s5_e1_bflc").css("background-color", "#f24858");
+        $("#id_s5_e1_bflc").css("color", "white");
+        reject_1 = 1;
+      }
+      else if (($("#id_s5_e1_bflc").val() <= 5000) || ($("#id_s5_e1_bflc").val().length == 0)) {
+        $("#id_s5_e1_bflc").css("background-color", "white");
+        $("#id_s5_e1_bflc").css("color", "black");
+        reject_1 = 0;
+      }
+      if (reject_1 == 0 && reject_2 == 0) {
+        $("#id_s5_e1_comment").css("background-color", "white");
+        $("#id_s5_e1_comment").css("color", "black");
+      }else{
+        $("#id_s5_e1_comment").css("background-color", "#f24858");
+        $("#id_s5_e1_comment").css("color", "white");
+      }
+    });
+
+  $("#id_s5_e1_cflc")
+    .focusout(function () {
+      if ($("#id_s5_e1_cflc").val() > 100 && ($("#id_s5_e1_cflc").val().length != 0)) {
+        $("#id_s5_e1_cflc").css("background-color", "#f24858");
+        $("#id_s5_e1_cflc").css("color", "white");
+        reject_2 = 1;
+
+      }
+      else if (($("#id_s5_e1_cflc").val() <= 100) || ($("#id_s5_e1_cflc").val().length == 0)) {
+        $("#id_s5_e1_cflc").css("background-color", "white");
+        $("#id_s5_e1_cflc").css("color", "black");
+        reject_2 = 0;
+      }
+      if (reject_1 == 0 && reject_2 == 0) {
+        $("#id_s5_e1_comment").css("background-color", "white");
+        $("#id_s5_e1_comment").css("color", "black");
+      }else{
+        $("#id_s5_e1_comment").css("background-color", "#f24858");
+        $("#id_s5_e1_comment").css("color", "white");
+      }
+    });
+
+
+  //////////table 6
+  $("#id_s6_e1_mf")
+    .focusout(function () {
+      var val = ($("#id_s6_e1_mf").val() - 50);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+      if ((val > (50 * 0.1)) && ($("#id_s6_e1_mf").val().length != 0)) {
+        $("#id_s6_e1_mf").css("background-color", "#f24858");
+        $("#id_s6_e1_mf").css("color", "white");
+      }
+      else if ((val <= (50 * 0.1)) || ($("#id_s6_e1_mf").val().length == 0)) {
+        $("#id_s6_e1_mf").css("background-color", "white");
+        $("#id_s6_e1_mf").css("color", "black");
+      }
+    });
+
+
+  $("#id_s6_e2_mf")
+    .focusout(function () {
+      var val = ($("#id_s6_e2_mf").val() - 100);
+      if (val < 0) {
+        val = -val;
+      }
+      val = val * 100;
+      val = parseInt(val);
+      val = val / 100;
+      if ((val > (100 * 0.1)) && ($("#id_s6_e2_mf").val().length != 0)) {
+        $("#id_s6_e2_mf").css("background-color", "#f24858");
+        $("#id_s6_e2_mf").css("color", "white");
+      }
+      else if ((val <= (100 * 0.1)) || ($("#id_s6_e2_mf").val().length == 0)) {
+        $("#id_s6_e2_mf").css("background-color", "white");
+        $("#id_s6_e2_mf").css("color", "black");
+      }
+    });
+
+
+  // last table
+
+  $("#id_s7_e1_mmf")
+    .focusout(function () {
+      if ($("#id_s7_e1_mmf").val() >= 20 && ($("#id_s7_e1_mmf").val().length != 0)) {
+        $("#id_s7_e1_mmf").css("background-color", "#f24858");
+        $("#id_s7_e1_mmf").css("color", "white");
+
+      }
+      else if (($("#id_s7_e1_mmf").val() < 20) || ($("#id_s7_e1_mmf").val().length == 0)) {
+        $("#id_s7_e1_mmf").css("background-color", "white");
+        $("#id_s7_e1_mmf").css("color", "black");
+      }
+    });
+
+  $("#id_s7_e2_mmf")
+    .focusout(function () {
+      if ($("#id_s7_e2_mmf").val() >= 20 && ($("#id_s7_e2_mmf").val().length != 0)) {
+        $("#id_s7_e2_mmf").css("background-color", "#f24858");
+        $("#id_s7_e2_mmf").css("color", "white");
+
+      }
+      else if (($("#id_s7_e2_mmf").val() < 20) || ($("#id_s7_e2_mmf").val().length == 0)) {
+        $("#id_s7_e2_mmf").css("background-color", "white");
+        $("#id_s7_e2_mmf").css("color", "black");
+      }
+    });
+
+
+</script>

@@ -1,0 +1,872 @@
+{% extends 'base-spo2.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: "B Zar";
+        src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Titr";
+        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Lotus";
+        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "B Nazanin";
+        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
+    }
+
+
+    @font-face {
+        font-family: "B Yagut";
+        src: url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.eot") format("eot"),
+            url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.woff") format("woff"),
+            url("http://db.onlinewebfonts.com/t/2b952727abf8625ae758ee849e90964b.ttf") format("truetype");
+
+    }
+
+
+
+
+    .tb-4 td {
+        padding-top: 0.1cm;
+        padding-bottom: 0.1cm;
+    }
+
+    .time {
+        font-family: "Times New Roman";
+    }
+</style>
+
+<body style="text-align: right;font-size: 16pt;">
+
+    <div class="cover main" style="font-family:'B Lotus';">
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
+
+            <br>
+            <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+                گواهينامه کنترل کيفي دستگاه ساکشن
+            </h1>
+            <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
+                <tr>
+                    <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+                    </td>
+                    <td class="no-border"><span
+                            class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }}
+                        </span>تاريخ کنترل کيفي: </td>
+                    <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
+                    <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
+                    <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
+                    <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
+                    <td class="no-border"><span class="time">
+                            {% if form.device.property_number != None %}
+                            {{form.device.property_number}}
+                            {% endif %}
+                        </span>کداموال :</td>
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
+                    <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+                        کنترل کيفي: </td>
+
+                </tr>
+
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+
+                </tr>
+
+            </table>
+            <div style="height:3.85cm;">
+                <div>موارد عدم شمول:</div>
+                <span>
+                    {{ form.totalcomment }}
+                </span>
+
+            </div>
+            <span style="font-weight: bold;">تجهيزات آزمون:</span>
+            <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2">
+                <tr>
+                    <td>تاريخ انقضاء</td>
+                    <td>تاريخ کاليبراسيون</td>
+                    <td>شماره سریال</td>
+                    <td>مدل</td>
+                    <td>نام تجهيز</td>
+                    <td>ردیف</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev1.serial }}</td>
+                    <td>{{ form.cal_dev1.name }}</td>
+                    <td>{{ form.cal_dev1.type.name }}</td>
+                    <td>1</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
+                    <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
+                    <td>{{ form.cal_dev2.serial }}</td>
+                    <td>{{ form.cal_dev2.name }}</td>
+                    <td>{{ form.cal_dev2.type.name }}</td>
+                    <td>2</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
+                    <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
+                    <td>{{ form.cal_dev3.serial }}</td>
+                    <td>{{ form.cal_dev3.name }}</td>
+                    <td>{{ form.cal_dev3.type.name }}</td>
+                    <td>3</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_4_xd.year }}/{{ form.cal_dev_4_xd.month }}/{{ form.cal_dev_4_xd.day }}</td>
+                    <td>{{ form.cal_dev_4_cd.year }}/{{ form.cal_dev_4_cd.month }}/{{ form.cal_dev_4_cd.day }}</td>
+                    <td>{{ form.cal_dev4.serial }}</td>
+                    <td>{{ form.cal_dev4.name }}</td>
+                    <td>{{ form.cal_dev4.type.name }}</td>
+                    <td>3</td>
+                </tr>
+
+            </table>
+            <br>
+            <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+                طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+                ملي يا بين المللي قابل رديابي است.</div>
+            <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+            <br>
+            <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+                است.</div>
+
+            <table style="margin: auto;text-align: center;font-weight: bold;">
+                <tr>
+                    <td style="width: 9cm;">مهر آزمايشگاه</td>
+                    <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+                </tr>
+                <tr>
+                    <img src="{% static 'img/spo2/stamp.jpg' %}"
+                        style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
+
+                    <td style="height: 3.5cm;">
+                        <!-- <div class="stmp"></div> -->
+            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
+                    </td>
+                    <td style="height: 3.5cm;position: relative;">
+                        <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+                        <!-- <div class="signature"></div> -->
+            <img style="width: 6cm; height:4cm; margin-right: 2cm;" src="https://{{ domain_name }}/static/img/signature.png">
+                    </td>
+                </tr>
+
+            </table>
+            <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51037</div>
+        </div>
+    </div>
+
+
+    <div class="page-1 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51037</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون کنترل کیفی
+                <br>
+                دستگاه ساکشن
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;">
+                تستهای کیفی:
+            </div>
+            <table style="margin: auto; width: 100%; text-align: center;" class="tb-1 tb-4">
+                <tbody>
+                    <tr>
+                        <td rowspan="2" style="min-width: 7cm;">توضیحات</td>
+                        <td colspan="2" style="width: 4cm;">نتیجه</td>
+                        <td rowspan="2">عنوان بررسی</td>
+                        <td rowspan="2" style="width: 2cm;">ردیف</td>
+                    </tr>
+                    <tr class="time">
+                        <td style="width: 2cm;">Rej</td>
+                        <td style="width: 2cm;">Ok</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e1_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e1_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e1_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>شماره سريال</span></td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e2_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e2_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e2_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>نصب صحيح اجزاء دستگاه</span></td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e3_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e3_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e3_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">چرخ ها / ترمزها</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e4_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e4_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e4_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">دوشاخه برق</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e5_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e5_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e5_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>گلند و سیم برق</span></td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e6_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e6_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e6_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e6_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">استند ونگهدارنده يونيت دستگاه</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e7_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e7_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e7_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e7_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">دسته و اتصالات</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e8_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e8_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e8_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e8_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">جافيوزي و فيوزها</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e9_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e9_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e9_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e9_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">برچسب ها وعلائم</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e10_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e10_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e10_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e10_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">
+                            <span class="time">on/off</span>
+                            کليد
+                        </td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e11_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e11_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e11_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e11_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">
+                            <span class="time">Standby</span>
+                            کليد
+                        </td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e12_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e12_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e12_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e12_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">باکتريا فيلتر</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e13_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e13_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e13_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e13_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">باطري</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e14_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e14_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e14_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e14_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">عملکرد پدال</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e15_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e15_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e15_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e15_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;">اتصالات (شيلنگها و آدابتور)</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e16_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e16_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e16_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e16_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>صداي الکتروپمپ</span></td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e17_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e17_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e17_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e17_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>کيفيت ظاهري و عملکرد گيج</span></td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e18_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e18_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e18_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e18_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>کيفيت ظاهري و عملکرد رگولاتور</span></td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e19_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e19_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e19_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e19_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>ماکزيمم مکش</span></td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e20_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e20_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e20_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e20_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>تست نشتي هوا</span></td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e21_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e21_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e21_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e21_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>سالم بودن مانع سرريز</span></td>
+                        <td>21</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e22_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e22_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e22_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e22_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>جارها و گپ جار</span></td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        {% if form.s0_e23_comment.id == 1%}
+                        <td></td>
+                        {% else %}
+                        <td>{{ form.s0_e23_comment }}</td>
+                        {% endif %}
+                        {% if form.s0_e23_comment.id == 1 %}
+                        <td></td>
+                        <td>&#10004;</td>
+                        {% elif form.s0_e23_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                        {% else %}
+                        <td>&#10004;</td>
+                        <td></td>
+                        {% endif %}
+                        <td style="text-align: right;"><span>آلارمها</span></td>
+                        <td>23</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 3</div>
+
+        </div>
+
+    </div>
+
+    <div class="page-2 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
+            <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
+                <span>
+                    <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                    شماره گزارش:
+                </span><br>
+                <span>
+                    <span class="time"> {{ time.year }}/{{ time.month }}/{{ time.day }} </span>
+                    تاريخ صدور:
+
+                </span><br>
+                <span>
+                    <span class="time">F51037</span>
+                    شماره مدرک:
+
+                </span>
+            </span>
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+                گزارش آزمون کنترل کیفی
+                <br>
+                دستگاه ساکشن
+            </span>
+        </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-family: 'B Titr',tahoma;">
+                1- صحت داده هاي عملکردي دستگاه </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <tbody>
+                    <tr style="font-family: 'B Yagut';">
+
+                        <td>اختلاف <span class="time">bar</span></td>
+                        <td>مقدار خوانده شده (ساكشن) <br><span class="time">bar</span></td>
+                        <td><span>مقدار واقعي (مرجع) <br><span class="time">bar</span></span></td>
+                        <td><span>اختلاف
+                                <br>
+                                <span class="time">mmHg</span></span></td>
+                        <td><span>مقدار خوانده شده (ساكشن)
+                                <br>
+                                <span class="time">mmHg</span>
+                            </span></td>
+                        <td><span>مقدار واقعي (مرجع)
+                                <br>
+                                <span class="time">mmHg</span>
+                            </span></td>
+                    </tr>
+                    {#<div style="font-family: 'Times New Roman'">#}
+                    <tr>
+                        <td>{{ data.1 }}</td>
+                        <td>0</td>
+                        <td>{{ form.s1_e2_rr}}</td>
+                        <td>{{ data.0 }}</td>
+                        <td>0</td>
+                        <td>{{ form.s1_e1_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.3 }}</td>
+                        <td>0.1</td>
+                        <td>{{ form.s1_e4_rr}}</td>
+                        <td>{{ data.2 }}</td>
+                        <td>100</td>
+                        <td>{{ form.s1_e3_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.5 }}</td>
+                        <td>0.3</td>
+                        <td>{{ form.s1_e6_rr}}</td>
+                        <td>{{ data.4 }}</td>
+                        <td>200</td>
+                        <td>{{ form.s1_e5_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.7 }}</td>
+                        <td>0.5</td>
+                        <td>{{ form.s1_e8_rr}}</td>
+                        <td>{{ data.6 }}</td>
+                        <td>400</td>
+                        <td>{{ form.s1_e7_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.9 }}</td>
+                        <td>0.7</td>
+                        <td>{{ form.s1_e10_rr}}</td>
+                        <td>{{ data.8 }}</td>
+                        <td>500</td>
+                        <td>{{ form.s1_e9_rr}}</td>
+                    </tr>
+                    {#    </div>#}
+                </tbody>
+
+
+            </table>
+            <span class="time" style="font-weight: bold;">
+                1bar=760mmHg
+            </span>
+            <br><br>
+            <span style="font-family: 'B Titr',tahoma;">2- کاليبراسيون گيج هاي کم فشار (خلاء)</span>
+
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <tbody>
+                    <tr style="font-family: 'B Yagut';">
+
+                        <td>اختلاف <span class="time">mbar</span></td>
+                        <td>مقدار خوانده شده (ساكشن) <br><span class="time">mbar</span></td>
+                        <td><span>مقدار واقعي (مرجع) <br><span class="time">mbar</span></span></td>
+                        <td><span>اختلاف
+                                <br>
+                                <span class="time">mmHg</span></span></td>
+                        <td><span>مقدار خوانده شده (ساكشن)
+                                <br>
+                                <span class="time">mmHg</span>
+                            </span></td>
+                        <td><span>مقدار واقعي (مرجع)
+                                <br>
+                                <span class="time">mmHg</span>
+                            </span></td>
+                    </tr>
+                    {#<div style="font-family: 'Times New Roman'">#}
+                    <tr>
+                        <td>{{ data.11 }}</td>
+                        <td>0</td>
+                        <td>{{ form.s2_e2_rr}}</td>
+                        <td>{{ data.10 }}</td>
+                        <td>0</td>
+                        <td>{{ form.s2_e1_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.13 }}</td>
+                        <td>50</td>
+                        <td>{{ form.s2_e4_rr}}</td>
+                        <td>{{ data.12 }}</td>
+                        <td>38</td>
+                        <td>{{ form.s2_e3_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.15 }}</td>
+                        <td>100</td>
+                        <td>{{ form.s2_e6_rr}}</td>
+                        <td>{{ data.14 }}</td>
+                        <td>76</td>
+                        <td>{{ form.s2_e5_rr}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ data.17 }}</td>
+                        <td>150</td>
+                        <td>{{ form.s2_e8_rr}}</td>
+                        <td>{{ data.16 }}</td>
+                        <td>114</td>
+                        <td>{{ form.s2_e7_rr}}</td>
+                    </tr>
+
+                    {#    </div>#}
+                </tbody>
+
+
+            </table>
+
+
+            <br><br><br><br>
+            <div style="width:100%;direction: rtl; text-align: right;">
+                <div style="margin-bottom: -5cm;" class="sign-2"><img src="http://{{domain_name}}{{ user_profile.signature.url }}"
+                        alt="" style="height: 6cm;">
+                </div>
+            </div>
+            <div style="margin-top: -4.5cm;font-family:'B Zar' ">
+                <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
+                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: {{ user_profile.user.first_name }}
+                </div>
+            </div>
+
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 3</div>
+
+        </div>
+
+
+    </div>
+
+</body>
+{% endblock %}
