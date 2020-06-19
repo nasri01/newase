@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -118,12 +118,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/reza/projects/ASE_files/static2'
+STATIC_ROOT = '/home2/kaadir/panel.azmasaba.ir/static'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'ww/static/'),
 
 STATICFILES_DIRS = ['D:\\_projects\\ASE_files\\static']
 
-MEDIA_ROOT = 'D:\\_projects\\ASE_files\\media'
+if DEBUG:
+    MEDIA_ROOT = 'D:\\_projects\\ASE_files\\media'
+else:
+    MEDIA_ROOT = '/home2/kaadir/panel.azmasaba.ir/media'
 MEDIA_URL = '/media/'
 
 
