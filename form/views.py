@@ -15,9 +15,9 @@ from weasyprint.fonts import FontConfiguration
 
 from acc.models import CalDevice, Licence, Record, UserProfile, AdTestType0
 from report.models import Encode, Report
-from ww.settings import STATICFILES_DIRS, DEBUG ,STATIC_ROOT
+from ww.settings import STATICFILES_DIRS ,STATIC_ROOT
 from ww.local_settings import (DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER,
-                               domain_name)
+                               domain_name, DEBUG)
 
 
 from .forms import *
@@ -587,7 +587,6 @@ def save_router(request, formtype):
                             user=DL_FTP_USER,
                             passwd=DL_FTP_PASSWD
                         ) as ftp:
-                            ftp.set_debuglevel(2)
                             ftp.cwd('pdf')
                             if not sform.device.hospital.city.state.eng_name in ftp.nlst():
                                 ftp.mkd(sform.device.hospital.city.state.eng_name)
