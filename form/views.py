@@ -481,24 +481,24 @@ def save_router(request, formtype):
 
                     elif (item[1] == Suction_1):
                         template_name = 'report/Suction/licence1.html'
-                        data.append(abs(int(sform.s1_e1_rr)))  # 0
-                        data.append(abs(int(sform.s1_e2_rr)))  # 1
-                        data.append(abs(int(sform.s1_e3_rr) - 100))  # 2
-                        data.append(abs(int(sform.s1_e4_rr) - 0.1))  # 3
-                        data.append(abs(int(sform.s1_e5_rr) - 200))  # 4
-                        data.append(abs(int(sform.s1_e6_rr - 0.3)))  # 5
-                        data.append(abs(int(sform.s1_e7_rr) - 400))  # 6
-                        data.append(abs(int(sform.s1_e8_rr) - 0.5))  # 7
-                        data.append(abs(int(sform.s1_e9_rr) - 500))  # 8
-                        data.append(abs(int(sform.s1_e10_rr) - 0.7))  # 9
-                        data.append(abs(int(sform.s2_e1_rr)))  # 10/////
-                        data.append(abs(int(sform.s2_e2_rr)))  # 11
-                        data.append(abs(int(sform.s2_e2_rr) - 38))  # 12
-                        data.append(abs(int(sform.s2_e2_rr) - 50))  # 13
-                        data.append(abs(int(sform.s2_e2_rr) - 76))  # 14
-                        data.append(abs(int(sform.s2_e2_rr) - 100))  # 15
-                        data.append(abs(int(sform.s2_e2_rr) - 114))  # 16
-                        data.append(abs(int(sform.s2_e2_rr) - 150))  # 17
+                        data.append(abs(int(sform.s1_e1_rr))) if sform.s1_e1_rr != None else data.append('') # 0          
+                        data.append(abs(int(sform.s1_e2_rr))) if sform.s1_e2_rr != None else data.append('')  # 1
+                        data.append(abs(int(sform.s1_e3_rr) - 100)) if sform.s1_e3_rr != None else data.append('') # 2
+                        data.append(abs(int(sform.s1_e4_rr) - 0.1)) if sform.s1_e4_rr != None else data.append('') # 3
+                        data.append(abs(int(sform.s1_e5_rr) - 200)) if sform.s1_e5_rr != None else data.append('') # 4
+                        data.append(abs(int(sform.s1_e6_rr - 0.3))) if sform.s1_e6_rr != None else data.append('') # 5
+                        data.append(abs(int(sform.s1_e7_rr) - 400)) if sform.s1_e7_rr != None else data.append('') # 6
+                        data.append(abs(int(sform.s1_e8_rr) - 0.5)) if sform.s1_e8_rr != None else data.append('') # 7
+                        data.append(abs(int(sform.s1_e9_rr) - 500)) if sform.s1_e9_rr != None else data.append('') # 8
+                        data.append(abs(int(sform.s1_e10_rr) - 0.7)) if sform.s1_e10_rr != None else data.append('') # 9
+                        data.append(abs(int(sform.s2_e1_rr))) if sform.s2_e1_rr != None else data.append('') # 10/////
+                        data.append(abs(int(sform.s2_e2_rr))) if sform.s2_e2_rr != None else data.append('') # 11
+                        data.append(abs(int(sform.s2_e3_rr) - 38)) if sform.s2_e3_rr != None else data.append('') # 12
+                        data.append(abs(int(sform.s2_e4_rr) - 50)) if sform.s2_e4_rr != None else data.append('') # 13
+                        data.append(abs(int(sform.s2_e5_rr) - 76)) if sform.s2_e5_rr != None else data.append('') # 14
+                        data.append(abs(int(sform.s2_e6_rr) - 100)) if sform.s2_e6_rr != None else data.append('') # 15
+                        data.append(abs(int(sform.s2_e7_rr) - 114)) if sform.s2_e7_rr != None else data.append('') # 16
+                        data.append(abs(int(sform.s2_e8_rr) - 150)) if sform.s2_e8_rr != None else data.append('') # 17
 
                     elif (item[1] == SyringePump_1):
                         template_name = 'report/SyringePump/licence1.html'
