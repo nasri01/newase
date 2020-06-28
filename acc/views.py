@@ -32,21 +32,22 @@ model_list = [['MonitorSpo2', MonitorSpo2_1, MonitorSpo2_1_Form],
               ['MonitorECG', MonitorECG_1, MonitorECG_1_Form],
               ['MonitorNIBP', MonitorNIBP_1, MonitorNIBP_1_Form],
               ['MonitorSafety', MonitorSafety_1, MonitorSafety_1_Form],
+              ['Defibrilator', Defibrilator_1, Defibrilator_1_Form],
               ['AED', AED_1, AED_1_Form],
+              ['ECG', ECG_1, ECG_1_Form],
+              ['InfusionPump', InfusionPump_1, InfusionPump_1_Form],
+              ['SyringePump', SyringePump_1, syringe_pump_1_Form],
+              ['spo2', Spo2_1, spo2_1_Form],
+              ['FlowMeter', FlowMeter_1, FlowMeter_1_Form],
               ['AnesthesiaMachine', AnesthesiaMachine_1,
                AnesthesiaMachine_1_Form],
-              ['Defibrilator', Defibrilator_1, Defibrilator_1_Form],
-              ['ECG', ECG_1, ECG_1_Form],
-              ['FlowMeter', FlowMeter_1, FlowMeter_1_Form],
-              ['InfusionPump', InfusionPump_1, InfusionPump_1_Form],
-              ['ManoMeter', ManoMeter_1, ManoMeter_1_Form],
-              ['spo2', Spo2_1, spo2_1_Form],
-              ['Suction', Suction_1, suction_1_Form],
-              ['SyringePump', SyringePump_1, syringe_pump_1_Form],
               ['Ventilator', Ventilator_1, ventilator_1_Form],
+              ['Suction', Suction_1, suction_1_Form],
+              ['ManoMeter', ManoMeter_1, ManoMeter_1_Form],
+              ['Incubator', ManoMeter_1, ManoMeter_1_Form],
               ['ElectroCauter', ElectroCauter_1, electrocauter_1_Form],
               ['CantTest', CantTest, CantTest_Form],
-              ['Report', Report],
+              ['Report', Report],  
               ]  # Order the same by AdTestType0
 
 
@@ -260,7 +261,8 @@ def edit_report(request):
                         model_name = model[0]
                         break
             except:
-                return('dashboard')
+                # return redirect('dashboard')
+                pass
             # try:
             #     form_type
             # except:
@@ -303,10 +305,11 @@ def recal_report(request):
                         form_type = model[2]
                         model_name = model[0]
                     break
-                else:
-                    return('recal_list')
+                # else:
+                #     return('recal_list')
 
-            form_body = form_type({'device': [model_query[0].device.id]})
+            # form_body = form_type({'device': [model_query[0].device.id]})
+            form_body = form_type
             pass_data = {'recal': 1,
                          'form': form_body,
                          'form_type': model_name,

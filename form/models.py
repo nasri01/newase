@@ -11,7 +11,7 @@ class CantTest(models.Model):
     tt = models.ForeignKey(acc.models.AdTestType0, on_delete=models.PROTECT)
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='ctr')
@@ -35,7 +35,7 @@ class MonitorSpo2_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -121,7 +121,7 @@ class MonitorECG_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -314,7 +314,7 @@ class MonitorNIBP_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -392,7 +392,7 @@ class AED_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -669,7 +669,7 @@ class MonitorSafety_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -857,7 +857,7 @@ class AnesthesiaMachine_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -1153,7 +1153,7 @@ class Defibrilator_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -1585,7 +1585,7 @@ class ECG_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -1800,7 +1800,7 @@ class FlowMeter_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -1840,7 +1840,7 @@ class InfusionPump_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2012,7 +2012,7 @@ class ManoMeter_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2097,7 +2097,7 @@ class Spo2_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2209,7 +2209,7 @@ class Suction_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2321,7 +2321,7 @@ class SyringePump_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2493,7 +2493,7 @@ class ElectroCauter_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)
@@ -2871,7 +2871,7 @@ class Ventilator_1(models.Model):
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     has_pdf = models.BooleanField(default=False)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
-    date = jmodels.jDateTimeField()
+    date = jmodels.jDateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.ForeignKey(
         acc.models.AdAzStatus, on_delete=models.PROTECT)

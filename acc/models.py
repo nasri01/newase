@@ -211,7 +211,7 @@ class AllDevice(models.Model):
 
 
 class Request(models.Model):
-    date = jmodels.jDateField(verbose_name='تاریخ میلادی دستگاه')
+    date = jmodels.jDateField(auto_now_add=True, verbose_name='تاریخ میلادی دستگاه')
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, verbose_name='نام بیمارستان')
     number = models.IntegerField(verbose_name='شماره درخواست')
     status = models.ForeignKey(
