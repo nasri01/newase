@@ -1,28 +1,29 @@
-import io
-import pytz
-import xlsxwriter
-import jdatetime
-import os
 import hashlib
-from statistics import mean, stdev
+import io
+import os
 from ftplib import FTP
-from jdatetime import timedelta
-from form.models import *
-from .models import Report, Encode
-from ww.local_settings import DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER, dl_domain_name, domain_name
+from statistics import mean, stdev
 
-
-from acc.models import AdExcelArg, UserProfile, Request, DeviceType, AdTestType0
-
-from django.templatetags import static
-from django.contrib.auth.models import Group
-from django.shortcuts import render, Http404, redirect
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-
-from weasyprint import HTML, CSS
-from weasyprint.fonts import FontConfiguration
+import jdatetime
+import pytz
 import weasyprint
+import xlsxwriter
+from django.contrib.auth.models import Group
+from django.http import HttpResponse
+from django.shortcuts import Http404, redirect, render
+from django.template.loader import render_to_string
+from django.templatetags import static
+from jdatetime import timedelta
+from weasyprint import CSS, HTML
+from weasyprint.fonts import FontConfiguration
+
+from acc.models import (AdExcelArg, AdTestType0, DeviceType, Request,
+                        UserProfile)
+from form.models import *
+from ww.local_settings import (DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER,
+                               dl_domain_name, domain_name)
+
+from .models import Encode, Report
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -47,7 +48,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         query_end_year, query_end_month, query_end_day, 19, 30).astimezone(pytz.timezone('UTC'))
     if QUERY_END_DATE < QUERY_START_DATE:
         return render(request, 'acc/hospital/index.html', {'date_error': 'بازه زمانی وارد شده نا معتبر است',
-                                                            'flag': 1})  # , 'date': jdatetime.date.today(),
+                                                           'flag': 1})  # , 'date': jdatetime.date.today(),
 
     # Create Excel
     query_list = []
@@ -129,15 +130,16 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         encode_instance = Encode.objects.get(
             hospital=instance.device.hospital)
 
-        row.append('https://{}/reports/pdf/{}/{}/{}/{}/{}/{}/{}.pdf'.format(  # 14
-            dl_domain_name,
-            instance.device.hospital.city.state.eng_name,
-            instance.device.hospital.city.eng_name,
-            encode_instance.name,
-            instance.request.number,
-            instance.device.section.eng_name,
-            instance.tt.type,
-            instance.licence.number,
+        row.append('https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{licence}.pdf'.format(  # 14
+            dl_domain=dl_domain_name,
+            state=instance.device.hospital.city.state.eng_name,
+            city=instance.device.hospital.city.eng_name,
+            hosp=str(instance.device.hospital.user.id) + \
+            '_' + encode_instance.name,
+            req=instance.request.number,
+            section=instance.device.section.eng_name,
+            device_type=instance.tt.type,
+            licence=instance.licence.number,
         )
         )
         table_rows.append(row)
@@ -177,10 +179,10 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         # first row
 
         table_header_format = wb.add_format({'font_size': 11, 'align': 'center',
-                                                'valign': 'vcenter', 'bottom': True, 'left': True})
+                                             'valign': 'vcenter', 'bottom': True, 'left': True})
 
         ws.write_row(row=0, col=0, data=table_header,
-                        cell_format=table_header_format)
+                     cell_format=table_header_format)
         # Patterns
         green_row_format = wb.add_format(  # accept
             {'font_size': 11, 'align': 'center', 'valign': 'vcenter', 'pattern': 1, 'bg_color': 'green',
@@ -226,7 +228,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
                         )
 
             ws.write_row(row=cursor, col=0, data=row_data,
-                            cell_format=row_format)
+                         cell_format=row_format)
 
             # report_instance = Report.objects.filter(
             #     licence__number=row[11])
@@ -235,7 +237,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
             # Esfahan/Esfahan/a01610228fe998f515a72dd730294d87/100/AMBULANCE/AED
 
             ws.write_url(row=cursor, col=len(row_data)-1, url=row[14],
-                            cell_format=row_format, string='show', tip='Downlaod PDF')
+                         cell_format=row_format, string='show', tip='Downlaod PDF')
 
             cursor += 1
         wb.close()
@@ -270,10 +272,10 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         #     req.date = req.date.today()
 
         pass_data = {
-                    'table_header': table_header, 'table_rows': table_rows,
-                    # 'request': request_list, 'avatar_url': avatar_url,
-                    # 'user_name': request.user.first_name, 'chart': chart
-                    }
+            'table_header': table_header, 'table_rows': table_rows,
+            # 'request': request_list, 'avatar_url': avatar_url,
+            # 'user_name': request.user.first_name, 'chart': chart
+        }
         # if Group.objects.get(name='admin') in request.user.groups.all():
         #     pass_data['admin'] = 1
         return render(request, template_name, pass_data)
@@ -335,22 +337,24 @@ def show_request_summary(request):
 def reportview(request):
     if request.method == 'GET':
         if Group.objects.get(name='hospital') in request.user.groups.all():
-            data = report.objects.filter(licence__number=request.GET['licence_number']).filter(
+            data = Report.objects.filter(licence__number=request.GET['licence_number']).filter(
                 request__hospital__user__id__exact=request.user.id)
         else:
-            data = report.objects.filter(
+            data = Report.objects.filter(
                 licence__number=request.GET['licence_num'])
         if len(data) != 0:
             name = Encode.objects.get(hospital=data[0].device.hospital)
-            return redirect('https://{}/pdf/{}/{}/{}/{}/{}/{}/{}.pdf'.format(
-                dl_domain_name,
-                data[0].request.hospital.city.state.name,
-                data[0].request.hospital.city.name,
-                name.name,
-                data[0].request.number,
-                data[0].device.section.name,
-                data[0].tt,
-                data[0].licence.number
+            return redirect('https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{licence}.pdf'.format(  # 14
+                dl_domain=dl_domain_name,
+                state=instance.device.hospital.city.state.eng_name,
+                city=instance.device.hospital.city.eng_name,
+                hosp=str(instance.device.hospital.user.id) + \
+                '_' + encode_instance.name,
+                req=instance.request.number,
+                section=instance.device.section.eng_name,
+                device_type=instance.tt.type,
+                licence=instance.licence.number,
+
             ))
 
         raise Http404
