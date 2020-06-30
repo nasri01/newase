@@ -1,28 +1,29 @@
-import io
-import pytz
-import xlsxwriter
-import jdatetime
-import os
 import hashlib
-from statistics import mean, stdev
+import io
+import os
 from ftplib import FTP
-from jdatetime import timedelta
-from form.models import *
-from .models import Report, Encode
-from ww.local_settings import DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER, dl_domain_name, domain_name
+from statistics import mean, stdev
 
-
-from acc.models import AdExcelArg, UserProfile, Request, DeviceType, AdTestType0
-
-from django.templatetags import static
-from django.contrib.auth.models import Group
-from django.shortcuts import render, Http404, redirect
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-
-from weasyprint import HTML, CSS
-from weasyprint.fonts import FontConfiguration
+import jdatetime
+import pytz
 import weasyprint
+import xlsxwriter
+from django.contrib.auth.models import Group
+from django.http import HttpResponse
+from django.shortcuts import Http404, redirect, render
+from django.template.loader import render_to_string
+from django.templatetags import static
+from jdatetime import timedelta
+from weasyprint import CSS, HTML
+from weasyprint.fonts import FontConfiguration
+
+from acc.models import (AdExcelArg, AdTestType0, DeviceType, Request,
+                        UserProfile)
+from form.models import *
+from ww.local_settings import (DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER,
+                               dl_domain_name, domain_name)
+
+from .models import Encode, Report
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -129,15 +130,15 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         encode_instance = Encode.objects.get(
             hospital=instance.device.hospital)
 
-        row.append('https://{}/reports/pdf/{}/{}/{}/{}/{}/{}/{}.pdf'.format(  # 14
-            dl_domain_name,
-            instance.device.hospital.city.state.eng_name,
-            instance.device.hospital.city.eng_name,
-            encode_instance.name,
-            instance.request.number,
-            instance.device.section.eng_name,
-            instance.tt.type,
-            instance.licence.number,
+        row.append('https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{licence}.pdf'.format(  # 14
+            dl_domain=dl_domain_name,
+            state=instance.device.hospital.city.state.eng_name,
+            city=instance.device.hospital.city.eng_name,
+            hosp=instance.device.hospital.user.id + '_' + encode_instance.name,
+            req=instance.request.number,
+            section=instance.device.section.eng_name,
+            device_type=instance.tt.type,
+            licence=instance.licence.number,
         )
         )
         table_rows.append(row)
