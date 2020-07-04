@@ -216,30 +216,30 @@ def show_report_list(request):
                         )
         table_rows = []
         # data1 = []
-        for model in model_list[:-1]:
-            model_query = model[1].objects.all()
+        # for model in model_list[:-1]:
+        model_query = model_list[-1][1].objects.all()
         #     data1.append(modelobj)
         # for obj1 in data1:
-            for obj in model_query:
-                row = []
-                row.append(obj.device.hospital.city.state.name)  # 0
-                row.append(obj.device.hospital.city.name)  # 1
-                row.append(obj.device.hospital.name)  # 2
-                row.append(obj.device.section.name)  # 3
-                row.append(obj.device.name.type.name)  # 4
-                row.append(obj.device.name.creator.name)  # 5
-                row.append(obj.device.name.name)  # 6
-                row.append(obj.device.serial_number)  # 7
-                row.append(obj.device.property_number)  # 8
-                row.append(obj.status.status)  # 9
-                row.append(obj.date.strftime("%Y-%m-%d"))  # 10
-                if obj.status.id != 4:
-                    row.append(obj.licence.number)  # 11
-                else:
-                    row.append('-')  # 11
-                row.append(obj.record.number)  # 12
-                row.append(obj.totalcomment)  # 13
-                table_rows.append(row)
+        for obj in model_query:
+            row = []
+            row.append(obj.device.hospital.city.state.name)  # 0
+            row.append(obj.device.hospital.city.name)  # 1
+            row.append(obj.device.hospital.name)  # 2
+            row.append(obj.device.section.name)  # 3
+            row.append(obj.device.name.type.name)  # 4
+            row.append(obj.device.name.creator.name)  # 5
+            row.append(obj.device.name.name)  # 6
+            row.append(obj.device.serial_number)  # 7
+            row.append(obj.device.property_number)  # 8
+            row.append(obj.status.status)  # 9
+            row.append(obj.date.strftime("%Y-%m-%d"))  # 10
+            if obj.status.id != 4:
+                row.append(obj.licence.number)  # 11
+            else:
+                row.append('-')  # 11
+            row.append(obj.record.number)  # 12
+            row.append(obj.totalcomment)  # 13
+            table_rows.append(row)
         return render(request, 'acc/employee/report_list.html', {'table_header': table_header, 'table_rows': table_rows})
     else:
         raise Http404
