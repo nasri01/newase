@@ -343,7 +343,9 @@ def reportview(request):
             data = Report.objects.filter(
                 licence__number=request.GET['licence_num'])
         if len(data) != 0:
-            name = Encode.objects.get(hospital=data[0].device.hospital)
+            instance = data[0] 
+            encode_instance = Encode.objects.get(
+                hospital=instance.device.hospital)
             return redirect('https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{licence}.pdf'.format(  # 14
                 dl_domain=dl_domain_name,
                 state=instance.device.hospital.city.state.eng_name,
