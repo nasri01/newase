@@ -767,16 +767,18 @@
             {% else %}
             <td>{{ form.s1_e1_comment }}</td>
             {% endif %}
+            
             {% if form.s1_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s1_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td>0.2</td>
 
 
@@ -810,143 +812,189 @@
           </tr>
           <tr>
             {% if form.s2_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e1_comment }}</td>
+              <td>{{ form.s2_e1_comment }}</td>
             {% endif %}
+
             {% if form.s2_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e1_lc }}</td>
+            <td class="time">
+              {% if form.s2_e1_comment.id != 2 %}
+                {{ form.s2_e1_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- روشن</td>
             <td rowspan="6">عادی</td>
           </tr>
           <tr>
             {% if form.s2_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e2_comment }}</td>
+              <td>{{ form.s2_e2_comment }}</td>
             {% endif %}
+
             {% if form.s2_e2_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e2_lc }}</td>
+            <td class="time">
+              {% if form.s2_e2_comment.id != 2 %}
+                {{ form.s2_e2_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- خاموش </td>
           </tr>
           <tr>
+            
             {% if form.s2_e3_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e3_comment }}</td>
+              <td>{{ form.s2_e3_comment }}</td>
             {% endif %}
+
             {% if form.s2_e3_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e3_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e3_lc }}</td>
+            <td class="time">
+              {% if form.s2_e3_comment.id != 2 %}
+                {{ form.s2_e3_lc }}
+              {% endif %}
+            </td>
             <td class="time" style="text-align: right;"> Standby -</td>
           </tr>
           <tr>
+            
             {% if form.s2_e4_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e4_comment }}</td>
+              <td>{{ form.s2_e4_comment }}</td>
             {% endif %}
+
             {% if form.s2_e4_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e4_lc }}</td>
+            <td class="time">
+              {% if form.s2_e4_comment.id != 2 %}
+                {{ form.s2_e4_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- پلاریته معکوس</td>
           </tr>
           <tr>
+            
             {% if form.s2_e5_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e5_comment }}</td>
+              td>{{ form.s2_e5_comment }}</td>
             {% endif %}
+
             {% if form.s2_e5_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e5_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e5_lc }}</td>
+            <td class="time">
+              {% if form.s2_e5_comment.id != 2 %}
+                {{ form.s2_e5_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- طی آنالیز ریتم</td>
           </tr>
           <tr>
             {% if form.s2_e6_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e6_comment }}</td>
+              <td>{{ form.s2_e6_comment }}</td>
             {% endif %}
+
             {% if form.s2_e6_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e6_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s2_e6_lc }}</td>
+            <td class="time">
+              {% if form.s2_e6_comment.id != 2 %}
+                {{ form.s2_e6_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- لحظۀ تخلیۀ شوک</td>
           </tr>
           <tr>
+            
             {% if form.s2_e7_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s2_e7_comment }}</td>
+              <td>{{ form.s2_e7_comment }}</td>
             {% endif %}
+
             {% if form.s2_e7_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s2_e7_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">1000</td>
-            <td class="time">{{ form.s2_e7_lc }}</td>
+            <td class="time">
+              {% if form.s2_e7_comment.id != 2 %}
+                {{ form.s2_e7_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع یکی از سیمهای تغذیه</td>
             <td>تک اشکالی</td>
           </tr>
@@ -982,144 +1030,192 @@
             <td>Ok</td>
           </tr>
           <tr>
+            
             {% if form.s3_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e1_comment }}</td>
+              <td>{{ form.s3_e1_comment }}</td>
             {% endif %}
+
             {% if form.s3_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e1_lc }}</td>
+            <td class="time">
+              {% if form.s3_e1_comment.id != 2 %}
+                {{ form.s3_e1_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- روشن</td>
             <td rowspan="6">عادی</td>
           </tr>
           <tr>
+            
             {% if form.s3_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e2_comment }}</td>
+              <td>{{ form.s3_e2_comment }}</td>
             {% endif %}
+
             {% if form.s3_e2_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e2_lc }}</td>
+            <td class="time">
+              {% if form.s3_e2_comment.id != 2 %}
+                {{ form.s3_e2_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- خاموش </td>
           </tr>
           <tr>
+            
             {% if form.s3_e3_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e3_comment }}</td>
+              <td>{{ form.s3_e3_comment }}</td>
             {% endif %}
+
             {% if form.s3_e3_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e3_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e3_lc }}</td>
+            <td class="time">
+              {% if form.s3_e3_comment.id != 2 %}
+                {{ form.s3_e3_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;" class="time"> Standby -</td>
           </tr>
           <tr>
+            
             {% if form.s3_e4_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e4_comment }}</td>
+              <td>{{ form.s3_e4_comment }}</td>
             {% endif %}
+
             {% if form.s3_e4_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e4_lc }}</td>
+            <td class="time">
+              {% if form.s3_e4_comment.id != 2 %}
+                {{ form.s3_e4_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- پلاریته معکوس</td>
           </tr>
           <tr>
             {% if form.s3_e5_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e5_comment }}</td>
+              <td>{{ form.s3_e5_comment }}</td>
             {% endif %}
+
             {% if form.s3_e5_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e5_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e5_lc }}</td>
+            <td class="time">
+              {% if form.s3_e5_comment.id != 2 %}
+                {{ form.s3_e5_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- طی آنالیز ریتم</td>
           </tr>
           <tr>
+            
             {% if form.s3_e6_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e6_comment }}</td>
+              <td>{{ form.s3_e6_comment }}</td>
             {% endif %}
+
             {% if form.s3_e6_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e6_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
-            <td class="time">{{ form.s3_e6_lc }}</td>
+            <td class="time">
+              {% if form.s3_e6_comment.id != 2 %}
+                {{ form.s3_e6_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- لحظۀ تخلیۀ شوک</td>
           </tr>
           <tr>
+            
             {% if form.s3_e7_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s3_e7_comment }}</td>
+              <td>{{ form.s3_e7_comment }}</td>
             {% endif %}
+
             {% if form.s3_e7_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s3_e7_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
-            <td class="time">{{ form.s3_e7_lc }}</td>
+            <td class="time">
+              {% if form.s3_e7_comment.id != 2 %}
+                {{ form.s3_e7_lc }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع یکی از سیمهای تغذیه – قطع زمین حفاظتی</td>
             <td>تک اشکالی</td>
           </tr>
@@ -1215,26 +1311,33 @@
             <td style="padding: 0;" class="time">1</td>
           </tr>
           <tr>
+            
             {% if form.s4_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e1_comment }}</td>
+              <td>{{ form.s4_e1_comment }}</td>
             {% endif %}
+
             {% if form.s4_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e1_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e1_comment.id != 2 %}
+                {{ form.s4_e1_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e1_lc3 == -1%}
             <td class="time"></td>
@@ -1250,31 +1353,42 @@
 
             <td class="time"></td>
             <td class="time"></td>
-            <td class="time">{{form.s4_e1_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e1_comment.id != 2 %}
+                {{ form.s4_e1_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- روشن</td>
             <td rowspan="8">عادی</td>
           </tr>
           <tr>
+            
             {% if form.s4_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e2_comment }}</td>
+              <td>{{ form.s4_e2_comment }}</td>
             {% endif %}
+
             {% if form.s4_e2_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e2_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e2_comment.id != 2 %}
+                {{ form.s4_e2_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e2_lc3 == -1%}
             <td class="time"></td>
@@ -1290,30 +1404,41 @@
             <td class="time"></td>
             <td class="time"></td>
 
-            <td class="time">{{form.s4_e2_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e2_comment.id != 2 %}
+                {{ form.s4_e2_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- خاموش </td>
           </tr>
           <tr>
+            
             {% if form.s4_e3_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e3_comment }}</td>
+              <td>{{ form.s4_e3_comment }}</td>
             {% endif %}
+
             {% if form.s4_e3_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e3_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e3_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e3_comment.id != 2 %}
+                {{ form.s4_e3_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e3_lc3 == -1%}
             <td class="time"></td>
@@ -1329,30 +1454,41 @@
             <td class="time"></td>
             <td class="time"></td>
 
-            <td class="time">{{form.s4_e3_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e3_comment.id != 2 %}
+                {{ form.s4_e3_lc1 }}
+              {% endif %}
+            </td>
             <td class="time" style="text-align: right;"> Standby -</td>
           </tr>
           <tr>
+            
             {% if form.s4_e4_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e4_comment }}</td>
+              <td>{{ form.s4_e4_comment }}</td>
             {% endif %}
+
             {% if form.s4_e4_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e4_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e4_comment.id != 2 %}
+                {{ form.s4_e4_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e4_lc3 == -1%}
             <td class="time"></td>
@@ -1368,30 +1504,41 @@
             <td class="time"></td>
             <td class="time"></td>
 
-            <td class="time">{{form.s4_e4_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e4_comment.id != 2 %}
+                {{ form.s4_e4_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- پلاریته معکوس</td>
           </tr>
           <tr>
+            
             {% if form.s4_e5_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e5_comment }}</td>
+              <td>{{ form.s4_e5_comment }}</td>
             {% endif %}
+
             {% if form.s4_e5_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e5_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+            
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e5_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e5_comment.id != 2 %}
+                {{ form.s4_e5_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e5_lc3 == -1%}
             <td class="time"></td>
@@ -1406,8 +1553,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s4_e5_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e5_comment.id != 2 %}
+                {{ form.s4_e5_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">
               - طی شارژ
               <br>
@@ -1416,26 +1566,33 @@
             </td>
           </tr>
           <tr>
+            
             {% if form.s4_e6_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e6_comment }}</td>
+              <td>{{ form.s4_e6_comment }}</td>
             {% endif %}
+
             {% if form.s4_e6_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e6_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e6_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e6_comment.id != 2 %}
+                {{ form.s4_e6_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e6_lc3 == -1%}
             <td class="time"></td>
@@ -1450,8 +1607,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s4_e6_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e6_comment.id != 2 %}
+                {{ form.s4_e6_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;width: 2.75cm;">
               - 1دقیقه
               بعد
@@ -1468,26 +1628,33 @@
             </td>
           </tr>
           <tr>
+            
             {% if form.s4_e7_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e7_comment }}</td>
+              <td>{{ form.s4_e7_comment }}</td>
             {% endif %}
+
             {% if form.s4_e7_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e7_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e7_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e7_comment.id != 2 %}
+                {{ form.s4_e7_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e7_lc3 == -1%}
             <td class="time"></td>
@@ -1502,32 +1669,43 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-            <td class="time">{{form.s4_e7_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e7_comment.id != 2 %}
+                {{ form.s4_e7_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- 1ثانیه بعد از تخلیه
               <br>
               در بار 50 اهم به مدت 1 دقیقه</td>
           </tr>
           <tr>
+            
             {% if form.s4_e8_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e8_comment }}</td>
+              <td>{{ form.s4_e8_comment }}</td>
             {% endif %}
+
             {% if form.s4_e8_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e8_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s4_e8_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e8_comment.id != 2 %}
+                {{ form.s4_e8_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e8_lc3 == -1%}
             <td class="time"></td>
@@ -1542,31 +1720,41 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s4_e8_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e8_comment.id != 2 %}
+                {{ form.s4_e8_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- طی آنالیز ریتم</td>
           </tr>
           <tr>
+            
             {% if form.s4_e9_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e9_comment }}</td>
+              <td>{{ form.s4_e9_comment }}</td>
             {% endif %}
+
             {% if form.s4_e9_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e9_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
             <td class="time">50</td>
             <td class="time">50</td>
             <td class="time">50</td>
-            <td class="time">{{form.s4_e9_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e9_comment.id != 2 %}
+                {{ form.s4_e9_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e9_lc3 == -1%}
             <td class="time"></td>
@@ -1581,32 +1769,43 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-            <td class="time">{{form.s4_e9_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e9_comment.id != 2 %}
+                {{ form.s4_e9_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع یکی از سیمهای تغذیه</td>
             <td rowspan="2">تک اشکالی</td>
           </tr>
 
           <tr>
+            
             {% if form.s4_e10_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e10_comment }}</td>
+              <td>{{ form.s4_e10_comment }}</td>
             {% endif %}
+
             {% if form.s4_e10_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s4_e10_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
             <td class="time">50</td>
             <td class="time">50</td>
             <td class="time">50</td>
-            <td class="time">{{form.s4_e10_lc4}}</td>
+            <td class="time">
+              {% if form.s4_e10_comment.id != 2 %}
+                {{ form.s4_e10_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s4_e10_lc3 == -1%}
             <td class="time"></td>
@@ -1622,7 +1821,11 @@
              -->
             <td class="time"></td>
             <td class="time"></td>
-            <td class="time">{{form.s4_e10_lc1}}</td>
+            <td class="time">
+              {% if form.s4_e10_comment.id != 2 %}
+                {{ form.s4_e10_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع زمین حفاظتی</td>
           </tr>
 
@@ -1710,26 +1913,33 @@
             <td style="padding: 0;" class="time">1</td>
           </tr>
           <tr>
+            
             {% if form.s5_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e1_comment }}</td>
+              <td>{{ form.s5_e1_comment }}</td>
             {% endif %}
+
             {% if form.s5_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e1_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e1_comment.id != 2 %}
+                {{ form.s5_e1_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e1_lc3 == -1%}
             <td class="time"></td>
@@ -1744,31 +1954,42 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-            <td class="time">{{form.s5_e1_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e1_comment.id != 2 %}
+                {{ form.s5_e1_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- روشن</td>
             <td rowspan="8">عادی</td>
           </tr>
           <tr>
+            
             {% if form.s5_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e2_comment }}</td>
+              <td>{{ form.s5_e2_comment }}</td>
             {% endif %}
+
             {% if form.s5_e2_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e2_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e2_comment.id != 2 %}
+                {{ form.s5_e2_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e2_lc3 == -1%}
             <td class="time"></td>
@@ -1783,31 +2004,41 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e2_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e2_comment.id != 2 %}
+                {{ form.s5_e2_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- خاموش </td>
           </tr>
           <tr>
+            
             {% if form.s5_e3_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e3_comment }}</td>
+              <td>{{ form.s5_e3_comment }}</td>
             {% endif %}
+
             {% if form.s5_e3_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e3_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e3_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e3_comment.id != 2 %}
+                {{ form.s5_e3_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e3_lc3 == -1%}
             <td class="time"></td>
@@ -1822,31 +2053,41 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e3_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e3_comment.id != 2 %}
+                {{ form.s5_e3_lc1 }}
+              {% endif %}
+            </td>
             <td class="time" style="text-align: right;"> Standby -</td>
           </tr>
           <tr>
+            
             {% if form.s5_e4_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e4_comment }}</td>
+              <td>{{ form.s5_e4_comment }}</td>
             {% endif %}
+
             {% if form.s5_e4_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+            
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e4_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e4_comment.id != 2 %}
+                {{ form.s5_e4_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e4_lc3 == -1%}
             <td class="time"></td>
@@ -1861,31 +2102,41 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e4_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e4_comment.id != 2 %}
+                {{ form.s5_e4_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- پلاریته معکوس</td>
           </tr>
           <tr>
+            
             {% if form.s5_e5_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e5_comment }}</td>
+              <td>{{ form.s5_e5_comment }}</td>
             {% endif %}
+
             {% if form.s5_e5_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e5_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+            
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e5_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e5_comment.id != 2 %}
+                {{ form.s5_e5_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e5_lc3 == -1%}
             <td class="time"></td>
@@ -1900,8 +2151,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e5_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e5_comment.id != 2 %}
+                {{ form.s5_e5_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">
               - طی شارژ
               <br>
@@ -1910,26 +2164,33 @@
             </td>
           </tr>
           <tr>
+            
             {% if form.s5_e6_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e6_comment }}</td>
+              <td>{{ form.s5_e6_comment }}</td>
             {% endif %}
+
             {% if form.s5_e6_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e6_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e6_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e6_comment.id != 2 %}
+                {{ form.s5_e6_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e6_lc3 == -1%}
             <td class="time"></td>
@@ -1944,8 +2205,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e6_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e6_comment.id != 2 %}
+                {{ form.s5_e6_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;width: 2.75cm;">
               - 1دقیقه
               بعد
@@ -1962,26 +2226,33 @@
             </td>
           </tr>
           <tr>
+            
             {% if form.s5_e7_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e7_comment }}</td>
+              <td>{{ form.s5_e7_comment }}</td>
             {% endif %}
+
             {% if form.s5_e7_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e7_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e7_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e7_comment.id != 2 %}
+                {{ form.s5_e7_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e7_lc3 == -1%}
             <td class="time"></td>
@@ -1996,33 +2267,43 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e7_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e7_comment.id != 2 %}
+                {{ form.s5_e7_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- 1ثانیه بعد از تخلیه
               <br>
               در بار 50 اهم به مدت 1 دقیقه</td>
           </tr>
           <tr>
+            
             {% if form.s5_e8_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e8_comment }}</td>
+              <td>{{ form.s5_e8_comment }}</td>
             {% endif %}
+
             {% if form.s5_e8_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e8_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">100</td>
             <td class="time">10</td>
             <td class="time">10</td>
             <td class="time">10</td>
-            <td class="time">{{form.s5_e8_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e8_comment.id != 2 %}
+                {{ form.s5_e8_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e8_lc3 == -1%}
             <td class="time"></td>
@@ -2037,31 +2318,41 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e8_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e8_comment.id != 2 %}
+                {{ form.s5_e8_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- طی آنالیز ریتم</td>
           </tr>
           <tr>
+            
             {% if form.s5_e9_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e9_comment }}</td>
+              <td>{{ form.s5_e9_comment }}</td>
             {% endif %}
+
             {% if form.s5_e9_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e9_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
             <td class="time">50</td>
             <td class="time">50</td>
             <td class="time">50</td>
-            <td class="time">{{form.s5_e9_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e9_comment.id != 2 %}
+                {{ form.s5_e9_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e9_lc3 == -1%}
             <td class="time"></td>
@@ -2076,33 +2367,43 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e9_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e9_comment.id != 2 %}
+                {{ form.s5_e9_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع یکی از سیمهای تغذیه</td>
             <td rowspan="2">تک اشکالی</td>
           </tr>
 
           <tr>
+            
             {% if form.s5_e10_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s5_e10_comment }}</td>
+              <td>{{ form.s5_e10_comment }}</td>
             {% endif %}
+
             {% if form.s5_e10_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s5_e10_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">500</td>
             <td class="time">50</td>
             <td class="time">50</td>
             <td class="time">50</td>
-            <td class="time">{{form.s5_e10_lc4}}</td>
+            <td class="time">
+              {% if form.s5_e10_comment.id != 2 %}
+                {{ form.s5_e10_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s5_e10_lc3 == -1%}
             <td class="time"></td>
@@ -2117,8 +2418,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s5_e10_lc1}}</td>
+            <td class="time">
+              {% if form.s5_e10_comment.id != 2 %}
+                {{ form.s5_e10_lc1 }}
+              {% endif %}
+            </td>
             <td style="text-align: right;">- قطع زمین حفاظتی</td>
           </tr>
 
@@ -2166,23 +2470,29 @@
           </tr>
           <tr>
             {% if form.s6_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s6_e1_comment }}</td>
+              <td>{{ form.s6_e1_comment }}</td>
             {% endif %}
+
             {% if form.s6_e1_comment.id == 1 %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% elif form.s6_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% endif %}
+
             <td class="time">5000</td>
             <td class="time">100</td>
-            <td class="time">{{form.s6_e1_lc4}}</td>
+            <td class="time">
+              {% if form.s6_e1_comment.id != 2 %}
+                {{ form.s6_e1_lc4 }}
+              {% endif %}
+            </td>
 
             <!-- {% if form.s6_e1_lc3 == -1%}
             <td class="time"></td>
@@ -2197,8 +2507,11 @@
             {% endif %} -->
             <td class="time"></td>
             <td class="time"></td>
-
-            <td class="time">{{form.s6_e1_lc1}}</td>
+            <td class="time">
+              {% if form.s6_e1_comment.id != 2 %}
+                {{ form.s6_e1_lc1 }}
+              {% endif %}
+            </td>
             <td>اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>
             <td>تک اشکالی</td>
         </tbody>

@@ -207,7 +207,7 @@ class AllDevice(models.Model):
         verbose_name_plural = "3_دستگاه های ثبت شده"
 
     def __str__(self):
-        return str(self.name) + ' - ' + str(self.hospital.name) + ' - ' + str(self.serial_number)
+        return self.name.creator.name + ' - ' + self.name.name + ' - ' + self.hospital.name + ' - ' + str(self.serial_number)
 
 
 class Request(models.Model):

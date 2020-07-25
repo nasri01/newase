@@ -105,7 +105,7 @@ class MonitorSpo2_1(models.Model):
     s4_e1_acc = models.ForeignKey(
         acc.models.Accessory, on_delete=models.PROTECT, related_name='ms1s4e1accessory', default=1)
     s4_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='ms1s4e1comment', default=2)
+                                      related_name='ms1s4e1comment', default=1)
 
     def __str__(self):
         return 'MonitorSpo2 : ' + str(self.licence)
@@ -137,7 +137,7 @@ class MonitorECG_1(models.Model):
 
     # cd = calibration date xd = expire date
     cal_dev1 = models.ForeignKey(
-        acc.models.CalDevice, on_delete=models.PROTECT, related_name='me1caldev1', default=5)
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='me1caldev1', default=7)  # Impulse 7000dp
     cal_dev_1_cd = models.DateField()
     cal_dev_1_xd = models.DateField()
     cal_dev2 = models.ForeignKey(
@@ -149,28 +149,28 @@ class MonitorECG_1(models.Model):
     cal_dev_3_cd = models.DateField()
     cal_dev_3_xd = models.DateField()
 
-    s1_e1_hr = models.IntegerField()
+    s1_e1_hr = models.IntegerField(default=75)
     s1_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e1comment', default=1)
-    s1_e2_hr = models.IntegerField()
+    s1_e2_hr = models.IntegerField(default=75)
     s1_e2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e2comment', default=1)
-    s1_e3_hr = models.IntegerField()
+    s1_e3_hr = models.IntegerField(default=75)
     s1_e3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e3comment', default=1)
-    s1_e4_hr = models.IntegerField()
+    s1_e4_hr = models.IntegerField(default=75)
     s1_e4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e4comment', default=1)
-    s1_e5_hr = models.IntegerField()
+    s1_e5_hr = models.IntegerField(default=75)
     s1_e5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e5comment', default=1)
-    s1_e6_hr = models.IntegerField()
+    s1_e6_hr = models.IntegerField(default=75)
     s1_e6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e6comment', default=1)
-    s1_e7_hr = models.IntegerField()
+    s1_e7_hr = models.IntegerField(default=75)
     s1_e7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e7comment', default=1)
-    s1_e8_hr = models.IntegerField()
+    s1_e8_hr = models.IntegerField(default=75)
     s1_e8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s1e8comment', default=1)
 
@@ -292,8 +292,8 @@ class MonitorECG_1(models.Model):
     s7_e5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s7e5comment', default=1)
 
-    s8_e1_bdisp = models.FloatField(null=True, blank=True)
-    s8_e1_slope = models.FloatField(null=True, blank=True)
+    s8_e1_bdisp = models.FloatField(null=True, blank=True, default=0.05)
+    s8_e1_slope = models.FloatField(null=True, blank=True, default=0.2)
     s8_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='me1s8e1comment', default=1)
 
@@ -1281,7 +1281,7 @@ class Defibrilator_1(models.Model):
                                       related_name='df1s3e7comment', default=1)
 
     s4_type = models.ForeignKey(
-        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s4_t')
+        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s4_t', default=1)
 
     s4_e1_lc1 = models.IntegerField(null=True, blank=True)
     # s4_e1_lc2 = models.IntegerField(null=True, blank=True)
@@ -1345,7 +1345,7 @@ class Defibrilator_1(models.Model):
                                        related_name='df1s4e10comment', default=1)
 
     s5_type = models.ForeignKey(
-        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s5_t')
+        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s5_t', default=1)
 
     s5_e1_lc1 = models.IntegerField(null=True, blank=True)
     # s5_e1_lc2 = models.IntegerField(null=True, blank=True)
@@ -1409,7 +1409,7 @@ class Defibrilator_1(models.Model):
                                        related_name='df1s5e10comment', default=1)
 
     s6_type = models.ForeignKey(
-        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s6_t')
+        acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s6_t', default=1)
 
     s6_e1_lc1 = models.IntegerField(null=True, blank=True)
     # s6_e1_lc2 = models.IntegerField(null=True, blank=True)
@@ -1600,7 +1600,7 @@ class ECG_1(models.Model):
 
     # cd = calibration date xd = expire date
     cal_dev1 = models.ForeignKey(
-        acc.models.CalDevice, on_delete=models.PROTECT, related_name='e1caldev1', default=5)
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='e1caldev1', default=7)  # Impulse 7000dp
     cal_dev_1_cd = models.DateField()
     cal_dev_1_xd = models.DateField()
     cal_dev2 = models.ForeignKey(
@@ -1996,7 +1996,7 @@ class InfusionPump_1(models.Model):
     s7_e1_mmf = models.FloatField()
     s7_e2_mmf = models.FloatField()
 
-    s8_e1_status = models.BooleanField(default=False)
+    s8_e1_status = models.BooleanField(default=True)
 
     def __str__(self):
         return 'InfusionPump : ' + str(self.licence)

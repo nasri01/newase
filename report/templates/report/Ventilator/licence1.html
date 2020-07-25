@@ -819,7 +819,11 @@
                         {% endif %}
 
                         <td class="time">500</td>
-                        <td class="time" rowspan="4">{{ form.s2_e1_lc}}</td>
+                        <td class="time" rowspan="4">
+							{% if form.s2_e1_comment.id != 2 %}
+                            	{{ form.s2_e1_lc}}
+							{% endif %} 
+						</td>
                         <td style="text-align: right;">- روشن</td>
                         <td rowspan="4">عادی</td>
                     </tr>
@@ -848,10 +852,10 @@
                         <td style="text-align: right;">- پلاریته معکوس</td>
                     </tr>
                     <tr>
-                        {% if form.s2_e1_comment.id == 1%}
+                        {% if form.s2_e2_comment.id == 1%}
                             <td></td>
                         {% else %}
-                        <td>{{ form.s2_e1_comment }}</td>
+                        <td>{{ form.s2_e2_comment }}</td>
                         {% endif %} 
                         
                         {% if form.s2_e2_comment.id == 1 %}
@@ -866,7 +870,11 @@
                         {% endif %}
 
                         <td class="time">1000</td>
-                        <td class="time">{{ form.s2_e2_lc}}</td>
+                        <td class="time" rowspan="4">
+							{% if form.s2_e2_comment.id != 2 %}
+                            	{{ form.s2_e2_lc}}
+							{% endif %} 
+						</td>
                         <td style="text-align: right;">- قطع یکی از سیمهای تغذیه</td>
                         <td>تک اشکالی</td>
                     </tr>
@@ -920,7 +928,11 @@
                         {% endif %}
 
                         <td class="time">100</td>
-                        <td class="time" rowspan="4">{{ form.s3_e1_lc}}</td>
+                        <td class="time" rowspan="4">
+							{% if form.s3_e1_comment.id != 2 %}
+                            	{{ form.s3_e1_lc}}
+							{% endif %} 
+						</td>
                         <td style="text-align: right;">- روشن</td>
                         <td rowspan="4">عادی</td>
                     </tr>
@@ -967,7 +979,11 @@
                         {% endif %}
 
                         <td class="time">500</td>
-                        <td class="time">{{ form.s3_e2_lc}}</td>
+                        <td class="time" rowspan="4">
+							{% if form.s3_e2_comment.id != 2 %}
+                            	{{ form.s3_e2_lc}}
+							{% endif %} 
+						</td>
                         <td style="text-align: right;">
                             - قطع یکی از سیمهای تغذیه – قطع زمین حفاظتی
                         </td>
