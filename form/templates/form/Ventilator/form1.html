@@ -80,7 +80,7 @@
             {% render_field form.temp  style="display:block;max-width:500px;width:50%;"%}
 
           </span>
-
+          <button id="btnNoSafety" >بدون ایمنی</button>
 
           <!--
 
@@ -1267,6 +1267,25 @@
 </form>
 
 <script>
+$( "#btnNoSafety" ).click(function() {
+        //alert( "..." );
+        run();
+    });
+
+    function run(){
+        $('#id_s2_e1_lc').val('-1');
+        $('#id_s2_e1_comment').val('2');
+
+        $('#id_s2_e2_lc').val('-1');
+        $('#id_s2_e2_comment').val('2');
+
+        $('#id_s3_e1_lc').val('-1');
+        $('#id_s3_e1_comment').val('2');
+
+        $('#id_s3_e2_lc').val('-1');
+        $('#id_s3_e2_comment').val('2');
+        
+    }
 
   $("#id_s0_e1_comment")
     .focusout(function () {

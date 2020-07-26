@@ -94,6 +94,7 @@
                             <th class="th-sm">{{table_header.12}}</th>
                             <th class="th-sm">{{table_header.14}}</th>
                             <th class="th-sm">{{table_header.16}}</th>
+                            <th class="th-sm">Recalibration</th>
 
                         </tr>
                     </thead>
@@ -102,7 +103,7 @@
                         {% for row in table_rows %}
 
                         <tr>
-                            <td>{{forloop.counter}}</td>
+                          
                             <td>{{row.0}}</td>
                             <td>{{row.1}}</td>
                             <td>{{row.2}}</td>
@@ -114,6 +115,7 @@
                             <td>{{row.9}}</td>
                             <td>{{row.10}}</td>
                             <td>{{row.11}}</td>
+                            <td>{{row.13}}</td>
                             <form method="GET" action="{% url 'recal_report' %}">
                                 <td> <button type="submit" value="{{row.12}}" name="record_number" class="btn"><img
                                             src="{% static 'img/pencil_gear.png' %}" height="30px" class="download-icon"

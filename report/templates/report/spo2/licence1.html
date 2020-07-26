@@ -809,75 +809,87 @@
           </tr>
           <tr>
             <td>Connection</td>
+            
             {% if form.s4_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e1_comment }}</td>
+              <td>{{ form.s4_e1_comment }}</td>
             {% endif %}
+
             {% if form.s4_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.4_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
           </tr>
           <tr>
             <td>Keys and Controllers</td>
+            
             {% if form.s4_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e2_comment }}</td>
+              <td>{{ form.s4_e2_comment }}</td>
             {% endif %}
+
             {% if form.s4_e2_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.4_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
           </tr>
           <tr>
             <td>Indicators and display</td>
+            
             {% if form.s4_e3_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e3_comment }}</td>
+              <td>{{ form.s4_e3_comment }}</td>
             {% endif %}
+
             {% if form.s4_e3_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.4_e3_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
           </tr>
           <tr>
             <td>Battery</td>
+            
             {% if form.s4_e4_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s4_e4_comment }}</td>
+              <td>{{ form.s4_e4_comment }}</td>
             {% endif %}
+
             {% if form.s4_e4_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.4_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
           </tr>
         </tbody>
       </table>
@@ -907,11 +919,27 @@
           </tr>
           <tr>
             <!-- va -->
-            <td>{{ data.19 }}</td>
+            <td>
+              {% if data.19 != -1 %}
+                {{ data.19 }}
+              {% endif %}
+            </td>
             <!-- watt -->
-            <td>{{ data.18 }}</td>
-            <td>{{ form.s5_e1_v}}</td>
-            <td>{{ form.s5_e1_a}}</td>
+            <td>
+              {% if data.18 != -1 %}
+                {{ data.18 }}
+              {% endif %}
+            </td>
+            <td>
+              {% if form.s5_e1_v != -1 %}
+                {{ form.s5_e1_v}}
+              {% endif %}
+            </td>
+            <td>
+              {% if form.s5_e1_a != -1 %}
+                {{ form.s5_e1_a}}
+              {% endif %}
+            </td>
             <td></td>
             <td></td>
           </tr>
@@ -938,17 +966,24 @@
             <td rowspan="5">Test current 25A</td>
             <td rowspan="5">
               <span style="font-weight: bold;">power supply cord</span>
-              {% if form.s6_e1_type == on %}
-              <br>
-              Yes&#9635;
-              <br>
-              No&#9633;
+            
+              {% if data.20 == 1 %}
+                <br>
+                Yes&#9633;
+                <br>
+                No&#9633;  
+              {% elif form.s6_e1_type == on %}
+                <br>
+                Yes&#9635;
+                <br>
+                No&#9633;
               {% else %}
-              <br>
-              Yes&#9633;
-              <br>
-              No&#9635;
+                <br>
+                Yes&#9633;
+                <br>
+                No&#9635;
               {% endif %}
+
             </td>
             <td rowspan="4">Earth Resistance</td>
             <td rowspan="4">Permissible Error</td>
@@ -962,23 +997,30 @@
             <td>Rej</td>
           </tr>
           <tr>
-            <td>{{ form.s6_e1_er}}</td>
+            <td>
+            {% if form.s6_r1_er != -1 %}
+              {{ form.s6_e1_er}}
+            {% endif %}
+            </td>
             <td>0.2</td>
+            
             {% if form.s6_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.s6_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+            
             {% if form.s6_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.6_e1_comment }}</td>
+              <td>{{ form.6_e1_comment }}</td>
             {% endif %}
+
           </tr>
         </tbody>
       </table>
@@ -1046,46 +1088,67 @@
           <tr>
             <td>Device on</td>
             <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
-            <td>{{ form.s7_e1_aplc}}</td>
-            <td>{{ form.s7_e1_noaplc}}</td>
+            <td>
+              {% if form.s7_e1_aplc != -1 %}
+                {{ form.s7_e1_aplc }}
+              {% endif %}
+            </td>
+            <td>
+              {% if form.s7_e1_noaplc != -1 %}
+                {{ form.s7_e1_noaplc }}
+              {% endif %}
+            </td>
             <td>500</td>
+            
             {% if form.s7_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.s7_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
             {% if form.s7_e1_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s7_e1_comment }}</td>
+              <td>{{ form.s7_e1_comment }}</td>
             {% endif %}
+
           </tr>
           <tr>
             <td>Device off</td>
             <td>Earth Leakage: Norm Pol,No Earth ,L2</td>
-            <td>{{ form.s7_e2_aplc}}</td>
-            <td>{{ form.s7_e2_noaplc}}</td>
+            <td>
+              {% if form.s7_e2_aplc != -1 %}
+                {{ form.s7_e2_aplc }}
+              {% endif %}
+            </td>
+            <td>
+              {% if form.s7_e2_noaplc != -1 %}
+                {{ form.s7_e2_noaplc }}
+              {% endif %}
+            </td>
             <td>500</td>
             {% if form.s7_e2_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
+              <td>&#10004;</td>
+              <td></td>
             {% elif form.s7_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
+              <td></td>
+              <td></td>
             {% else %}
-            <td></td>
-            <td>&#10004;</td>
+              <td></td>
+              <td>&#10004;</td>
             {% endif %}
+
             {% if form.s7_e2_comment.id == 1%}
-            <td></td>
+              <td></td>
             {% else %}
-            <td>{{ form.s7_e2_comment }}</td>
+              <td>{{ form.s7_e2_comment }}</td>
             {% endif %}
+            
           </tr>
         </tbody>
       </table>

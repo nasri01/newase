@@ -2168,32 +2168,32 @@ class Spo2_1(models.Model):
                                       related_name='sp1s3e1comment', default=2)
 
     s4_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s4e1comment', default=1)
+                                      related_name='sp1s4e1comment', default=2)
     s4_e2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s4e2comment', default=1)
+                                      related_name='sp1s4e2comment', default=2)
     s4_e3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s4e3comment', default=1)
+                                      related_name='sp1s4e3comment', default=2)
     s4_e4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s4e4comment', default=1)
+                                      related_name='sp1s4e4comment', default=2)
 
     # s5_e1_va = models.FloatField()
     # s5_e1_watt = models.FloatField()
-    s5_e1_v = models.FloatField()
-    s5_e1_a = models.FloatField()
+    s5_e1_v = models.FloatField(default=-1)
+    s5_e1_a = models.FloatField(default=-1)
 
-    s6_e1_type = models.BooleanField()
-    s6_e1_er = models.FloatField()
+    s6_e1_type = models.BooleanField(default=false)
+    s6_e1_er = models.FloatField(default=-1)
     s6_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s6e1comment', default=1)
+                                      related_name='sp1s6e1comment', default=2)
 
-    s7_e1_aplc = models.IntegerField(null=True, blank=True)
-    s7_e1_noaplc = models.IntegerField(null=True, blank=True)
+    s7_e1_aplc = models.IntegerField(null=True, blank=True, default=-1)
+    s7_e1_noaplc = models.IntegerField(null=True, blank=True, default=-1)
     s7_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s7e1comment', default=1)
-    s7_e2_aplc = models.IntegerField(null=True, blank=True)
-    s7_e2_noaplc = models.IntegerField(null=True, blank=True)
+                                      related_name='sp1s7e1comment', default=2)
+    s7_e2_aplc = models.IntegerField(null=True, blank=True, default=-1)
+    s7_e2_noaplc = models.IntegerField(null=True, blank=True, default=-1)
     s7_e2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                      related_name='sp1s7e2comment', default=1)
+                                      related_name='sp1s7e2comment', default=2)
 
     def __str__(self):
         return 'spo2 : ' + str(self.licence)

@@ -477,9 +477,22 @@ def save_router(request, formtype):
                             for i in range(12, 17):
                                 sss += data[i]
                             data.append(int(((sss/5)**0.5)*100)/100)  # 17
-                            k = int(sform.s5_e1_v) * int(sform.s5_e1_a)
+                            
+                            if (int(sform.s5_e1_v) != -1 ):
+                                k = int(sform.s5_e1_v) * int(sform.s5_e1_a)
+                            else:
+                                k = -1
                             data.append(k)  # 18
-                            data.append(format((2 ** 0.5) * k, '.2f'))  # 19
+                            
+                            if (int(sform.s5_e1_v) != -1 ):
+                                data.append(format((2 ** 0.5) * k, '.2f'))  # 19
+                            else:
+                                data.append(-1) # 19
+                            
+                            if (form.s6_e1_er == -1): # for N/A of Section 6
+                                data.append(1) # 20
+                            else:
+                                data.append(0)
 
                         elif (item[1] == Suction_1):
                             template_name = 'report/Suction/licence1.html'
