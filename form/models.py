@@ -2181,7 +2181,7 @@ class Spo2_1(models.Model):
     s5_e1_v = models.FloatField(default=-1)
     s5_e1_a = models.FloatField(default=-1)
 
-    s6_e1_type = models.BooleanField(default=false)
+    s6_e1_type = models.BooleanField(default=False)
     s6_e1_er = models.FloatField(default=-1)
     s6_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                       related_name='sp1s6e1comment', default=2)
