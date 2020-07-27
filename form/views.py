@@ -489,7 +489,7 @@ def save_router(request, formtype):
                             else:
                                 data.append(-1) # 19
                             
-                            if (form.s6_e1_er == -1): # for N/A of Section 6
+                            if (sform.s6_e1_er == -1): # for N/A of Section 6
                                 data.append(1) # 20
                             else:
                                 data.append(0)
