@@ -567,7 +567,7 @@ def save_router(request, formtype):
                             'form': sform, 'time': today_datetime, 'user_profile': user_profile, 'data': data, 'domain_name': domain_name})
                         
                         if DEBUG:
-                            css_root = STATICFILES_DIRS[0] + '\css'
+                            css_root = STATICFILES_DIRS[0] + '/css'
                         else:
                             css_root = STATIC_ROOT + '/css'
 

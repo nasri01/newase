@@ -185,7 +185,7 @@ def show_recalibration_list(request):
                 else:
                     row.append('-')  # 11
                 row.append(obj.record.number)  # 12
-                row.append(obj.status.id)  # 13
+                row.append(obj.totalcomment)  # 13
                 table_rows.append(row)
 
         return render(request, 'acc/employee/recalibration_list.html', {'table_header': table_header, 'table_rows': table_rows})
