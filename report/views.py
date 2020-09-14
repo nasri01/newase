@@ -236,7 +236,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
 
             # Esfahan/Esfahan/a01610228fe998f515a72dd730294d87/100/AMBULANCE/AED
 
-            ws.write_url(row=cursor, col=len(row_data)-1, url=row[14],
+            ws.write_url(row=cursor, col=len(row_data), url=row[14],
                          cell_format=row_format, string='show', tip='Downlaod PDF')
 
             cursor += 1
