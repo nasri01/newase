@@ -15,7 +15,7 @@ from weasyprint.fonts import FontConfiguration
 
 from acc.models import CalDevice, Licence, Record, UserProfile, AdTestType0
 from report.models import Encode, Report
-from ww.settings import STATICFILES_DIRS ,STATIC_ROOT
+from ww.settings import STATICFILES_DIRS, STATIC_ROOT
 from ww.local_settings import (DL_FTP_HOST, DL_FTP_PASSWD, DL_FTP_USER,
                                domain_name, DEBUG)
 
@@ -204,7 +204,7 @@ def save_router(request, formtype):
                     # ===================================Begin-File Backing=================================================
                     data = []
                     if item[1] != CantTest:
-                        
+
                         if(item[1] == MonitorSpo2_1):
                             template_name = 'report/Monitor/Spo2/licence1.html'
                             ss = 0
@@ -255,7 +255,7 @@ def save_router(request, formtype):
                                 0 if abs(int(sform.s1_e1_simp) - int(sform.s1_e1_nibpp)) >= max(3, int(sform.s1_e1_simp) * 0.03) else 1 )
                             data3.append(
                                 0 if abs(int(sform.s1_e1_simp) - int(sform.s1_e1_nibpp)) >= max(3, int(sform.s1_e1_simp) * 0.03) else 1 )
-                                
+
 
                             data1.append(int(sform.s2_e1_pr1.split('/')[0]))
                             data1.append(int(sform.s2_e1_pr2.split('/')[0]))
@@ -477,18 +477,18 @@ def save_router(request, formtype):
                             for i in range(12, 17):
                                 sss += data[i]
                             data.append(int(((sss/5)**0.5)*100)/100)  # 17
-                            
+
                             if (int(sform.s5_e1_v) != -1 ):
                                 k = int(sform.s5_e1_v) * int(sform.s5_e1_a)
                             else:
                                 k = -1
                             data.append(k)  # 18
-                            
+
                             if (int(sform.s5_e1_v) != -1 ):
                                 data.append(format((2 ** 0.5) * k, '.2f'))  # 19
                             else:
                                 data.append(-1) # 19
-                            
+
                             if (sform.s6_e1_er == -1): # for N/A of Section 6
                                 data.append(1) # 20
                             else:
@@ -565,7 +565,7 @@ def save_router(request, formtype):
                         font_config = FontConfiguration()
                         html = render_to_string(template_name, {
                             'form': sform, 'time': today_datetime, 'user_profile': user_profile, 'data': data, 'domain_name': domain_name})
-                        
+
                         if DEBUG:
                             css_root = STATICFILES_DIRS[0] + '/css'
                         else:
@@ -594,7 +594,7 @@ def save_router(request, formtype):
                             encode_instance.save()
                         else:
                             filename = encode_query[0].name
-                        
+
                         #===================================Begin-FTP Stuf=================================================
                         if not DEBUG:
                             with FTP(
@@ -629,20 +629,20 @@ def save_router(request, formtype):
                                 send_file_ftp(
                                     ftp, '{}.pdf'.format(sform.licence.number), report_name)
                                 os.remove(report_name)
-                                
+
                                 ftp.close()
                         # ===================================End-FTP Stuf=================================================
-                    
-                    
+
+
                     green_status += 'PDF ذخیره شد!!!'
                     report_query = Report.objects.filter(record=sform.record)
                     if len(report_query):
                         report_query[0].delete()
                     report_instance = Report.objects.create(tt=AdTestType0.objects.get(type=(item[0] if item[0] != 'spo2' else 'PulseOximetry')), device=sform.device,
                                                             request=sform.request, date=sform.date, user=sform.user, status=sform.status,
-                                                            record=sform.record, 
+                                                            record=sform.record,
                                                             licence=sform.licence if item[1] != CantTest else Licence.objects.get(number=-1),
-                                                            is_recal=sform.is_recal, 
+                                                            is_recal=sform.is_recal,
                                                             ref_record=sform.ref_record if item[1] != CantTest else Record.objects.get(number=-1),
                                                             is_done=sform.is_done, totalcomment=sform.totalcomment)
                     report_instance.save()

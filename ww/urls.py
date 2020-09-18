@@ -26,7 +26,8 @@ urlpatterns = [
     path('mo/', admin.site.urls),
     path('dashboard/', acc.views.route_to_dashboard,name='dashboard'),
     path('report/', include('report.urls')),
-    path('form/', include('form.urls'))
+    path('form/', include('form.urls')),
+    path('add/<slug:what>', acc.views.add_what, name='add_what')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
 static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

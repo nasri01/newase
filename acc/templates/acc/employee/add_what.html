@@ -1,0 +1,102 @@
+{% extends 'base2.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+    integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.search-a').selectize({
+            sortField: 'text'
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+    integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous">
+</script>
+
+<link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+
+
+
+<form method="POST" class="post-form" id="myform">
+
+    {% csrf_token %}
+
+    <table class="table-bordered">
+
+        <div class="data container-fluid">
+            
+            <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+            {{ formTitle1 }}
+            </h1>
+            <div class="row" style="margin-right: 40px;">
+                <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+                    <span style="margin-right: 30px;"> {{ field1Name }} </span>
+                    <span>
+                        {% render_field form.name style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+                        <a href="{% url 'admin:acc_device_add'%}" target="_blank">
+                                <button style="margin-right: -4px;" type="button" class="btn btn-success op-btn">افزودن
+                                    مدل دستگاه</button>
+                            </a>
+                    </span>
+                    <br>
+
+
+                
+                    <span style="margin-right: 17px;"> {{ field2Name }} </span>
+                    <br>
+                    <span class="ee">
+                        {% render_field form.hospital style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+                        <a href="{% url 'admin:acc_section_add'%}" target="_blank">
+                                <button style="margin-right: -4px;" type="button" class="btn btn-success op-btn">افزودن
+                                    بخش</button>
+                            </a>
+                    </span>
+
+                    <br>
+                    <!-- / -->
+                    <label style="margin-right: 17px;"> {{ field3Name }} </label>
+                    <br>
+                    <span class="ee">
+                        {% render_field form.section style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+                    </span>
+                </div>
+
+                <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+
+                    <h2 style="font-family: light-iransans">{{ formTitle2 }}  </h2>
+
+                    <div class="container">
+                        <label>{{ field4Name }}</label>
+                        <span class="ee">
+                            {{form.property_number}}
+                        </span><br>
+                        <label>{{ field5Name }}</label>
+                        <span class="ee">
+                            {{form.serial_number}}
+                        </span><br>
+
+                    </div>
+                    <br><br>
+
+
+
+                </div>
+                <br><br>
+                <button type="submit" class="btn btn-primary" style="float: left;"
+                  formaction="{% url 'add_what' what='device' %}">
+                  ذخیره نهایی
+                </button>
+            </div>
+        </div>
+    </table>
+</form>
+{% endblock %}

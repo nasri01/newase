@@ -2,8 +2,7 @@ import jdatetime
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, User
-from django.shortcuts import Http404, redirect, render
-
+from django.shortcuts import Http404, redirect, render, HttpResponse
 
 from acc.models import Parameters, Request, AdExcelArg
 from form.forms import *
@@ -47,7 +46,7 @@ model_list = [['MonitorSpo2', MonitorSpo2_1, MonitorSpo2_1_Form],
               ['Incubator', ManoMeter_1, ManoMeter_1_Form],
               ['ElectroCauter', ElectroCauter_1, electrocauter_1_Form],
               ['CantTest', CantTest, CantTest_Form],
-              ['Report', Report],  
+              ['Report', Report],
               ]  # Order the same by AdTestType0
 
 
@@ -79,7 +78,8 @@ def route_to_dashboard(request):
     if Group.objects.get(name='admin') in request.user.groups.all():
         try:
             request.GET['employee']  # if the admin asked for user_dashboard
-            return render(request, 'acc/employee/index.html', {'status1': 'خوش آمدید', 'user_name': request.user.first_name, 'avatar_url': avatar_url})
+            return render(request, 'acc/employee/index.html',
+                          {'status1': 'خوش آمدید', 'user_name': request.user.first_name, 'avatar_url': avatar_url})
         except:
             # hospital_list = Hospital.objects.all()
             request_list = Request.objects.all().order_by('date')
@@ -125,12 +125,14 @@ def route_to_dashboard(request):
 
     elif Group.objects.get(name='employee') in request.user.groups.all():
         return render(request, 'acc/employee/index.html', {'status1': 'خوش آمدید',
-                                                           'avatar_url': avatar_url, 'user_name': request.user.first_name})
+                                                           'avatar_url': avatar_url,
+                                                           'user_name': request.user.first_name})
 
 
 # list of requests
 def show_request_list(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         request_list = Request.objects.all()
         for req in request_list:
             req.date = jdatetime.date.fromgregorian(date=req.date)
@@ -138,11 +140,11 @@ def show_request_list(request):
     else:
         raise Http404
 
+
 # List of recalibration
-
-
 def show_recalibration_list(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         table_header_list = AdExcelArg.objects.all().order_by('id')
         table_header = (str(table_header_list[1]),
                         str(table_header_list[2]),
@@ -164,8 +166,8 @@ def show_recalibration_list(request):
         # model_query_list = []
         for model in model_list:
             model_query = model[1].objects.filter(is_done=False)
-        #     model_query_list.append(model_query)
-        # for model_ in model_query_list:
+            #     model_query_list.append(model_query)
+            # for model_ in model_query_list:
             for obj in model_query:
                 # obj = report_instance
                 row = []
@@ -188,15 +190,16 @@ def show_recalibration_list(request):
                 row.append(obj.totalcomment)  # 13
                 table_rows.append(row)
 
-        return render(request, 'acc/employee/recalibration_list.html', {'table_header': table_header, 'table_rows': table_rows})
+        return render(request, 'acc/employee/recalibration_list.html',
+                      {'table_header': table_header, 'table_rows': table_rows})
     else:
         raise Http404
 
+
 # list of all records
-
-
 def show_report_list(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         table_header_list = AdExcelArg.objects.all().order_by('id')
         table_header = (str(table_header_list[1]),
                         str(table_header_list[2]),
@@ -240,15 +243,16 @@ def show_report_list(request):
             row.append(obj.record.number)  # 12
             row.append(obj.totalcomment)  # 13
             table_rows.append(row)
-        return render(request, 'acc/employee/report_list.html', {'table_header': table_header, 'table_rows': table_rows})
+        return render(request, 'acc/employee/report_list.html',
+                      {'table_header': table_header, 'table_rows': table_rows})
     else:
         raise Http404
 
+
 # Perepare the appropiate Edit form for Frame
-
-
 def edit_report(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         if (request.method == 'GET'):
             avatar_url = UserProfile.objects.get(
                 id=1).avatar.url  # admin user_profile
@@ -281,15 +285,15 @@ def edit_report(request):
                 pass_data['edit_recal'] = 1
             return render(request, 'acc/employee/index.html', pass_data)
         else:
-            return('report_list')
+            return ('report_list')
     else:
         raise Http404
 
+
 # Perepare the appropiate Recalibration form for Frame
-
-
 def recal_report(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         if (request.method == 'GET'):
             avatar_url = UserProfile.objects.get(
                 id=1).avatar.url  # admin user_profile
@@ -299,8 +303,8 @@ def recal_report(request):
 
                 if (len(model_query) == 1):
                     if model[0] in ['CantTest', 'report']:
-                        form_type = model_list[int(model_query[0].tt.id)-1][2]
-                        model_name = model_list[int(model_query[0].tt.id)-1][0]
+                        form_type = model_list[int(model_query[0].tt.id) - 1][2]
+                        model_name = model_list[int(model_query[0].tt.id) - 1][0]
                     else:
                         form_type = model[2]
                         model_name = model[0]
@@ -351,3 +355,29 @@ def change_email(request):
                           {'red_status': 'ایمیل ها مطابقت ندارند!'})
     else:
         return render(request, 'registration/email_change_form.html')
+
+
+def add_what(request, what):
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
+        if request.method == 'POST':  # Save the Device
+            sform = add_device_Form(request.POST)
+            if not sform.is_valid():
+                return HttpResponse('فرم ناقص')
+            sform.save()
+            return HttpResponse('saved!')
+        else:  # Show the Form
+            data = {}
+            if what == 'device':
+                form = add_device_Form()
+                data['form'] = form
+                data['formTitle1'] = 'افزودن دستگاه'
+                data['field1Name'] = 'مدل دستگاه'
+                data['field2Name'] = 'نام بیمارستان'
+                data['field3Name'] = 'نام بخش'
+                data['formTitle2'] = 'مشخصات دستگاه'
+                data['field4Name'] = 'شماره اموال'
+                data['field5Name'] = 'سریال دستگاه'
+                return render(request, 'acc/employee/add_what.html', data)
+    else:
+        return Http404
