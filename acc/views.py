@@ -241,7 +241,17 @@ def show_report_list(request):
             else:
                 row.append('-')  # 11
             row.append(obj.record.number)  # 12
-            row.append(obj.totalcomment)  # 13
+            # row.append(obj.totalcomment)  # 13
+            if obj.tt.type == 'MonitorSpo2':
+                row.append('-SPO2-' + obj.totalcomment)  # 12*
+            elif obj.tt.type == 'MonitorECG':
+                row.append('-ECG-' + obj.totalcomment)  # 12*
+            elif obj.tt.type == 'MonitorNIBP':
+                row.append('-NIBP-' + obj.totalcomment)  # 12*
+            elif obj.tt.type == 'MonitorSafety':
+                row.append('-Safety-' + obj.totalcomment)  # 12*
+            else:
+                row.append(obj.totalcomment)  # 12*
             table_rows.append(row)
         return render(request, 'acc/employee/report_list.html',
                       {'table_header': table_header, 'table_rows': table_rows})
