@@ -4,9 +4,20 @@ from django_jalali.db import models as jmodels
 
 
 class AdAzStatus(models.Model):
+    """
+    Class containing The Status of every Trial
+
+    Attributes:
+    -----------
+
+    status (str): The status of the trial 
+    """
     status = models.CharField(max_length=30)
 
     class Meta:
+        """
+        
+        """
         verbose_name_plural = "وضعیت های آزمایش"
 
     def __str__(self):
@@ -105,7 +116,7 @@ class Section(models.Model):
         verbose_name_plural = "بخش های بیمارستان"
 
     def __str__(self):
-        return self.name
+        return self.name + ' - ' + self.eng_name
 
 
 class Parameters(models.Model):
