@@ -1,0 +1,70 @@
+{% extends 'base2.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+          integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.search-a').selectize({
+                sortField: 'text'
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/spo2-styles.css' %}">
+
+
+
+
+    <form method="POST" class="post-form" id="myform">
+
+        {% csrf_token %}
+
+        <table class="table-bordered">
+
+            <div class="data container-fluid">
+
+                <h1 class="header-t" style="font-size: 20pt;font-weight: bold;font-family:light-iransans;">
+                    {{ formTitle1 }}
+                </h1>
+                <div class="row" style="margin-right: 40px;">
+                    <div class="col-md-6 col-sm-12" style="margin-top: 10px;">
+                        <span style="margin-right: 17px;"> {{ field2Name }} </span>
+                        <br>
+                        <span class="ee">
+                        {% render_field form.hospital style="display:inline;width:50%;" class="search-a" searchable="Search here.." %}
+                        <select name="hospital" required="" id="id_hospital">
+                          <option value="" selected="">---------</option>
+                        {% for hosp in hospital_list %}
+                          <option value="{{ hosp.id }}">{{ hosp.name }} {{ hosp.city.name }}</option>
+                        {% endfor %}
+
+
+                        </select>
+
+                    </span>
+
+                        <br>
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary" style="float: left;"
+                            formaction="{% url 'report_list' select_hospital='0' %}">
+                        نمایش گزارش
+                    </button>
+                </div>
+            </div>
+        </table>
+    </form>
+{% endblock %}

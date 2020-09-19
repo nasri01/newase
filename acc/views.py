@@ -197,9 +197,11 @@ def show_recalibration_list(request):
 
 
 # list of all records
-def show_report_list(request):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
-            name='employee') in request.user.groups.all():
+def show_report_list(request, select_hospital):
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+        if int(select_hospital) == 1:
+            hospital_list = Hospital.objects.all().values('id', 'name', 'city')
+            return render(request, 'acc/employee/report_list_select_hospital.html', {'hospital_list': hospital_list})
         table_header_list = AdExcelArg.objects.all().order_by('id')
         table_header = (str(table_header_list[1]),
                         str(table_header_list[2]),
@@ -220,7 +222,7 @@ def show_report_list(request):
         table_rows = []
         # data1 = []
         # for model in model_list[:-1]:
-        model_query = model_list[-1][1].objects.all()
+        model_query = model_list[-1][1].objects.filter(device__hospital__id=request.POST['hospital'])
         #     data1.append(modelobj)
         # for obj1 in data1:
         for obj in model_query:

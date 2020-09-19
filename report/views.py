@@ -249,7 +249,6 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         return response
 
     elif operation_type == 'show':  # display table
-        template_name = 'acc/hospital/table.html'
         # avatar_url = UserProfile.objects.get(
         #     id=1).avatar.url  # admin user_profile
 
@@ -278,7 +277,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         }
         # if Group.objects.get(name='admin') in request.user.groups.all():
         #     pass_data['admin'] = 1
-        return render(request, template_name, pass_data)
+        return render(request, 'acc/hospital/table.html', pass_data)
 
 
 def show_request_summary(request):
