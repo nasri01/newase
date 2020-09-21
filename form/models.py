@@ -1090,8 +1090,8 @@ class AnesthesiaMachine_1(models.Model):
     s16_e1 = models.FloatField()  # 500 +-15
     s16_e2 = models.FloatField()  # 500 +- 15
 
-    s17_e03 = models.FloatField(default=-1)
-    s17_e04 = models.FloatField(default=-1)
+    s17_e03 = models.FloatField(default=1.65)
+    s17_e04 = models.FloatField(default=3.35)
     s17_e01 = models.FloatField(default=-1)
     s17_e02 = models.FloatField(default=-1)
     s17_e1 = models.FloatField()
@@ -3015,8 +3015,8 @@ class Ventilator_1(models.Model):
     s15_e1 = models.FloatField()
     s15_e2 = models.FloatField()
 
-    s16_1e1 = models.FloatField(default=-1)
-    s16_1e2 = models.FloatField(default=-1)
+    s16_1e1 = models.FloatField(default=1.65)
+    s16_1e2 = models.FloatField(default=3.35)
     s16_1e3 = models.FloatField(default=-1)
     s16_e1 = models.FloatField()
     s16_e2 = models.FloatField()
