@@ -767,65 +767,65 @@ class MonitorSafety_1(models.Model):
     # s1_e3_res = models.IntegerField()
     s1_e4_res = models.FloatField()
 
-    s2_e1_aplc = models.FloatField()
-    s2_e1_noaplc = models.FloatField()
-    s2_e2_aplc = models.FloatField()
-    s2_e2_noaplc = models.FloatField()
+    s2_e1_aplc = models.FloatField(default=52)
+    s2_e1_noaplc = models.FloatField(default=52)
+    s2_e2_aplc = models.FloatField(default=19)
+    s2_e2_noaplc = models.FloatField(default=19)
 
-    s3_e1_aplc = models.FloatField()
-    s3_e1_noaplc = models.FloatField()
-    s3_e2_aplc = models.FloatField()
-    s3_e2_noaplc = models.FloatField()
-    s3_e3_aplc = models.FloatField()
-    s3_e3_noaplc = models.FloatField()
-    s3_e4_aplc = models.FloatField()
-    s3_e4_noaplc = models.FloatField()
-    s3_e5_aplc = models.FloatField()
-    s3_e5_noaplc = models.FloatField()
-    s3_e6_aplc = models.FloatField()
-    s3_e6_noaplc = models.FloatField()
+    s3_e1_aplc = models.FloatField(default=0.4)
+    s3_e1_noaplc = models.FloatField(default=0.4)
+    s3_e2_aplc = models.FloatField(default=0.4)
+    s3_e2_noaplc = models.FloatField(default=0.4)
+    s3_e3_aplc = models.FloatField(default=0.1)
+    s3_e3_noaplc = models.FloatField(default=0.1)
+    s3_e4_aplc = models.FloatField(default=0.1)
+    s3_e4_noaplc = models.FloatField(default=0.1)
+    s3_e5_aplc = models.FloatField(default=0.1)
+    s3_e5_noaplc = models.FloatField(default=0.7)
+    s3_e6_aplc = models.FloatField(default=0.7)
+    s3_e6_noaplc = models.FloatField(default=0.7)
 
-    s4_e1_lc = models.FloatField()
+    s4_e1_lc = models.FloatField(default=0.6)
 
-    s4_e2_lc = models.FloatField()
+    s4_e2_lc = models.FloatField(default=0.5)
 
-    s4_e3_lc = models.FloatField()
+    s4_e3_lc = models.FloatField(default=0.6)
 
-    s4_e4_lc = models.FloatField()
+    s4_e4_lc = models.FloatField(default=0.4)
 
-    s4_e5_lc = models.FloatField()
+    s4_e5_lc = models.FloatField(default=0.4)
 
-    s4_e6_lc = models.FloatField()
+    s4_e6_lc = models.FloatField(default=6.3)
 
-    s4_e7_lc = models.FloatField()
+    s4_e7_lc = models.FloatField(default=0.5)
 
-    s4_e8_lc = models.FloatField()
+    s4_e8_lc = models.FloatField(default=0.3)
 
-    s4_e9_lc = models.FloatField()
+    s4_e9_lc = models.FloatField(default=0.1)
 
-    s4_e10_lc = models.FloatField()
+    s4_e10_lc = models.FloatField(default=0.3)
 
-    s4_e11_lc = models.FloatField()
+    s4_e11_lc = models.FloatField(default=0.1)
 
-    s4_e12_lc = models.FloatField()
+    s4_e12_lc = models.FloatField(default=0.1)
 
-    s4_e13_lc = models.FloatField()
+    s4_e13_lc = models.FloatField(default=6.3)
 
-    s4_e14_lc = models.FloatField()
+    s4_e14_lc = models.FloatField(default=0.1)
 
-    s4_e15_lc = models.FloatField()
+    s4_e15_lc = models.FloatField(default=1.2)
 
-    s4_e16_lc = models.FloatField()
+    s4_e16_lc = models.FloatField(default=1.2)
 
-    s4_e17_lc = models.FloatField()
+    s4_e17_lc = models.FloatField(default=1.1)
 
-    s4_e18_lc = models.FloatField()
+    s4_e18_lc = models.FloatField(default=1.1)
 
-    s4_e19_lc = models.FloatField()
+    s4_e19_lc = models.FloatField(default=1.1)
 
-    s4_e20_lc = models.FloatField()
+    s4_e20_lc = models.FloatField(default=6.3)
 
-    s4_e21_lc = models.FloatField()
+    s4_e21_lc = models.FloatField(default=1.2)
 
     s5_e1_lc = models.FloatField()
     s5_e2_lc = models.FloatField()
