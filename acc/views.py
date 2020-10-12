@@ -325,7 +325,7 @@ def recal_report(request):
                 #     return('recal_list')
 
             # form_body = form_type({'device': [model_query[0].device.id]})
-            form_body = form_type
+            form_body = form_type(initial={'device': [model_query[0].device.id]})
             pass_data = {'recal': 1,
                          'form': form_body,
                          'form_type': model_name,
