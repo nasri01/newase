@@ -306,10 +306,11 @@ def edit_report(request):
 def recal_report(request):
     if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
             name='employee') in request.user.groups.all():
-        if (request.method == 'GET'):
+        if request.method == 'GET':
             avatar_url = UserProfile.objects.get(
                 id=1).avatar.url  # admin user_profile
             for model in model_list:
+                q_exclude_field = model[2].Meta.exclude
                 model_query = model[1].objects.filter(record__number=int(request.GET['record_number'])).filter(
                     is_done__exact=False)
 
@@ -320,12 +321,22 @@ def recal_report(request):
                     else:
                         form_type = model[2]
                         model_name = model[0]
+                        q_dict = model_query.values()[0]
                     break
                 # else:
                 #     return('recal_list')
-
+            q_d = {}
+            for k in q_dict:
+                if k.endswith('_id'):
+                   q_d[k[:-3]] = q_dict[k]
+                else:
+                    q_d[k] = q_dict[k]
+            del q_dict
+            q_exclude_field.append('id')
+            for field in q_exclude_field:
+                q_d.pop(field )
             # form_body = form_type({'device': [model_query[0].device.id]})
-            form_body = form_type(initial={'device': [model_query[0].device.id]})
+            form_body = form_type(initial=q_d)
             pass_data = {'recal': 1,
                          'form': form_body,
                          'form_type': model_name,
