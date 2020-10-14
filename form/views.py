@@ -114,15 +114,15 @@ def save_router(request, formtype):
                 if form1.is_valid():
                     sform = form1.save(commit=False)
                     sform.user = request.user
-                    sform.date = jdatetime.datetime.now().astimezone(pytz.timezone('Asia/Tehran'))
                     try:
-                        sform.date = sform.date.replace(
+                        sform.date = jdatetime.datetime(
                             year=int(request.POST['report_year']),
                             month=int(request.POST['report_month']),
-                            day=int(request.POST['report_day'])
+                            day=int(request.POST['report_day']),
                         )
                     except:
-                        pass
+                        sform.date = jdatetime.datetime.now().astimezone(pytz.timezone('Asia/Tehran'))
+                    
                     sform.has_pdf = False
 
                     if request.POST['op_type'] == 'save':
