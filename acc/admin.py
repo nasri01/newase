@@ -28,6 +28,7 @@ admin.site.register(CalDevice,DeviceAdmin)
 
 class All_DeviceAdmin(admin.ModelAdmin):
     list_display = ("name", "hospital","section")
+    search_fields = ["name__name", "hospital__name", "section__name"]
 admin.site.register(AllDevice,All_DeviceAdmin)
 
 admin.site.register(Request)
