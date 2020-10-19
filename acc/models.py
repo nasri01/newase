@@ -217,6 +217,8 @@ class AllDevice(models.Model):
     class Meta:
         verbose_name_plural = "3_دستگاه های ثبت شده"
 
+    def __unicode__(self):
+        return self.name.creator.name + ' - ' + self.name.name + ' - ' + self.hospital.name + ' - ' + str(self.serial_number)
     def __str__(self):
         return self.name.creator.name + ' - ' + self.name.name + ' - ' + self.hospital.name + ' - ' + str(self.serial_number)
 
