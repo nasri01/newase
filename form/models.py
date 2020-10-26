@@ -3049,3 +3049,450 @@ class Ventilator_1(models.Model):
 
     def __str__(self):
         return 'Ventilator : ' + str(self.licence)
+
+
+class AutoClave_1(models.Model):
+    class Meta:
+        verbose_name_plural = "Incubator"
+    is_recal = models.BooleanField(default=False)
+    ref_record = models.ForeignKey(
+        acc.models.Record, on_delete=models.CASCADE, related_name='incb1rr')
+
+    device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
+    has_pdf = models.BooleanField(default=False)
+    request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
+    date = jmodels.jDateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    status = models.ForeignKey(
+        acc.models.AdAzStatus, on_delete=models.PROTECT)
+    licence = models.ForeignKey(
+        acc.models.Licence, on_delete=models.CASCADE, related_name='autoclove1licence')
+    record = models.ForeignKey(acc.models.Record, on_delete=models.CASCADE)
+    totalcomment = models.TextField(null=True, blank=True)
+    is_done = models.BooleanField(default=False)
+
+    humidity = models.IntegerField(default=45)
+    temp = models.IntegerField(default=25)
+
+    # cd = calibration date xd = expire date
+    cal_dev1 = models.ForeignKey(
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='autoclove1caldev1', default=8)
+    cal_dev_1_cd = models.DateField()
+    cal_dev_1_xd = models.DateField()
+    cal_dev2 = models.ForeignKey(
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='autoclove1caldev2', default=6)
+    cal_dev_2_cd = models.DateField()
+    cal_dev_2_xd = models.DateField()
+    cal_dev3 = models.ForeignKey(
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='autoclove1caldev3', default=2)
+    cal_dev_3_cd = models.DateField()
+    cal_dev_3_xd = models.DateField()
+    cal_dev4 = models.ForeignKey(
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='autoclove1caldev4', default=3)
+    cal_dev_4_cd = models.DateField()
+    cal_dev_4_xd = models.DateField()
+    cal_dev5 = models.ForeignKey(
+        acc.models.CalDevice, on_delete=models.PROTECT, related_name='autoclove1caldev5', default=3)
+    cal_dev_5_cd = models.DateField()
+    cal_dev_5_xd = models.DateField()
+
+    s0_e1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e1comment', default=1)
+    s0_e2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e2comment', default=1)
+    s0_e3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e3comment', default=1)
+    s0_e4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e4comment', default=1)
+    s0_e5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e5comment', default=1)
+    s0_e6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e6comment', default=1)
+    s0_e7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e7comment', default=1)
+    s0_e8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e8comment', default=1)
+    s0_e9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                      related_name='autoclove1s0e9comment', default=1)
+    s0_e10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e10comment', default=1)
+    s0_e11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e11comment', default=1)
+    s0_e12_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e12comment', default=1)
+    s0_e13_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e13comment', default=1)
+    s0_e14_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e14comment', default=1)
+    s0_e15_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e15comment', default=1)
+    s0_e16_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e16comment', default=1)
+    s0_e17_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e17comment', default=1)
+    s0_e18_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e18comment', default=1)
+    s0_e19_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e19comment', default=1)
+    s0_e20_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e20comment', default=1)
+    s0_e21_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e21comment', default=1)
+    s0_e22_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1s0e22comment', default=1)
+
+    p3_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                       related_name='autoclove1p3t1r1comment', default=1)
+    p3_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r2comment', default=1)
+    p3_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r3comment', default=1)
+    p3_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r4comment', default=1)
+    p3_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r5comment', default=1)
+    p3_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r6comment', default=1)
+    p3_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r7comment', default=1)
+    p3_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t1r8comment', default=1)
+
+    p3_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t2r1comment', default=1)
+    p3_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t2r2comment', default=1)
+    p3_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p3t2r3comment', default=1)
+
+    p4_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t1r1comment', default=1)
+    p4_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t1r2comment', default=1)
+    p4_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t1r3comment', default=1)
+    p4_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t1r4comment', default=1)
+
+    p4_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r1comment', default=1)
+    p4_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r2comment', default=1)
+    p4_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r3comment', default=1)
+    p4_t2_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r4comment', default=1)
+    p4_t2_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r5comment', default=1)
+    p4_t2_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r6comment', default=1)
+    p4_t2_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p4t2r7comment', default=1)
+
+    p5_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r1comment', default=1)
+    p5_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r2comment', default=1)
+    p5_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r3comment', default=1)
+    p5_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r4comment', default=1)
+    p5_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r5comment', default=1)
+    p5_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r6comment', default=1)
+    p5_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r7comment', default=1)
+    p5_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t1r8comment', default=1)
+
+    p5_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t2r1comment', default=1)
+    p5_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t2r2comment', default=1)
+    p5_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p5t2r3comment', default=1)
+
+    p6_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r1comment', default=1)
+    p6_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r2comment', default=1)
+    p6_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r3comment', default=1)
+    p6_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r4comment', default=1)
+    p6_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r5comment', default=1)
+    p6_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r6comment', default=1)
+    p6_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r7comment', default=1)
+    p6_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r8comment', default=1)
+    p6_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p6t1r9comment', default=1)
+
+    p7_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r1comment', default=1)
+    p7_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r2comment', default=1)
+    p7_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r3comment', default=1)
+    p7_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r4comment', default=1)
+    p7_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r5comment', default=1)
+    p7_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r6comment', default=1)
+    p7_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t1r7comment', default=1)
+
+    p7_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r1comment', default=1)
+    p7_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r2comment', default=1)
+    p7_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r3comment', default=1)
+    p7_t2_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r4comment', default=1)
+    p7_t2_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r5comment', default=1)
+    p7_t2_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p7t2r6comment', default=1)
+
+    p8_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r1comment', default=1)
+    p8_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r2comment', default=1)
+    p8_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r3comment', default=1)
+    p8_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r4comment', default=1)
+    p8_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r5comment', default=1)
+    p8_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r6comment', default=1)
+    p8_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r7comment', default=1)
+    p8_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r8comment', default=1)
+    p8_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p8t1r9comment', default=1)
+
+    p9_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r1comment', default=1)
+    p9_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r2comment', default=1)
+    p9_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r3comment', default=1)
+    p9_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r4comment', default=1)
+    p9_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r5comment', default=1)
+    p9_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r6comment', default=1)
+    p9_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r7comment', default=1)
+    p9_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r8comment', default=1)
+    p9_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r9comment', default=1)
+    p9_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r10comment', default=1)
+    p9_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r11comment', default=1)
+    p9_t1_r12_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r12comment', default=1)
+    p9_t1_r13_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p9t1r13comment', default=1)
+
+    p10_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                         related_name='autoclove1p10t1r1comment', default=1)
+    p10_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r2comment', default=1)
+    p10_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r3comment', default=1)
+    p10_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r4comment', default=1)
+    p10_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r5comment', default=1)
+    p10_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r6comment', default=1)
+    p10_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r7comment', default=1)
+    p10_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r8comment', default=1)
+    p10_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r9comment', default=1)
+    p10_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r10comment', default=1)
+    p10_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t1r11comment', default=1)
+
+    p10_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t2r1comment', default=1)
+    p10_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t2r2comment', default=1)
+    p10_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t2r3comment', default=1)
+    p10_t2_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t2r4comment', default=1)
+    p10_t2_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p10t2r5comment', default=1)
+
+    p11_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r1comment', default=1)
+    p11_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r2comment', default=1)
+    p11_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r3comment', default=1)
+    p11_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r4comment', default=1)
+    p11_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r5comment', default=1)
+    p11_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r6comment', default=1)
+    p11_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r7comment', default=1)
+    p11_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r8comment', default=1)
+    p11_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r9comment', default=1)
+    p11_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r10comment', default=1)
+    p11_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r11comment', default=1)
+    p11_t1_r12_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r12comment', default=1)
+    p11_t1_r13_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p11t1r13comment', default=1)
+
+    p12_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r1comment', default=1)
+    p12_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r2comment', default=1)
+    p12_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r3comment', default=1)
+    p12_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r4comment', default=1)
+    p12_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r5comment', default=1)
+    p12_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r6comment', default=1)
+    p12_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p12t1r7comment', default=1)
+
+    p13_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r1comment', default=1)
+    p13_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r2comment', default=1)
+    p13_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r3comment', default=1)
+    p13_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r4comment', default=1)
+    p13_t1_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r5comment', default=1)
+    p13_t1_r6_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r6comment', default=1)
+    p13_t1_r7_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r7comment', default=1)
+    p13_t1_r8_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r8comment', default=1)
+    p13_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r9comment', default=1)
+    p13_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r10comment', default=1)
+    p13_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p13t1r11comment', default=1)
+
+    p14_t1_r1_edea = models.FloatField()
+    p14_t1_r1_read = models.FloatField()
+    p14_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p14t1r1comment', default=1)
+    p14_t1_r2_edea = models.FloatField()
+    p14_t1_r2_read = models.FloatField()
+    p14_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p14t1r2comment', default=1)
+    p14_t1_r3_edea = models.FloatField()
+    p14_t1_r3_read = models.FloatField()
+    p14_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p14t1r3comment', default=1)
+    # TODO Inc p14 t2
+
+    p15_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p15t1r1comment', default=1)
+    p15_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p15t1r2comment', default=1)
+    p15_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p15t1r3comment', default=1)
+    p15_t1_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p15t1r4comment', default=1)
+    # TODO Inc p15 t2
+
+    p16_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p16t1r1comment', default=1)
+    p16_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p16t1r2comment', default=1)
+    p16_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p16t1r3comment', default=1)
+
+    p16_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p16t2r1comment', default=1)
+    # TODO Inc p16 t3
+
+    # TODO Inc p17 t1 r1
+    p17_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p17t2r1comment', default=1)
+    p17_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p17t2r2comment', default=1)
+    p17_t2_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p17t2r3comment', default=1)
+    p17_t2_r4_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p17t2r4comment', default=1)
+    p17_t2_r5_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p17t2r5comment', default=1)
+
+    p18_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p18t1r1comment', default=1)
+    p18_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p18t1r2comment', default=1)
+
+    p18_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p18t2r1comment', default=1)
+    p18_t2_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
+                                          related_name='autoclove1p18t2r2comment', default=1)
+
+    p18_t3_r1_norm_p_normal = models.FloatField()
+    p18_t3_r1_norm_p_issue = models.FloatField()
+    p18_t3_r1_rev_p_normal = models.FloatField()
+    p18_t3_r1_rev_p_issue = models.FloatField()
+    p18_t3_r2_norm_p_normal = models.FloatField() # 2
+    p18_t3_r2_norm_p_issue = models.FloatField()
+    p18_t3_r2_rev_p_normal = models.FloatField()
+    p18_t3_r2_rev_p_issue = models.FloatField()
+    p18_t3_r3_norm_p_normal = models.FloatField() # 3
+    p18_t3_r3_norm_p_issue = models.FloatField()
+    p18_t3_r3_rev_p_normal = models.FloatField()
+    p18_t3_r3_rev_p_issue = models.FloatField()
+
+    p19_t1_r1_norm_p_normal = models.FloatField()
+    p19_t1_r1_norm_p_issue_noearth = models.FloatField()
+    p19_t1_r1_norm_p_issue_nonull = models.FloatField()
+    p19_t1_r1_rev_p_normal = models.FloatField()
+    p19_t1_r1_rev_p_issue_noearth = models.FloatField()
+    p19_t1_r1_rev_p_issue_nonull = models.FloatField()
+    p19_t1_r2_norm_p_normal = models.FloatField()         # 2
+    p19_t1_r2_norm_p_issue_noearth = models.FloatField()
+    p19_t1_r2_norm_p_issue_nonull = models.FloatField()
+    p19_t1_r2_rev_p_normal = models.FloatField()
+    p19_t1_r2_rev_p_issue_noearth = models.FloatField()
+    p19_t1_r2_rev_p_issue_nonull = models.FloatField()
+    p19_t1_r3_norm_p_normal = models.FloatField()         # 3
+    p19_t1_r3_norm_p_issue_noearth = models.FloatField()
+    p19_t1_r3_norm_p_issue_nonull = models.FloatField()
+    p19_t1_r3_rev_p_normal = models.FloatField()
+    p19_t1_r3_rev_p_issue_noearth = models.FloatField()
+    p19_t1_r3_rev_p_issue_nonull = models.FloatField()
+
+    def __str__(self):
+        return 'AutoClave : ' + str(self.licence)
