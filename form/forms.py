@@ -136,3 +136,12 @@ class ventilator_1_Form(forms.ModelForm):
         #fields = '__all__'
         exclude = ['is_done', 'is_recal', 'has_pdf',  'ref_record', 'record', 'user', 'date', 'licence', 'cal_dev_1_cd',
                    'cal_dev_1_xd', 'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd']
+
+
+class AutoClave_1_Form(forms.ModelForm):
+    class Meta:
+        model = AutoClave_1
+        #fields = '__all__'
+        exclude = ['is_done', 'is_recal', 'has_pdf',  'ref_record', 'record', 'user', 'date', 'licence', 'cal_dev_1_cd', 'cal_dev_1_xd',
+                   'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd', 'cal_dev_5_cd', 'cal_dev_5_xd']
+

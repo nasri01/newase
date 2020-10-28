@@ -41,6 +41,8 @@ model_list = [['MonitorSpo2', MonitorSpo2_1, MonitorSpo2_1_Form, 3],
               ['SyringePump', SyringePump_1, syringe_pump_1_Form, 4],
               ['Ventilator', Ventilator_1, ventilator_1_Form, 4],
               ['ElectroCauter', ElectroCauter_1, electrocauter_1_Form, 5],
+              ['AutoClave', AutoClave_1, AutoClave_1_Form, 5],
+
               ['CantTest', CantTest, CantTest_Form, 0],
               ]
 
@@ -73,7 +75,7 @@ def delete_report(request):
                 modelobj[0].delete()
                 break
 
-        return redirect('report_list')
+        return redirect('report_list', select_hospital=1)
     else:
         raise Http404
 
@@ -321,8 +323,7 @@ def save_router(request, formtype):
                                 data1[id] = abs(data1[id] - 100)
                                 data2[id] = abs(data2[id] - 70)
 
-                            print(data1)
-                            print(data2)
+                         
                             data.append(sum(data1))  # 0
                             data.append(sum(data2))  # 1
                             data.append(round(mean(data1), 2))  # 2
@@ -567,6 +568,9 @@ def save_router(request, formtype):
                                     data.append(0)
                             else:
                                 data.append(2)
+
+                        elif (item[1] == AutoClave_1):
+                            template_name = 'report/AutoClave/licence1.html'
 
                         user_profile = UserProfile.objects.get(user=sform.user)
                         today_datetime = jdatetime.datetime.today()

@@ -1,12 +1,8 @@
-import hashlib
 import io
 import os
-from ftplib import FTP
-from statistics import mean, stdev
 
 import jdatetime
 import pytz
-import weasyprint
 import xlsxwriter
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
@@ -30,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 model_list = [MonitorSpo2_1, MonitorECG_1, MonitorNIBP_1, MonitorSafety_1, Defibrilator_1, AED_1, ECG_1,
               InfusionPump_1, SyringePump_1, Spo2_1, FlowMeter_1, AnesthesiaMachine_1, Ventilator_1,
-              Suction_1, ElectroCauter_1, ManoMeter_1, CantTest, Report]
+              Suction_1, ElectroCauter_1, ManoMeter_1, AutoClave_1, CantTest, Report]
 modellist = ['MonitorSpo2', 'MonitorECG', 'MonitorNIBP', 'MonitorSafety', 'Defibrilator', 'AED', 'ECG',
              'InfusionPump', 'SyringePump', 'PulseOximetry', 'FlowMeter', 'AnesthesiaMachine', 'Ventilator',
-             'Suction', 'ElectroCauter', 'ManoMeter', 'CantTest']
+             'Suction', 'ElectroCauter', 'ManoMeter', 'AutoClave', 'CantTest']
 
 
 def xlsx(request, filtering, query_start_year, query_start_month, query_start_day, query_end_year, query_end_month, query_end_day, operation_type):
@@ -340,7 +336,7 @@ def reportview(request):
                 request__hospital__user__id__exact=request.user.id)
         else:
             data = Report.objects.filter(
-                licence__number=request.GET['licence_num'])
+                licence__number=request.GET['licence_number'])
         if len(data) != 0:
             instance = data[0] 
             encode_instance = Encode.objects.get(

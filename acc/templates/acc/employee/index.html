@@ -4,9 +4,9 @@
 {% block content %}
     {% if form_type %}
         {% if edit %}
-            <title>اصلاح گزارش {{ licence_num }}</title>
+            <title>اصلاح گزارش {{ licence_number }}</title>
         {% elif edit_recal%}
-            <title>اصلاح گزارش ریکالیبراسیون {{ licence_num }}</title>
+            <title>اصلاح گزارش ریکالیبراسیون {{ licence_number }}</title>
         {% elif recal %}
             <title>ثبت گزارش ریکالیبراسیون {{ ref_licence_num }}</title>
         {% else %}
@@ -347,7 +347,20 @@
                                 </form>
                             </div>
                         </div>
-
+                        <div class="row" style="margin-top: 0;">
+                            <div class="col-6" style="padding: 0;margin: 0;">
+                                <form action="{% url 'router'  %}" method="get">
+                                    {% if form_type == 'AutoClave' %}
+                                        <button name="type" value="AutoClave" type="submit" class="btn btn-danger op-btn-2">
+                                            AutoClave</button>
+                                    {% else %}
+                                        <button name="type" value="AutoClave" type="submit" class="btn btn-info op-btn-2">
+                                            AutoClave</button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            
+                        </div>
                         <div class="row" style="margin-top: 0;">
 
                             <div class="col-6" style="padding: 0;margin: 0;">
@@ -446,6 +459,9 @@
 
                     {% elif form_type == 'ElectroCauter' %}
                         {% include 'form/ElectroCauter/form1.html' %}
+
+                    {% elif form_type == 'AutoClave' %}
+                        {% include 'form/AutoClave/form1.html' %}
 
                     {% elif form_type == 'CantTest' %}
                         {% include 'form/CantTest.html' %}

@@ -12,7 +12,7 @@ admin.site.register(MonitorSpo2_1, formAdmin)
 admin.site.register(MonitorECG_1, formAdmin)
 admin.site.register(MonitorNIBP_1, formAdmin)
 admin.site.register(MonitorSafety_1, formAdmin)
-
+admin.site.register(AutoClave_1, formAdmin)
 admin.site.register(AED_1, formAdmin)
 admin.site.register(AnesthesiaMachine_1, formAdmin)
 admin.site.register(Defibrilator_1, formAdmin)
