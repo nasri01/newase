@@ -193,7 +193,7 @@ def reload(request, formtype):
             name='employee') in request.user.groups.all():
         avatar_url = UserProfile.objects.get(
             id=1).avatar.url  # admin user_profile
-        form1 = model_dict[formtype][-1][1](request.POST):
+        form1 = model_dict[formtype][-1][1](request.POST)
         return render(request, 'acc/employee/index.html',
                       {'form': form1, 'test_form_type': item[0], 'user_name': request.user.first_name,
                                'avatar_url': avatar_url, 'reload': 1})
