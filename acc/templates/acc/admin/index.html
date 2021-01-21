@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<title>پنل کاربری مدیریت</title>
+<title>پنل کاربری</title>
 
 
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'JalaliJSCalendar/skins/calendar-blue.css' %}"
@@ -32,8 +32,6 @@
                         <div style="font-size: 15px;width:50%;text-align:center;">
                             {{user_name }}
                             <br>
-
-
                         </div>
                         <div style="width:50%;text-align:center;">
                             <img src="{{avatar_url}}" class="employee-img">
@@ -68,84 +66,93 @@
                     <!--<button type="button" class="btn btn-outline-success" style="border-radius: 20px;">Exel</button>-->
 
                     <!-- &#10004; ///////////////////// tick  -->
-                        <div class="excel-report">
-                            <div class="flex-btn">
-                                <form action="{% url 'dashboard' %}" method="GET">
-                                    <button name="employee" value="1" type="submit" class="btn btn-light" ">ورود به پنل کارمندی</button>
+                    <div class="excel-report">
+                        <div class="flex-btn">
+                            <form action="{% url 'dashboard' %}" method="GET">
+                                <button name="employee" value="1" type="submit" class="btn btn-light" ">ورود به پنل کارمندی</button>
                                 </form>
-    
+
                                 <form action=" {% url 'admin:index' %}">
-                                        <button name="admin" value="1" type="submit" class="btn btn-light" ">ورود به پنل مدیریت</button>
+                                    <button name="admin" value="1" type="submit" class="btn btn-light" ">ورود به پنل مدیریت</button>
                                     </form>
     
                                 </div>
                         
                         </div>
                         <div class=" excel-report">
-                        <div class="excel-btn">گزارش Excel</div>
-                        <!-- <br> -->
-                        <!-- <br> -->
-                        <div style="height: 250px;"></div>
-                        <!-- <div class="card card-body" style="border:none;"> -->
-                        <form method="GET">
-                            <div class="fm">
-                                <div>
-                                    <div class="form-group">
-                                        <select name="selected_hospitals" multiple>
+                                        <div class="excel-btn">گزارش Excel</div>
+                                        <!-- <br> -->
+                                        <!-- <br> -->
+                                        <div style="height: 250px;"></div>
+                                        <!-- <div class="card card-body" style="border:none;"> -->
+                                        <form method="GET">
+                                            <div class="fm">
+                                                <div>
+                                                    <div class="form-group">
+                                                        {% if hospital_dict %}
+                                                        <select name="selected_hospitals" multiple>
+                                                            <option value="-1">همه</option>
+                                                            {% for hospital_id, hospital_name in hospital_dict.items %}
+                                                            <option value="{{ hospital_id }}">{{ hospital_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        {% endif %}
+                                                        <label>از: </label>
 
-                                        </select>
-                                        <label>از: </label>
-
-                                        <input type="text" required name="start_date" id="date_input"
-                                            class="form-control inp">
-                                        <img src="{% static 'img/calender.svg' %}" id="date_btn" height="25px">
-
-
-                                        <script>
-                                            Calendar.setup({
-                                                inputField: 'date_input',
-                                                button: 'date_btn',
-                                                ifFormat: '%Y/%m/%d',
-                                                dateType: 'jalali'
-                                            });
-                                        </script>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label>تا: </label>
-                                        <input type="text" required name="end_date" id="date_input_2"
-                                            class="form-control inp">
-                                        <img src="{% static 'img/calender.svg' %}" id="date_btn_2" height="25px">
-                                        <script>
-                                            Calendar.setup({
-                                                inputField: 'date_input_2',
-                                                button: 'date_btn_2',
-                                                ifFormat: '%Y/%m/%d',
-                                                dateType: 'jalali'
-                                            });
-                                        </script>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="is_recal" class="custom-control-input"
-                                                id="defaultUnchecked">
-                                            <label class="custom-control-label" for="defaultUnchecked">فقط گزارشات
-                                                ریکالیبراسیون</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                        <input type="text" required name="start_date" id="date_input"
+                                                            class="form-control inp">
+                                                        <img src="{% static 'img/calender.svg' %}" id="date_btn"
+                                                            height="25px">
 
 
-                            <div class="flex-btn">
-                                <a target="_blank" id="show" href="#" type="submit" class="btn btn-primary"
-                                    name="action"
-                                    style="border-radius: 20px;width: 125px;padding: 10px 0;background-color: #114476;border-color:#114476;">نمایش</a>
-                                <a id="download" href="#" class="btn btn-success" name="action"
-                                    style="border-radius: 20px;width: 125px;padding: 10px 0;">دانلود</a>
+                                                        <script>
+                                                            Calendar.setup({
+                                                                inputField: 'date_input',
+                                                                button: 'date_btn',
+                                                                ifFormat: '%Y/%m/%d',
+                                                                dateType: 'jalali'
+                                                            });
+                                                        </script>
 
-                            </div>
-                        </form>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>تا: </label>
+                                                        <input type="text" required name="end_date" id="date_input_2"
+                                                            class="form-control inp">
+                                                        <img src="{% static 'img/calender.svg' %}" id="date_btn_2"
+                                                            height="25px">
+                                                        <script>
+                                                            Calendar.setup({
+                                                                inputField: 'date_input_2',
+                                                                button: 'date_btn_2',
+                                                                ifFormat: '%Y/%m/%d',
+                                                                dateType: 'jalali'
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="is_recal"
+                                                                class="custom-control-input" id="defaultUnchecked">
+                                                            <label class="custom-control-label"
+                                                                for="defaultUnchecked">فقط گزارشات
+                                                                ریکالیبراسیون</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="flex-btn">
+                                                <a target="_blank" id="show" href="#" type="submit"
+                                                    class="btn btn-primary" name="action"
+                                                    style="border-radius: 20px;width: 125px;padding: 10px 0;background-color: #114476;border-color:#114476;">نمایش</a>
+                                                <a id="download" href="#" class="btn btn-success" name="action"
+                                                    style="border-radius: 20px;width: 125px;padding: 10px 0;">دانلود</a>
+
+                                            </div>
+                                        </form>
                         </div>
                         <!-- </div> -->
 
@@ -200,12 +207,7 @@
                                                 {% endif %}
                                     </td>
                                 </tr>
-
                                 {% endfor %}
-
-
-
-
                             </tbody>
                         </table>
                     </div>
@@ -213,15 +215,10 @@
             </div>
         </div>
         <!--  -->
-
-
     </div>
     <!--  -->
 </div>
 </div>
-
-
-
 <script type="text/javascript">
 
     function f1() {

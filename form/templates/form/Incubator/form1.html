@@ -14,15 +14,15 @@
         <div class="data container-fluid">
           {% if edit %}
           <div class="alert alert-warning">
-               شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+               شما در حال ویرایش گزارش شماره {{ test_licence_number }} هستید
         </div>
           {% elif recal %}
           <div class="alert alert-warning">
-               شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+               شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ test_licence_number }} هستید
         </div>
           {% elif edit_recal %}
           <div class="alert alert-warning">
-               شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+               شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ test_licence_number }} هستید
         </div>
 
           {% endif %}
@@ -952,23 +952,22 @@
 
 
         {% if edit %}
-        <button type="submit" name="record_number" value="{{record_number}}" class="btn btn-primary" onclick='this.form.action="{% url 'save_edit_router' formtype='AED' %}";'>
-        ذخیره نهایی اصلاح
-        </button>
-        {% elif recal %}
-        <button type="submit" name="ref_record_number" value="{{ref_record_number}}" class="btn btn-primary"  onclick='this.form.action="{% url 'save_recal_router' formtype='AED' %}";'>
-        ذخیره نهایی ریکالیبراسیون
-        </button>
-        {% elif edit_recal %}
-        <button type="submit" name="record_number" value="{{record_number}}" class="btn btn-primary"  onclick='this.form.action="{% url 'save_recal_edit_router' formtype='AED' %}";'>
-        ذخیره نهایی ویرایش ریکالیبراسیون
-        </button>
-
-        {% else %}{# normal save #}
-        <button type="submit"  class="btn btn-primary" onclick='this.form.action="{% url 'save_router' formtype='AED' %}";' >
-         ذخیره نهایی فرم
-        </button>
-        {% endif %}
+          <input type="text" name="op_type" value="save_edit" hidden>
+          <input type="text" name="test_record_number" value="{{test_record_number}}" hidden>
+          {% elif recal %}
+          <input type="text" name="op_type" value="save_recal" hidden>
+          <input type="text" name="test_ref_record_number" value="{{test_ref_record_number}}" hidden>
+          {% elif edit_recal %}
+          <input type="text" name="op_type" value="save_edit_recal" hidden>
+          <input type="text" name="test_record_number" value="{{test_record_number}}" hidden>
+          {% else %}
+          <input type="text" name="op_type" value="save" hidden>
+          {% endif %}
+          <br><br>
+          <button type="submit" class="btn btn-primary" style="float: left;"
+            formaction="{% url 'save_router' formtype='Incubator' %}">
+            ذخیره نهایی
+          </button>
 
 
         </div>

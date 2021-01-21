@@ -2,19 +2,19 @@
 {% load static %}
 
 {% block content %}
-<title>پنل کاربری مدیریت</title>
+    <title>ریز گزارش</title>
 
 
-<link rel="stylesheet" type="text/css" media="all" href="{% static 'JalaliJSCalendar/skins/calendar-blue.css' %}"
-    title="Aqua" />
-<script src="{% static 'JalaliJSCalendar/jalali.js' %}"></script>
-<script src="{% static 'JalaliJSCalendar/calendar.js' %}"></script>
-<script src="{% static 'JalaliJSCalendar/calendar-setup.js'%}"></script>
-<script src="{% static 'JalaliJSCalendar/lang/calendar-fa.js' %}"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'JalaliJSCalendar/skins/calendar-blue.css' %}"
+          title="Aqua"/>
+    <script src="{% static 'JalaliJSCalendar/jalali.js' %}"></script>
+    <script src="{% static 'JalaliJSCalendar/calendar.js' %}"></script>
+    <script src="{% static 'JalaliJSCalendar/calendar-setup.js' %}"></script>
+    <script src="{% static 'JalaliJSCalendar/lang/calendar-fa.js' %}"></script>
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="row">
+        <div class="row">
             <div class="col-12" style="direction: rtl;">
                 <div class="data-box">
 
@@ -33,59 +33,56 @@
                         }
                     </style>
                     <table style="border-radius: 10px; width: 100%;" id="dtBasicExample"
-                        class="table table-striped table-bordered table-sm" cellspacing="0">
+                           class="table table-striped table-bordered table-sm" cellspacing="0">
                         <!--///////////////////////////////////-->
                         <thead class="thead-light">
-                            <tr class="t-row">
-                                <th class="th-sm">{{table_header.1}}</th>
-                                <th class="th-sm">{{table_header.2}}</th>
-                                <th class="th-sm">{{table_header.3}}</th>
-                                <th class="th-sm">{{table_header.4}}</th>
-                                <th class="th-sm">{{table_header.5}}</th>
-                                <th class="th-sm">{{table_header.6}}</th>
-                                <th class="th-sm">{{table_header.7}}</th>
-                                <th class="th-sm">{{table_header.8}}</th>
-                                <th class="th-sm">{{table_header.9}}</th>
-                                <th class="th-sm">{{table_header.10}}</th>
-                                <th class="th-sm">{{table_header.11}}</th>
-                                <th class="th-sm">{{table_header.12}}</th>
-                                <th class="th-sm">{{table_header.13}}</th>
-                                <th class="th-sm">{{table_header.14}}</th>
-                                <th class="th-sm">{{table_header.15}}</th>
-
-
-                            </tr>
+                        <tr class="t-row">
+                            <th class="th-sm">{{ table_header.1 }}</th>
+                            <th class="th-sm">{{ table_header.2 }}</th>
+                            <th class="th-sm">{{ table_header.3 }}</th>
+                            <th class="th-sm">{{ table_header.4 }}</th>
+                            <th class="th-sm">{{ table_header.5 }}</th>
+                            <th class="th-sm">{{ table_header.6 }}</th>
+                            <th class="th-sm">{{ table_header.7 }}</th>
+                            <th class="th-sm">{{ table_header.8 }}</th>
+                            <th class="th-sm">{{ table_header.9 }}</th>
+                            <th class="th-sm">{{ table_header.10 }}</th>
+                            <th class="th-sm">{{ table_header.11 }}</th>
+                            <th class="th-sm">{{ table_header.12 }}</th>
+                            <th class="th-sm">{{ table_header.13 }}</th>
+                            <th class="th-sm">{{ table_header.14 }}</th>
+                            <th class="th-sm">{{ table_header.15 }}</th>
+                        </tr>
                         </thead>
                         {% for row in table_rows %}
 
-                        <tr class="t-row">
+                            <tr class="t-row">
 
-                            <td>{{row.0}}</td>
-                            <td>{{row.1}}</td>
-                            <td>{{row.2}}</td>
-                            <td>{{row.3}}</td>
-                            <td>{{row.4}}</td>
-                            <td>{{row.5}}</td>
-                            <td>{{row.6}}</td>
-                            <td>{{row.7}}</td>
-                            <td>{{row.8}}</td>
-                            <td>{{row.9}}</td>
-                            <td>{{row.10}}</td>
+                            <td>{{ row.state_name }}</td>
+                            <td>{{ row.city_name }}</td>
+                            <td>{{ row.hospital_name }}</td>
+                            <td>{{ row.section_name }}</td>
+                            <td>{{ row.device_type_name }}</td>
+                            <td>{{ row.5 }}</td>  {# Tolid konande #}
+                            <td>{{ row.device_name }}</td>
+                            <td>{{ row.device_serial_number }}</td>
+                            <td>{{ row.device_property_number }}</td>
+                            <td>{{ row.test_status }}</td>
+                            <td>{{ row.test_time }}</td>
                             <td>یک سال</td>
-                            <td>{{row.11}}</td>
-
+                            <td>{{ row.test_licence_number }}</td>
+                            <td>{{ row.test_comment }}</td>
                             <td>
-                                {{row.12}}
+                                {% if row.test_status != 'عدم تست' %}
+                                    <form method="GET" action="{% url 'view_report' %}">
+                                        <button type="submit" value="{{ row.test_licence_number }}"
+                                                name="test_licence_number" class="btn"><img
+                                                src="{% static 'img/arrow-pointing-down.png' %}" class="download-icon"
+                                                alt="download-icon">
+                                    </form>
+                                {% endif %}
                             </td>
-
-                            {% if i.11 != -1 %}
-                            <form method="GET" action="{% url 'view_report'%}">
-                                <td> <button type="submit" value="{{row.11}}" name="licence_num" class="btn"><img
-                                            src="{% static 'img/arrow-pointing-down.png' %}" class="download-icon"
-                                            alt="download-icon"></td>
-                            </form>
-                            {% endif %}
-                            {% endfor %}
+                        {% endfor %}
                         </tr>
                         </tbody>
                     </table>
@@ -107,7 +104,7 @@
                         <div class="chart-box">
                             <div style="height: 5px;"></div>
                             <h1
-                                style="text-align: center;font-size: 15pt;font-weight: bold;font-family:light-iransans;">
+                                    style="text-align: center;font-size: 15pt;font-weight: bold;font-family:light-iransans;">
                                 نمودار وضعیت</h1>
                             <canvas id="doughnutChart"></canvas>
                         </div>
@@ -116,7 +113,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 
 

@@ -932,10 +932,10 @@
       <div>
 
         مقدار اندازه گیری شده:
-        {% if form.s1_e1_res == -1 %}
+        {% if form.s1_res == -1 %}
         N/A
         {% else %}
-        {{form.s1_e1_res}}
+        {{form.s1_res}}
         {% endif %}
 
       </div>
@@ -1350,7 +1350,7 @@
             <td>dc</td>
           </tr>
           <tr class="time">
-            {% if form.s4_e1_comment.id == 1%}
+            <!-- {% if form.s4_e1_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e1_comment }}</td>
@@ -1364,20 +1364,25 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>100</td>
             <td>10</td>
             <td>100</td>
             <td>10</td>
             <td>10</td>
             <td>10</td>
-            <td>{{ form.s4_e1_aclc }}</td>
-            <td>{{ form.s4_e1_dclc }}</td>
+            <!-- <td>{{ form.s4_e1_aclc }}</td>
+            <td>{{ form.s4_e1_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';text-align: right;">- روشن</td>
             <td rowspan="4" style="font-family: 'B Nazanin';">عادی</td>
           </tr>
           <tr class="time">
-            {% if form.s4_e2_comment.id == 1%}
+            <!-- {% if form.s4_e2_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e2_comment }}</td>
@@ -1391,19 +1396,24 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>100</td>
             <td>10</td>
             <td>100</td>
             <td>10</td>
             <td>10</td>
             <td>10</td>
-            <td>{{ form.s4_e2_aclc }}</td>
-            <td>{{ form.s4_e2_dclc }}</td>
+            <!-- <td>{{ form.s4_e2_aclc }}</td>
+            <td>{{ form.s4_e2_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';text-align: right;">- خاموش </td>
           </tr>
           <tr class="time">
-            {% if form.s4_e3_comment.id == 1%}
+            <!-- {% if form.s4_e3_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e3_comment }}</td>
@@ -1417,19 +1427,24 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>100</td>
             <td>10</td>
             <td>100</td>
             <td>10</td>
             <td>10</td>
             <td>10</td>
-            <td>{{ form.s4_e3_aclc }}</td>
-            <td>{{ form.s4_e3_dclc }}</td>
+            <!-- <td>{{ form.s4_e3_aclc }}</td>
+            <td>{{ form.s4_e3_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="text-align: right;"> Standby -</td>
           </tr>
           <tr class="time">
-            {% if form.s4_e4_comment.id == 1%}
+            <!-- {% if form.s4_e4_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e4_comment }}</td>
@@ -1443,19 +1458,24 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>100</td>
             <td>10</td>
             <td>100</td>
             <td>10</td>
             <td>10</td>
             <td>10</td>
-            <td>{{ form.s4_e4_aclc }}</td>
-            <td>{{ form.s4_e4_dclc }}</td>
+            <!-- <td>{{ form.s4_e4_aclc }}</td>
+            <td>{{ form.s4_e4_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';text-align: right;">- پلاریته معکوس</td>
           </tr>
           <tr class="time">
-            {% if form.s4_e5_comment.id == 1%}
+            <!-- {% if form.s4_e5_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e5_comment }}</td>
@@ -1469,21 +1489,26 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>500</td>
             <td>50</td>
             <td>500</td>
             <td>50</td>
             <td>50</td>
             <td>50</td>
-            <td>{{ form.s4_e5_aclc }}</td>
-            <td>{{ form.s4_e5_dclc }}</td>
+            <!-- <td>{{ form.s4_e5_aclc }}</td>
+            <td>{{ form.s4_e5_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';text-align: right;">- قطع یکی از سیمهای تغذیه</td>
             <td rowspan="2" style="font-family: 'B Nazanin';">تک اشکالی</td>
           </tr>
 
           <tr class="time">
-            {% if form.s4_e6_comment.id == 1%}
+            <!-- {% if form.s4_e6_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s4_e6_comment }}</td>
@@ -1497,15 +1522,20 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>100</td>
             <td>10</td>
             <td>100</td>
             <td>10</td>
             <td>10</td>
             <td>10</td>
-            <td>{{ form.s4_e6_aclc }}</td>
-            <td>{{ form.s4_e6_dclc }}</td>
+            <!-- <td>{{ form.s4_e6_aclc }}</td>
+            <td>{{ form.s4_e6_dclc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';text-align: right;">- قطع زمین حفاظتی</td>
           </tr>
 
@@ -1541,7 +1571,7 @@
 
           </tr>
           <tr class="time">
-            {% if form.s5_e1_comment.id == 1%}
+            <!-- {% if form.s5_e1_comment.id == 1%}
             <td></td>
             {% else %}
             <td>{{ form.s5_e1_comment }}</td>
@@ -1555,11 +1585,16 @@
             {% else %}
             <td>&#10004;</td>
             <td></td>
-            {% endif %}
+            {% endif %} -->
+            <td></td>
+            <td></td>
+            <td></td>
             <td>5000</td>
             <td>100</td>
-            <td>{{ form.s5_e1_bflc }}</td>
-            <td>{{ form.s5_e1_cflc }}</td>
+            <!-- <td>{{ form.s5_e1_bflc }}</td>
+            <td>{{ form.s5_e1_cflc }}</td> -->
+            <td>N/A</td>
+            <td>N/A</td>
             <td style="font-family: 'B Nazanin';">اعمال ولتاژ 110% ولتاژ نامی بین قسمت کاربردی ایزوله و زمین</td>
             <td style="font-family: 'B Nazanin';">تک اشکالی</td>
           </tr>
@@ -1628,10 +1663,14 @@
             <td>Ok</td>
           </tr>
           <tr class="time">
-            <td>PO<sub>2</sub>: {{form.s7_e1_si1}}</td>
+            <!-- <td>PO<sub>2</sub>: {{form.s7_e1_si1}}</td>
             <td>PN<sub>2</sub>O: {{form.s7_e1_si2}}</td>
             <td>PO<sub>2</sub>: {{form.s7_e1_si3}}</td>
-            <td>PN<sub>2</sub>O: {{form.s7_e1_si4}}</td>
+            <td>PN<sub>2</sub>O: {{form.s7_e1_si4}}</td> -->
+            <td>PO<sub>2</sub>: N/A</td>
+            <td>PN<sub>2</sub>O: N/A</td>
+            <td>PO<sub>2</sub>: N/A</td>
+            <td>PN<sub>2</sub>O: N/A</td>
             <td></td>
             <td></td>
           </tr>

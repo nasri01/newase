@@ -106,36 +106,42 @@
 
             <tr>
               <!-- <th>{{forloop.counter}}</th> -->
-              <td>{{row.0}}</td>
-              <td>{{row.1}}</td>
-              <td>{{row.2}}</td>
-              <td>{{row.3}}</td>
-              <td>{{row.4}}</td>
-              <td>{{row.6}}</td>
-              <td>{{row.7}}</td>
-              <td>{{row.8}}</td>
-              <td>{{row.9}}</td>
-              <td>{{row.10}}</td>
-              <td>{{row.11}}</td>
-              <td>{{row.13}}</td>
-              {% if row.9 == 'عدم تست' %}
+              <td>{{row.state_name}}</td>
+              <td>{{row.city_name}}</td>
+              <td>{{row.hospital_name}}</td>
+              <td>{{row.section_name}}</td>
+              <td>{{row.device_type_name}}</td>
+              <td>{{row.device_name}}</td>
+              <td>{{row.device_serial_number}}</td>
+              <td>{{row.device_property_number}}</td>
+              <td>{{row.test_status}}</td>
+              <td>{{row.test_time}}</td>
+              <td>{{row.test_licence_number}}</td>
+              <td>{{row.test_comment}}</td>
+              {% if row.test_status == 'عدم تست' %}
+              <td></td>
+              {% else %}
               <td>
-                {% else %}
                 <form method="GET" action="{% url 'edit_report' %}">
-              <td> <button type="submit" value="{{row.12}}" name="record_number" class="btn"><img
-                    src="{% static 'img/icon-edit.jpg' %}" height="30" class="download-icon" alt="download-icon">
-                </button>
-              </td>
-              </form>
-              {% endif %}
-
-              <form method="GET" action="{% url 'delete_report' %}">
-                <td> <button type="submit" value="{{row.12}}" name="record_number" class="btn"><img
-                      src="{% static 'img/icon-edit.jpg' %}" height="30" class="download-icon" alt="download-icon">
+                  <button type="submit" class="btn"><img src="{% static 'img/icon-edit.jpg' %}" height="30"
+                      class="download-icon" alt="download-icon">
                   </button>
-                </td>
-              </form>
 
+                  <input name="test_record_number" value="{{row.test_record_number}}" hidden>
+                  <input name="test_model_name" value="{{row.test_model_name}}" hidden>
+                </form>
+              </td>
+              {% endif %}
+              <td>
+                <form method="GET" action="{% url 'delete_report' %}">
+                  <button type="submit" class="btn"><img src="{% static 'img/icon-edit.jpg' %}" height="30"
+                      class="download-icon" alt="download-icon">
+                  </button>
+
+                  <input name="test_record_number" value="{{row.test_record_number}}" hidden>
+                  <input name="test_model_name" value="{{row.test_model_name}}" hidden>
+                </form>
+              </td>
             </tr>
             {% empty %}
             <tr>

@@ -106,7 +106,7 @@ class spo2_1_Form(forms.ModelForm):
                    'cal_dev_1_xd', 'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd']
 
 
-class suction_1_Form(forms.ModelForm):
+class Suction_1_Form(forms.ModelForm):
     class Meta:
         model = Suction_1
         #fields = '__all__'
@@ -114,7 +114,7 @@ class suction_1_Form(forms.ModelForm):
                    'cal_dev_1_xd', 'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd']
 
 
-class syringe_pump_1_Form(forms.ModelForm):
+class Syringe_pump_1_Form(forms.ModelForm):
     class Meta:
         model = SyringePump_1
         #fields = '__all__'
@@ -122,7 +122,7 @@ class syringe_pump_1_Form(forms.ModelForm):
                    'cal_dev_1_xd', 'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd']
 
 
-class electrocauter_1_Form(forms.ModelForm):
+class ElectroCauter_1_Form(forms.ModelForm):
     class Meta:
         model = ElectroCauter_1
         #fields = '__all__'
@@ -130,7 +130,7 @@ class electrocauter_1_Form(forms.ModelForm):
                    'cal_dev_2_cd', 'cal_dev_2_xd', 'cal_dev_3_cd', 'cal_dev_3_xd', 'cal_dev_4_cd', 'cal_dev_4_xd', 'cal_dev_5_cd', 'cal_dev_5_xd']
 
 
-class ventilator_1_Form(forms.ModelForm):
+class Ventilator_1_Form(forms.ModelForm):
     class Meta:
         model = Ventilator_1
         #fields = '__all__'

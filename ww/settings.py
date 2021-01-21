@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from .local_settings import *
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ww.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -96,7 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -105,13 +101,11 @@ LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'UTC'
 
-
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -120,14 +114,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/home2/kaadir/panel.azmasaba.ir/static'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'ww/static/'),
 
-STATICFILES_DIRS = ['D:\\_projects\\ASE_files\\static']
+STATICFILES_DIRS = ['D:\\3projects\\ASE_files\\static']
 
 if DEBUG:
-    MEDIA_ROOT = 'D:\\_projects\\ASE_files\\media'
+    MEDIA_ROOT = 'D:\\3projects\\ASE_files\\media'
 else:
     MEDIA_ROOT = '/home2/kaadir/panel.azmasaba.ir/media'
 MEDIA_URL = '/media/'
 
-
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-

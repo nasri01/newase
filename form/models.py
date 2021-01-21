@@ -8,6 +8,7 @@ import acc.models
 class CantTest(models.Model):
     class Meta:
         verbose_name_plural = "1_Can,t Test"
+
     tt = models.ForeignKey(acc.models.AdTestType0, on_delete=models.PROTECT)
     device = models.ForeignKey(acc.models.AllDevice, on_delete=models.PROTECT)
     request = models.ForeignKey(acc.models.Request, on_delete=models.PROTECT)
@@ -28,6 +29,7 @@ class CantTest(models.Model):
 class MonitorSpo2_1(models.Model):
     class Meta:
         verbose_name_plural = "Monitor SPO2"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='ms1rr')
@@ -114,6 +116,7 @@ class MonitorSpo2_1(models.Model):
 class MonitorECG_1(models.Model):
     class Meta:
         verbose_name_plural = "Monitor ECG"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='me1rr')
@@ -307,6 +310,7 @@ class MonitorECG_1(models.Model):
 class MonitorNIBP_1(models.Model):
     class Meta:
         verbose_name_plural = "Monitor NIBP"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='mn1rr')
@@ -385,6 +389,7 @@ class MonitorNIBP_1(models.Model):
 class AED_1(models.Model):
     class Meta:
         verbose_name_plural = "AED"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='aed1rr')
@@ -662,6 +667,7 @@ class AED_1(models.Model):
 class MonitorSafety_1(models.Model):
     class Meta:
         verbose_name_plural = "Monitor Safety"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='msa1rr')
@@ -850,6 +856,7 @@ class MonitorSafety_1(models.Model):
 class AnesthesiaMachine_1(models.Model):
     class Meta:
         verbose_name_plural = "Anesthesia Machine"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='am1rr')
@@ -1129,6 +1136,7 @@ class AnesthesiaMachine_1(models.Model):
     s19_g2_e1 = models.FloatField()
     s19_g2_e2 = models.FloatField()
     s19_g2_e3 = models.FloatField()
+
     # s19_g2_e4 = models.FloatField(default= -1)
     # s19_g3_e1 = models.FloatField(default= -1 )
     # s19_g3_e2 = models.FloatField(default= -1 )
@@ -1146,6 +1154,7 @@ class AnesthesiaMachine_1(models.Model):
 class Defibrilator_1(models.Model):
     class Meta:
         verbose_name_plural = "Defibrilator"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='df1rr')
@@ -1411,7 +1420,7 @@ class Defibrilator_1(models.Model):
     s6_type = models.ForeignKey(
         acc.models.AdTestType1, on_delete=models.CASCADE, related_name='df1s6_t', default=1)
 
-    s6_e1_lc1 = models.FloatField(null=True, blank=True ,default=56.9)
+    s6_e1_lc1 = models.FloatField(null=True, blank=True, default=56.9)
     # s6_e1_lc2 = models.FloatField(null=True, blank=True)
     # s6_e1_lc3 = models.FloatField(null=True, blank=True)
     s6_e1_lc4 = models.FloatField(null=True, blank=True, default=18.8)
@@ -1578,6 +1587,7 @@ class Defibrilator_1(models.Model):
 class ECG_1(models.Model):
     class Meta:
         verbose_name_plural = "ElectroCardioGraph"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='e1rr')
@@ -1793,6 +1803,7 @@ class ECG_1(models.Model):
 class FlowMeter_1(models.Model):
     class Meta:
         verbose_name_plural = "Flow Meter"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='fm1rr')
@@ -1833,6 +1844,7 @@ class FlowMeter_1(models.Model):
 class InfusionPump_1(models.Model):
     class Meta:
         verbose_name_plural = "Infusion Pump"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='ip1rr')
@@ -2005,6 +2017,7 @@ class InfusionPump_1(models.Model):
 class ManoMeter_1(models.Model):
     class Meta:
         verbose_name_plural = "ManoMeter"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='mm1rr')
@@ -2090,6 +2103,7 @@ class ManoMeter_1(models.Model):
 class Spo2_1(models.Model):
     class Meta:
         verbose_name_plural = "PulseOxyMeter"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='sp1rr')
@@ -2202,6 +2216,7 @@ class Spo2_1(models.Model):
 class Suction_1(models.Model):
     class Meta:
         verbose_name_plural = "Suction"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='su1rr')
@@ -2286,7 +2301,6 @@ class Suction_1(models.Model):
                                        related_name='su1s0e22comment', default=1)
     s0_e23_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                        related_name='su1s0e23comment', default=1)
-    
 
     s1_e1_rr = models.IntegerField(null=True, blank=True)
     s1_e2_rr = models.IntegerField(null=True, blank=True)
@@ -2315,6 +2329,7 @@ class Suction_1(models.Model):
 class SyringePump_1(models.Model):
     class Meta:
         verbose_name_plural = "Syringe Pump"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='spmp1rr')
@@ -2487,6 +2502,7 @@ class SyringePump_1(models.Model):
 class ElectroCauter_1(models.Model):
     class Meta:
         verbose_name_plural = "ElectroCauter"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='ec1rr')
@@ -2865,6 +2881,7 @@ class ElectroCauter_1(models.Model):
 class Ventilator_1(models.Model):
     class Meta:
         verbose_name_plural = "Ventilator"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='ven1rr')
@@ -3054,6 +3071,7 @@ class Ventilator_1(models.Model):
 class AutoClave_1(models.Model):
     class Meta:
         verbose_name_plural = "Incubator"
+
     is_recal = models.BooleanField(default=False)
     ref_record = models.ForeignKey(
         acc.models.Record, on_delete=models.CASCADE, related_name='incb1rr')
@@ -3142,7 +3160,7 @@ class AutoClave_1(models.Model):
                                        related_name='autoclove1s0e22comment', default=1)
 
     p3_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                       related_name='autoclove1p3t1r1comment', default=1)
+                                         related_name='autoclove1p3t1r1comment', default=1)
     p3_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                          related_name='autoclove1p3t1r2comment', default=1)
     p3_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
@@ -3298,16 +3316,16 @@ class AutoClave_1(models.Model):
     p9_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                          related_name='autoclove1p9t1r9comment', default=1)
     p9_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                         related_name='autoclove1p9t1r10comment', default=1)
+                                          related_name='autoclove1p9t1r10comment', default=1)
     p9_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                         related_name='autoclove1p9t1r11comment', default=1)
+                                          related_name='autoclove1p9t1r11comment', default=1)
     p9_t1_r12_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                         related_name='autoclove1p9t1r12comment', default=1)
+                                          related_name='autoclove1p9t1r12comment', default=1)
     p9_t1_r13_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                         related_name='autoclove1p9t1r13comment', default=1)
+                                          related_name='autoclove1p9t1r13comment', default=1)
 
     p10_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                         related_name='autoclove1p10t1r1comment', default=1)
+                                          related_name='autoclove1p10t1r1comment', default=1)
     p10_t1_r2_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p10t1r2comment', default=1)
     p10_t1_r3_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
@@ -3325,9 +3343,9 @@ class AutoClave_1(models.Model):
     p10_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p10t1r9comment', default=1)
     p10_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p10t1r10comment', default=1)
+                                           related_name='autoclove1p10t1r10comment', default=1)
     p10_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p10t1r11comment', default=1)
+                                           related_name='autoclove1p10t1r11comment', default=1)
 
     p10_t2_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p10t2r1comment', default=1)
@@ -3359,13 +3377,13 @@ class AutoClave_1(models.Model):
     p11_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p11t1r9comment', default=1)
     p11_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p11t1r10comment', default=1)
+                                           related_name='autoclove1p11t1r10comment', default=1)
     p11_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p11t1r11comment', default=1)
+                                           related_name='autoclove1p11t1r11comment', default=1)
     p11_t1_r12_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p11t1r12comment', default=1)
+                                           related_name='autoclove1p11t1r12comment', default=1)
     p11_t1_r13_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p11t1r13comment', default=1)
+                                           related_name='autoclove1p11t1r13comment', default=1)
 
     p12_t1_r1_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p12t1r1comment', default=1)
@@ -3401,9 +3419,9 @@ class AutoClave_1(models.Model):
     p13_t1_r9_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
                                           related_name='autoclove1p13t1r9comment', default=1)
     p13_t1_r10_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p13t1r10comment', default=1)
+                                           related_name='autoclove1p13t1r10comment', default=1)
     p13_t1_r11_comment = models.ForeignKey(acc.models.Comment, on_delete=models.PROTECT,
-                                          related_name='autoclove1p13t1r11comment', default=1)
+                                           related_name='autoclove1p13t1r11comment', default=1)
 
     p14_t1_r1_edea = models.FloatField()
     p14_t1_r1_read = models.FloatField()
@@ -3466,11 +3484,11 @@ class AutoClave_1(models.Model):
     p18_t3_r1_norm_p_issue = models.FloatField()
     p18_t3_r1_rev_p_normal = models.FloatField()
     p18_t3_r1_rev_p_issue = models.FloatField()
-    p18_t3_r2_norm_p_normal = models.FloatField() # 2
+    p18_t3_r2_norm_p_normal = models.FloatField()  # 2
     p18_t3_r2_norm_p_issue = models.FloatField()
     p18_t3_r2_rev_p_normal = models.FloatField()
     p18_t3_r2_rev_p_issue = models.FloatField()
-    p18_t3_r3_norm_p_normal = models.FloatField() # 3
+    p18_t3_r3_norm_p_normal = models.FloatField()  # 3
     p18_t3_r3_norm_p_issue = models.FloatField()
     p18_t3_r3_rev_p_normal = models.FloatField()
     p18_t3_r3_rev_p_issue = models.FloatField()
@@ -3481,13 +3499,13 @@ class AutoClave_1(models.Model):
     p19_t1_r1_rev_p_normal = models.FloatField()
     p19_t1_r1_rev_p_issue_noearth = models.FloatField()
     p19_t1_r1_rev_p_issue_nonull = models.FloatField()
-    p19_t1_r2_norm_p_normal = models.FloatField()         # 2
+    p19_t1_r2_norm_p_normal = models.FloatField()  # 2
     p19_t1_r2_norm_p_issue_noearth = models.FloatField()
     p19_t1_r2_norm_p_issue_nonull = models.FloatField()
     p19_t1_r2_rev_p_normal = models.FloatField()
     p19_t1_r2_rev_p_issue_noearth = models.FloatField()
     p19_t1_r2_rev_p_issue_nonull = models.FloatField()
-    p19_t1_r3_norm_p_normal = models.FloatField()         # 3
+    p19_t1_r3_norm_p_normal = models.FloatField()  # 3
     p19_t1_r3_norm_p_issue_noearth = models.FloatField()
     p19_t1_r3_norm_p_issue_nonull = models.FloatField()
     p19_t1_r3_rev_p_normal = models.FloatField()

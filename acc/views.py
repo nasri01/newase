@@ -1,13 +1,12 @@
 import jdatetime
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.shortcuts import Http404, redirect, render, HttpResponse
 
-from acc.models import Parameters, Request, AdExcelArg
+# from acc.models import Parameters, Request, AdExcelArg
 from form.forms import *
 from report.models import Report
-
 from .forms import *
 
 try:
@@ -24,30 +23,29 @@ except:
 
 # form_list = [MonitorSpo2_1_Form, MonitorECG_1_Form, MonitorNIBP_1_Form, MonitorSafety_1_Form, AED_1_Form,
 #              AnesthesiaMachine_1_Form, Defibrilator_1_Form, ECG_1_Form, FlowMeter_1_Form, InfusionPump_1_Form,
-#              ManoMeter_1_Form, spo2_1_Form, suction_1_Form, syringe_pump_1_Form, ventilator_1_Form, electrocauter_1_Form,
+#              ManoMeter_1_Form, spo2_1_Form, Suction_1_Form, Syringe_pump_1_Form, Ventilator_1_Form, ElectroCauter_1_Form,
 #              CantTest_Form]
 
-model_list = [['MonitorSpo2', MonitorSpo2_1, MonitorSpo2_1_Form],
-              ['MonitorECG', MonitorECG_1, MonitorECG_1_Form],
-              ['MonitorNIBP', MonitorNIBP_1, MonitorNIBP_1_Form],
-              ['MonitorSafety', MonitorSafety_1, MonitorSafety_1_Form],
-              ['Defibrilator', Defibrilator_1, Defibrilator_1_Form],
-              ['AED', AED_1, AED_1_Form],
-              ['ECG', ECG_1, ECG_1_Form],
-              ['InfusionPump', InfusionPump_1, InfusionPump_1_Form],
-              ['SyringePump', SyringePump_1, syringe_pump_1_Form],
-              ['spo2', Spo2_1, spo2_1_Form],
-              ['FlowMeter', FlowMeter_1, FlowMeter_1_Form],
-              ['AnesthesiaMachine', AnesthesiaMachine_1,
-               AnesthesiaMachine_1_Form],
-              ['Ventilator', Ventilator_1, ventilator_1_Form],
-              ['Suction', Suction_1, suction_1_Form],
-              ['ManoMeter', ManoMeter_1, ManoMeter_1_Form],
-              ['Incubator', ManoMeter_1, ManoMeter_1_Form],
-              ['ElectroCauter', ElectroCauter_1, electrocauter_1_Form],
-              ['CantTest', CantTest, CantTest_Form],
-              ['Report', Report],
-              ]  # Order the same by AdTestType0
+model_dict = {'MonitorSpo2': [[MonitorSpo2_1, MonitorSpo2_1_Form, 3]],
+              'MonitorECG': [[MonitorECG_1, MonitorECG_1_Form, 3]],
+              'MonitorNIBP': [[MonitorNIBP_1, MonitorNIBP_1_Form, 3]],
+              'MonitorSafety': [[MonitorSafety_1, MonitorSafety_1_Form, 3]],
+              'Defibrilator': [[Defibrilator_1, Defibrilator_1_Form, 4]],
+              'AED': [[AED_1, AED_1_Form, 2]],
+              'ECG': [[ECG_1, ECG_1_Form, 4]],
+              'InfusionPump': [[InfusionPump_1, InfusionPump_1_Form, 4]],
+              'SyringePump': [[SyringePump_1, Syringe_pump_1_Form, 4]],
+              'spo2': [[Spo2_1, spo2_1_Form, 4]],
+              'FlowMeter': [[FlowMeter_1, FlowMeter_1_Form, 1]],
+              'AnesthesiaMachine': [[AnesthesiaMachine_1, AnesthesiaMachine_1_Form, 4]],
+              'Ventilator': [[Ventilator_1, Ventilator_1_Form, 4]],
+              'Suction': [[Suction_1, Suction_1_Form, 4]],
+              'ManoMeter': [[ManoMeter_1, ManoMeter_1_Form, 3]],
+              # 'AutoClave': [[AutoClave_1, AutoClave_1]], #TODO AutoClave form
+              'ElectroCauter': [[ElectroCauter_1, ElectroCauter_1_Form, 5]],
+              'CantTest': [[CantTest, CantTest_Form]],
+              'Report': [[Report]],
+              }  # Order the same by AdTestType0
 
 
 def login(request):
@@ -73,53 +71,57 @@ def logout(request):
 
 @login_required
 def route_to_dashboard(request):
-    id = models.IntegerField(primary_key=True)
     avatar_url = UserProfile.objects.all()[0].avatar.url  # admin user_profile
     if Group.objects.get(name='admin') in request.user.groups.all():
         try:
             request.GET['employee']  # if the admin asked for user_dashboard
             return render(request, 'acc/employee/index.html',
-                          {'status1': 'خوش آمدید', 'user_name': request.user.first_name, 'avatar_url': avatar_url})
+                          {'user_name': request.user.first_name, 'avatar_url': avatar_url})
         except:
-            # hospital_list = Hospital.objects.all()
-            request_list = Request.objects.all().order_by('date')
+            hospital_list = Hospital.objects.all()
+            hospital_dict = {}
+            for hospital in hospital_list:
+                hospital_dict['{}'.format(hospital.id)] = hospital.name
+            request_list = Request.objects.all().order_by('-date')
             chart = [0, 0, 0, 0]
+            
             # [accept, conditional, reject, cant test]
-            for model in model_list:
-                if model[1] == CantTest:
-                    continue
-                chart[0] += len(model[1].objects.filter(status__id=1))
-                chart[1] += len(model[1].objects.filter(status__id=2))
-                chart[2] += len(model[1].objects.filter(status__id=3))
-            chart[3] = len(CantTest.objects.all())
-            for req in request_list:
-                req.date = req.date.today()
+            # for model in model_list:
+            #     if model[1] == CantTest:
+            #         continue
+            #     chart[0] += len(model[1].objects.filter(status__id=1))
+            #     chart[1] += len(model[1].objects.filter(status__id=2))
+            #     chart[2] += len(model[1].objects.filter(status__id=3))
+            # chart[3] = len(CantTest.objects.all())
+            # for req in request_list:
+            #     req.date = req.date.today()
 
             return render(request, 'acc/admin/index.html', {
-                'status': 'Welcome Back', 'user_name': request.user.first_name, 'request_list': request_list,
-                'chart': chart, 'avatar_url': avatar_url})
+                'user_name': request.user.first_name, 'request_list': request_list,
+                'chart': chart, 'avatar_url': avatar_url, 'hospital_dict': hospital_dict})
 
     elif Group.objects.get(name='hospital') in request.user.groups.all():
 
         request_list = Request.objects.filter(
             hospital__user=request.user).order_by('date')
         chart = [0, 0, 0, 0]
-        # [accept, conditional, reject, cant test]
-        for model in model_list:
-            if model[1] == CantTest:
-                continue
-            query = model[1].objects.filter(
-                device__hospital__user=request.user)
 
-            chart[0] += len(query.filter(status__id=1))
-            chart[1] += len(query.filter(status__id=2))
-            chart[2] += len(query.filter(status__id=3))
-        chart[3] = len(CantTest.objects.filter(
-            device__hospital__user=request.user))
-        for req in request_list:
-            req.date = req.date.today()
+        # [accept, conditional, reject, cant test]
+        # for model in model_list:
+        #     if model[1] == CantTest:
+        #         continue
+        #     query = model[1].objects.filter(
+        #         device__hospital__user=request.user)
+
+        #     chart[0] += len(query.filter(status__id=1))
+        #     chart[1] += len(query.filter(status__id=2))
+        #     chart[2] += len(query.filter(status__id=3))
+        # chart[3] = len(CantTest.objects.filter(
+        #     device__hospital__user=request.user))
+        # for req in request_list:
+        #     req.date = req.date.today()
         return render(request, 'acc/hospital/index.html',
-                      {'status': 'خوش آمدید', 'request_list': request_list, 'avatar_url': avatar_url,
+                      {'request_list': request_list, 'avatar_url': avatar_url,
                        'user_name': request.user.first_name, 'chart': chart})
         #    'date': jdatetime.date.today(), 'month': mm,
 
@@ -164,31 +166,44 @@ def show_recalibration_list(request):
                         )
         table_rows = []
         # model_query_list = []
-        for model in model_list:
-            model_query = model[1].objects.filter(is_done=False)
-            #     model_query_list.append(model_query)
-            # for model_ in model_query_list:
-            for obj in model_query:
-                # obj = report_instance
-                row = []
-                row.append(obj.device.hospital.city.state.name)  # 0
-                row.append(obj.device.hospital.city.name)  # 1
-                row.append(obj.device.hospital.name)  # 2
-                row.append(obj.device.section.name)  # 3
-                row.append(obj.device.name.type.name)  # 4
-                row.append(obj.device.name.creator.name)  # 5
-                row.append(obj.device.name.name)  # 6
-                row.append(obj.device.serial_number)  # 7
-                row.append(obj.device.property_number)  # 8
-                row.append(obj.status.status)  # 9
-                row.append(obj.date.strftime("%Y-%m-%d"))  # 10
-                if obj.status.id != 4:
-                    row.append(obj.licence.number)  # 11
-                else:
-                    row.append('-')  # 11
-                row.append(obj.record.number)  # 12
-                row.append(obj.totalcomment)  # 13
-                table_rows.append(row)
+        for t, model_hist in model_dict.items():
+            if t == 'Report':
+                continue
+            for model in model_hist:
+                model_query = model[0].objects.filter(is_done=False)
+                for obj in model_query:
+                    row = {}
+                    row['test_model_name'] = model_query.model.__name__  # for reffrence when clicko=ing on edit ad delete button
+                    row['state_name'] = obj.device.hospital.city.state.name
+                    row['city_name'] = obj.device.hospital.city.name
+                    row['hospital_name'] = obj.device.hospital.name
+                    row['section_name'] = obj.device.section.name
+                    row['device_type_name'] = obj.device.name.type.name
+                    row['device_creator_name'] = obj.device.name.creator.name
+                    row['device_name'] = obj.device.name.name
+                    row['device_serial_number'] = obj.device.serial_number
+                    row['device_property_number'] = obj.device.property_number
+                    row['test_status'] = obj.status.status
+                    row['test_time'] = obj.date.strftime("%Y-%m-%d")
+
+                    if obj.status.id != 4:
+                        row['test_licence_number'] = obj.licence.number
+                    else:
+                        row['test_licence_number'] = '-'
+                    row['test_record_number'] = obj.record.number
+                    # row.append(obj.totalcomment) 
+                    if t == 'MonitorSpo2':
+                        row['test_comment'] = '-SPO2-' + obj.totalcomment
+                    elif t == 'MonitorECG':
+                        row['test_comment'] = '-ECG-' + obj.totalcomment
+                    elif t == 'MonitorNIBP':
+                        row['test_comment'] = '-NIBP-' + obj.totalcomment
+                    elif t == 'MonitorSafety':
+                        row['test_comment'] = '-Safety-' + obj.totalcomment
+                    else:
+                        row['test_comment'] = obj.totalcomment
+
+                    table_rows.append(row)
 
         return render(request, 'acc/employee/recalibration_list.html',
                       {'table_header': table_header, 'table_rows': table_rows})
@@ -198,7 +213,8 @@ def show_recalibration_list(request):
 
 # list of all records
 def show_report_list(request, select_hospital):
-    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(name='employee') in request.user.groups.all():
+    if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
+            name='employee') in request.user.groups.all():
         if int(select_hospital) == 1:
             hospital_list = Hospital.objects.all().values('id', 'name', 'city')
             return render(request, 'acc/employee/report_list_select_hospital.html', {'hospital_list': hospital_list})
@@ -220,41 +236,44 @@ def show_report_list(request, select_hospital):
                         str(table_header_list[15]),
                         )
         table_rows = []
-        # data1 = []
-        # for model in model_list[:-1]:
-        model_query = model_list[-1][1].objects.filter(device__hospital__id=request.POST['hospital'])
-        #     data1.append(modelobj)
-        # for obj1 in data1:
-        for obj in model_query:
-            row = []
-            row.append(obj.device.hospital.city.state.name)  # 0
-            row.append(obj.device.hospital.city.name)  # 1
-            row.append(obj.device.hospital.name)  # 2
-            row.append(obj.device.section.name)  # 3
-            row.append(obj.device.name.type.name)  # 4
-            row.append(obj.device.name.creator.name)  # 5
-            row.append(obj.device.name.name)  # 6
-            row.append(obj.device.serial_number)  # 7
-            row.append(obj.device.property_number)  # 8
-            row.append(obj.status.status)  # 9
-            row.append(obj.date.strftime("%Y-%m-%d"))  # 10
-            if obj.status.id != 4:
-                row.append(obj.licence.number)  # 11
-            else:
-                row.append('-')  # 11
-            row.append(obj.record.number)  # 12
-            # row.append(obj.totalcomment)  # 13
-            if obj.tt.type == 'MonitorSpo2':
-                row.append('-SPO2-' + obj.totalcomment)  # 12*
-            elif obj.tt.type == 'MonitorECG':
-                row.append('-ECG-' + obj.totalcomment)  # 12*
-            elif obj.tt.type == 'MonitorNIBP':
-                row.append('-NIBP-' + obj.totalcomment)  # 12*
-            elif obj.tt.type == 'MonitorSafety':
-                row.append('-Safety-' + obj.totalcomment)  # 12*
-            else:
-                row.append(obj.totalcomment)  # 12*
-            table_rows.append(row)
+        # model_query = model_dict['Report'][1].objects.filter(device__hospital__id=request.POST['hospital'])
+        for t, model_hist in model_dict.items():
+            if t == 'Report':
+                continue
+            for model in reversed(model_hist):
+                model_query = model[0].objects.filter(device__hospital__id=request.POST['hospital'])
+                for obj in model_query:
+                    row = {}
+                    row['test_model_name'] = model_query.model.__name__
+                    row['state_name'] = obj.device.hospital.city.state.name
+                    row['city_name'] = obj.device.hospital.city.name
+                    row['hospital_name'] = obj.device.hospital.name
+                    row['section_name'] = obj.device.section.name
+                    row['device_type_name'] = obj.device.name.type.name
+                    row['device_creator_name'] = obj.device.name.creator.name
+                    row['device_name'] = obj.device.name.name
+                    row['device_serial_number'] = obj.device.serial_number
+                    row['device_property_number'] = obj.device.property_number
+                    row['test_status'] = obj.status.status
+                    row['test_time'] = obj.date.strftime("%Y-%m-%d")
+                    if obj.status.id != 4:
+                        row['test_licence_number'] = obj.licence.number
+                    else:
+                        row['test_licence_number'] = '-'
+                    row['test_record_number'] = obj.record.number
+                    # row.append(obj.totalcomment) 
+                    if t == 'MonitorSpo2':
+                        row['test_comment'] = '-SPO2-' + obj.totalcomment
+                    elif t == 'MonitorECG':
+                        row['test_comment'] = '-ECG-' + obj.totalcomment
+                    elif t == 'MonitorNIBP':
+                        row['test_comment'] = '-NIBP-' + obj.totalcomment
+                    elif t == 'MonitorSafety':
+                        row['test_comment'] = '-Safety-' + obj.totalcomment
+                    else:
+                        row['test_comment'] = obj.totalcomment
+                    table_rows.append(row)
+
         return render(request, 'acc/employee/report_list.html',
                       {'table_header': table_header, 'table_rows': table_rows})
     else:
@@ -265,33 +284,32 @@ def show_report_list(request, select_hospital):
 def edit_report(request):
     if Group.objects.get(name='admin') in request.user.groups.all() or Group.objects.get(
             name='employee') in request.user.groups.all():
-        if (request.method == 'GET'):
+        if request.method == 'GET':
             avatar_url = UserProfile.objects.get(
                 id=1).avatar.url  # admin user_profile
             try:
-                for model in model_list:
-                    model_query = model[1].objects.filter(
-                        record__number=int(request.GET['record_number']))
-                    if (len(model_query) == 1):
-                        form_type = model[2]
-                        model_name = model[0]
+                model_name = request.GET['test_model_name'].split('_')[0]
+                model_hist = model_dict[model_name]
+
+                for model in model_hist:
+                    model_query = model[0].objects.filter(
+                        record__number=int(request.GET['test_record_number']))
+                    if len(model_query) == 1:
+                        form_type = model[1]
                         break
             except:
                 # return redirect('dashboard')
-                pass
-            # try:
-            #     form_type
-            # except:
-            #     raise Http404
+                return Http404
             form_body = form_type(instance=model_query[0])
             pass_data = {'form': form_body,
                          'form_type': model_name,
-                         'record_number': model_query[0].record.number,
-                         'licence_number': model_query[0].licence.number,
-                         'user_name': request.user.first_name, 'avatar_url': avatar_url
+                         'test_record_number': request.GET['test_record_number'],
+                         'test_licence_number': model_query[0].licence.number,
+                         'user_name': request.user.first_name, 'avatar_url': avatar_url,
+                         'test_form_type': model_name
                          }
 
-            if (model_query[0].is_recal == False):  # its calibration
+            if (model_query[0].is_recal == False):  # its not calibration
                 pass_data['edit'] = 1
             else:
                 pass_data['edit_recal'] = 1
@@ -309,43 +327,45 @@ def recal_report(request):
         if request.method == 'GET':
             avatar_url = UserProfile.objects.get(
                 id=1).avatar.url  # admin user_profile
-            for model in model_list:
-                q_exclude_field = model[2].Meta.exclude
-                model_query = model[1].objects.filter(record__number=int(request.GET['record_number'])).filter(
+
+            model_name = request.GET['test_model_name'].split('_')[0]
+            model_hist = model_dict[model_name]
+            for model in model_hist:
+                q_exclude_field = model[1].Meta.exclude  # List of excluded Filed
+                model_query = model[0].objects.filter(
+                    record__number=int(request.GET['test_record_number'])).filter(
                     is_done__exact=False)
 
-                if (len(model_query) == 1):
-                    if model[0] in ['CantTest', 'report']:
-                        form_type = model_list[int(model_query[0].tt.id) - 1][2]
-                        model_name = model_list[int(model_query[0].tt.id) - 1][0]
-                    else:
-                        form_type = model[2]
-                        model_name = model[0]
-                        q_dict = model_query.values()[0]
+                if len(model_query) == 1:
                     break
-                # else:
-                #     return('recal_list')
+
+            if model_name in ['CantTest', 'report']:
+                form_type = model_dict[model_query[0].tt][-1][1]  # get last appropiate version form object
+
+            else:
+                form_type = model[1]
+
+            q_dict = model_query.values()[0]  # get the data as dictionary
+
             q_d = {}
             for k in q_dict:
-                if k.endswith('_id'):
-                   q_d[k[:-3]] = q_dict[k]
-                else:
-                    q_d[k] = q_dict[k]
+                q_d[k.replace('_id', '')] = q_dict[k]
             del q_dict
             q_exclude_field.append('id')
             for field in q_exclude_field:
-                q_d.pop(field )
+                q_d.pop(field)
             # form_body = form_type({'device': [model_query[0].device.id]})
             form_body = form_type(initial=q_d)
+
             pass_data = {'recal': 1,
                          'form': form_body,
-                         'form_type': model_name,
-                         'ref_record_number': model_query[0].record.number,
+                         'test_form_type': model_name,
+                         'test_ref_record_number': model_query[0].record.number,
                          'user_name': request.user.first_name, 'avatar_url': avatar_url
                          }
             try:
                 # if exist
-                pass_data['ref_licence_num'] = model_query[0].licence.number
+                pass_data['test_ref_licence_number'] = model_query[0].licence.number
             except:
                 pass
             return render(request, 'acc/employee/index.html', pass_data)
@@ -367,8 +387,8 @@ def make_done(request):
 
 @login_required
 def change_email(request):
-    if (request.method == 'POST'):
-        if (request.POST['email1'] == request.POST['email2']):
+    if request.method == 'POST':
+        if request.POST['email1'] == request.POST['email2']:
             d = User.objects.get(id=request.user.id)
             d.email = request.POST['email1']
             d.save()

@@ -30,15 +30,15 @@
     <div class="data container-fluid">
       {% if edit %}
       <div class="alert alert-warning">
-        شما در حال ویرایش گزارش شماره {{ licence_number }} هستید
+        شما در حال ویرایش گزارش شماره {{ test_licence_number }} هستید
       </div>
       {% elif recal %}
       <div class="alert alert-warning">
-        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+        شما در حال ثبت گزارش ریکالیبراسیون گواهی شماره {{ test_licence_number }} هستید
       </div>
       {% elif edit_recal %}
       <div class="alert alert-warning">
-        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ licence_number }} هستید
+        شما در حال ویرایش گزارش ریکالیبراسیون گواهی شماره {{ test_licence_number }} هستید
       </div>
 
       {% endif %}
@@ -373,13 +373,13 @@
           {% render_field form.totalcomment style="display:inline-block;width:100%;height:200px;" %}
           {% if edit %}
           <input type="text" name="op_type" value="save_edit" hidden>
-          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          <input type="text" name="test_record_number" value="{{test_record_number}}" hidden>
           {% elif recal %}
           <input type="text" name="op_type" value="save_recal" hidden>
-          <input type="text" name="ref_record_number" value="{{ref_record_number}}" hidden>
+          <input type="text" name="test_ref_record_number" value="{{test_ref_record_number}}" hidden>
           {% elif edit_recal %}
           <input type="text" name="op_type" value="save_edit_recal" hidden>
-          <input type="text" name="record_number" value="{{record_number}}" hidden>
+          <input type="text" name="test_record_number" value="{{test_record_number}}" hidden>
           {% else %}
           <input type="text" name="op_type" value="save" hidden>
           {% endif %}
