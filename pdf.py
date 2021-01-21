@@ -27,7 +27,8 @@ def send_file_ftp(ftp_obj, filename, report_name):
 for t, model_hist in model_dict.items():
     for item in model_hist:
         query = item[0].objects.filter(has_pdf=False)
-        for obj in query:
+        for idx, obj in enumerate(query):
+            print('[{}/{} -> Start'.format(idx, len(query)))
             data = []
             if item[0] != CantTest:
 
@@ -410,10 +411,10 @@ for t, model_hist in model_dict.items():
                 css2 = CSS(
                     filename=f'{css_root}/bootstrap-v4.min.css')
                 report_name = 'report_{}.pdf'.format(obj.record.number)
-                print('startpdf{}'.format(obj.licence.number))
+                print('[{}/{} -> pdfStart'.format(idx, len(query)))
                 HTML(string=html).write_pdf(
                     report_name, font_config=font_config, stylesheets=[css1, css2])
-                print('endpdf{}'.format(obj.licence.number))
+                print('[{}/{} -> pdfEnd'.format(idx, len(query)))
                 # ===================================End-File Backing=================================================
 
                 # ===================================Begin-File Processing=================================================
@@ -460,12 +461,15 @@ for t, model_hist in model_dict.items():
                             ftp.mkd(item[0])
 
                         ftp.cwd(item[0])
-
+                        
                         send_file_ftp(
                             ftp, '{}.pdf'.format(obj.licence.number), report_name)
-                        print('file sent!{}'.format(obj.licence.number))
+                        print('[{}/{} -> FileSent'.format(idx, len(query)))
+                        
+                        obj.has_pdf = True
+                        obj.save()
+                        
                         os.remove(report_name)
-
                         ftp.close()
                 # ===================================End-FTP Stuf=================================================
 
@@ -477,10 +481,11 @@ for t, model_hist in model_dict.items():
                 device=obj.device,
                 request=obj.request, date=obj.date, user=obj.user, status=obj.status,
                 record=obj.record,
-                licence=obj.licence if item[0] != CantTest else Licence.objects.get(number=-1),
+                licence=obj.licence if t != 'CantTest' else Licence.objects.get(number=-1),
                 is_recal=obj.is_recal,
                 ref_record=obj.ref_record if item[0] != CantTest else Record.objects.get(number=-1),
                 is_done=obj.is_done, totalcomment=obj.totalcomment)
             report_instance.save()
+            print('[{}/{} -> ReportCreated! - {}'.format(idx, len(query), report_instance.id))
             # except:
             #     return HttpResponse('Error while sending to host!!!!')
