@@ -28,7 +28,7 @@ for t, model_hist in model_dict.items():
     for item in model_hist:
         query = item[0].objects.filter(has_pdf=False)
         for idx, obj in enumerate(query):
-            print('[{}/{} -> Start'.format(idx, len(query)))
+            print('[{}/{}] -> Start'.format(idx, len(query)))
             data = []
             if item[0] != CantTest:
 
@@ -411,10 +411,10 @@ for t, model_hist in model_dict.items():
                 css2 = CSS(
                     filename=f'{css_root}/bootstrap-v4.min.css')
                 report_name = 'report_{}.pdf'.format(obj.record.number)
-                print('[{}/{} -> pdfStart'.format(idx, len(query)))
+                print('[{}/{}] -> pdfStart'.format(idx, len(query)))
                 HTML(string=html).write_pdf(
                     report_name, font_config=font_config, stylesheets=[css1, css2])
-                print('[{}/{} -> pdfEnd'.format(idx, len(query)))
+                print('[{}/{}] -> pdfEnd'.format(idx, len(query)))
                 # ===================================End-File Backing=================================================
 
                 # ===================================Begin-File Processing=================================================
@@ -438,7 +438,8 @@ for t, model_hist in model_dict.items():
                             user=DL_FTP_USER,
                             passwd=DL_FTP_PASSWD
                     ) as ftp:
-                        print(ftp.cwd('pdf'))
+                        print('[{}/{}] -> FTP in!'.format(idx, len(query)))
+                        ftp.cwd('pdf')
                         if not obj.device.hospital.city.state.eng_name in ftp.nlst():
                             ftp.mkd(obj.device.hospital.city.state.eng_name)
                         ftp.cwd(obj.device.hospital.city.state.eng_name)
@@ -464,7 +465,7 @@ for t, model_hist in model_dict.items():
                         
                         send_file_ftp(
                             ftp, '{}.pdf'.format(obj.licence.number), report_name)
-                        print('[{}/{} -> FileSent'.format(idx, len(query)))
+                        print('[{}/{}] -> FileSent'.format(idx, len(query)))
                         
                         obj.has_pdf = True
                         obj.save()
@@ -486,6 +487,6 @@ for t, model_hist in model_dict.items():
                 ref_record=obj.ref_record if item[0] != CantTest else Record.objects.get(number=-1),
                 is_done=obj.is_done, totalcomment=obj.totalcomment)
             report_instance.save()
-            print('[{}/{} -> ReportCreated! - {}'.format(idx, len(query), report_instance.id))
+            print('[{}/{}] -> ReportCreated! - {}'.format(idx, len(query), report_instance.id))
             # except:
             #     return HttpResponse('Error while sending to host!!!!')
