@@ -55,7 +55,7 @@ def delete_report(request):
         if len(modelobj) == 1:
             modelobj[0].delete()
 
-        return redirect('report_list')
+        return redirect('report_list', select_hospital=1)
     else:
         raise Http404
 
