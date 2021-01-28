@@ -70,7 +70,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
         if t == 'Report':
             continue
         for model in model_hist:
-            report_query = model.objects.filter(
+            report_query = model[0].objects.filter(
                 date__gte=QUERY_START_DATE).filter(
                 date__lte=QUERY_END_DATE)
             if Group.objects.get(name='hospital') in request.user.groups.all():  # admin
@@ -119,7 +119,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
                     hosp=str(obj.device.hospital.user.id) + '_' + encode_obj.name,
                     req=obj.request.number,
                     section=obj.device.section.eng_name,
-                    device_type=obj.tt.type,
+                    device_type=t,
                     licence=obj.licence.number,
                 )
                 table_rows.append(row)
@@ -214,7 +214,7 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
                         )
             ws.write_row(row=cursor, col=0, data=row_data,
                          cell_format=row_format)
-            ws.write_url(row=cursor, col=len(row_data), url=row[14],
+            ws.write_url(row=cursor, col=len(row_data), url=row['url'],
                          cell_format=row_format, string='show', tip='Downlaod PDF')
 
             cursor += 1
