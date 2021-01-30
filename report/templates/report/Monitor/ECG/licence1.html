@@ -4,186 +4,161 @@
 
 {% block content %}
     <style>
+        .tb-4 td {
+            padding: 0.08cm 0.1cm;
 
-       @font-face {
-    font-family: "B Zar";
-    src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
-        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
-        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
-}
-
-       @font-face {
-        font-family: "B Titr";
-        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
-    }
-
-    @font-face {
-        font-family: "B Lotus";
-        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
-    }
-
-    @font-face {
-        font-family: "B Nazanin";
-        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
-    }
-        .time{
-            font-family: "Times New Roman";
         }
-    .tb-4 td{
-        padding: 0.08cm 0.1cm;
 
-       }
-    .tb-5 td{
-        padding: 0.02cm 0.1cm;
+        .tb-5 td {
+            padding: 0.02cm 0.1cm;
 
-       }
-       /* .dirr{ */
-        /* unicode-bidi: bidi-override !important; */
-        /* direction: unset !important; */
-        /* direction: rtl !important; */
-       /* } */
-       /* td,th,span{
-        unicode-bidi: bidi-override !important;
-        direction: unset !important;
-        direction: rtl;
-       } */
+        }
+
     </style>
 
     <body style="text-align: right;font-size: 16pt;">
 
 
+    <div class="cover main" style="font-family:'B Lotus';">
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
 
-        <div class="cover main" style="font-family:'B Lotus';">
-            <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
-              
-        <br>
-    <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
-        <span class="time">ECG</span>
-گواهينامه کنترل کيفي دستگاه مانيتورينگ
-    </h1>
-    <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
-        <tr>
-            <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور: </td>
-            <td class="no-border"><span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+            <br>
+            <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+                <span class="time">ECG</span>
+                گواهينامه کنترل کيفي دستگاه مانيتورينگ
+            </h1>
+            <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
+                <tr>
+                    <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+                    </td>
+                    <td class="no-border"><span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>شماره
+                        گواهينامه:
+                    </td>
 
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }} </span>تاريخ کنترل کيفي: </td>
-            <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }} </span>تاريخ
+                        کنترل کيفي:
+                    </td>
+                    <td class="no-border"><span>{{ form.device.name.type.name }}</span>نام دستگاه:</td>
 
-        </tr>
+                </tr>
 
-        <tr>
-            <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
-            <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده:</td>
+                    <td class="no-border"><span class="time">{{ form.device.name.creator.name }}</span>نام سازنده:</td>
 
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
-            <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
-        </tr>
-        <tr>
-            <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
-            <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td >
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
-            <td class="no-border"><span class="time">
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس :</td>
+                    <td class="no-border"><span class="time">{{ form.device.name.name }}</span>مدل:</td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست:</td>
+                    <td class="no-border"><span class="time">{{ form.device.serial_number }}</span>شماره سريال:</td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام:</td>
+                    <td class="no-border"><span class="time">
             {% if form.device.property_number != 'None' %}
-            {{form.device.property_number}}
+                {{ form.device.property_number }}
             {% endif %}
-            </span>کداموال :</td>
-        </tr>
+            </span>کداموال :
+                    </td>
+                </tr>
 
-        <tr>
-            <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
-            <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه کنترل کيفي: </td>
-    
-        </tr>
+                <tr>
+                    <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي:</td>
+                    <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+                        کنترل کيفي:
+                    </td>
 
-        <tr>
-            <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+                </tr>
 
-        </tr>
-    
-    </table>
-    <div style="height:5.85cm;">
-        موارد عدم شمول:  
-             {{ form.totalcomment }}
-    </div>
-    
-    <span style="font-weight: bold;">تجهيزات آزمون:</span>
-    <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">
-        <tr>
-            <td>تاريخ انقضاء</td>
-            <td>تاريخ کاليبراسيون</td>
-            <td>شماره سریال</td>
-            <td>مدل</td>
-           <td>نام تجهيز</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
-            <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
-            <td>{{ form.cal_dev1.serial }}</td>
-            <td>{{ form.cal_dev1.name }}</td>
-            <td>{{ form.cal_dev1.type.name }}</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
-            <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
-            <td>{{ form.cal_dev2.serial }}</td>
-            <td>{{ form.cal_dev2.name }}</td>
-            <td>{{ form.cal_dev2.type.name }}</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
-            <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
-            <td>{{ form.cal_dev3.serial }}</td>
-            <td>{{ form.cal_dev3.name }}</td>
-            <td>{{ form.cal_dev3.type.name }}</td>
-        </tr>
-    </table>
-    <br>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي:</td>
 
-        <div>
-            <span class="time">2011</span>
-            نسخه
-            <span class="time">EN60601-2-27</span>
-            مراجع: استاندارد
+                </tr>
+
+            </table>
+            <div style="height:5.85cm;">
+                موارد عدم شمول:
+                {{ form.totalcomment }}
+            </div>
+
+            <span style="font-weight: bold;">تجهيزات آزمون:</span>
+            <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">
+                <tr>
+                    <td>تاريخ انقضاء</td>
+                    <td>تاريخ کاليبراسيون</td>
+                    <td>شماره سریال</td>
+                    <td>مدل</td>
+                    <td>نام تجهيز</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev1.serial }}</td>
+                    <td>{{ form.cal_dev1.name }}</td>
+                    <td>{{ form.cal_dev1.type.name }}</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
+                    <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
+                    <td>{{ form.cal_dev2.serial }}</td>
+                    <td>{{ form.cal_dev2.name }}</td>
+                    <td>{{ form.cal_dev2.type.name }}</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
+                    <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
+                    <td>{{ form.cal_dev3.serial }}</td>
+                    <td>{{ form.cal_dev3.name }}</td>
+                    <td>{{ form.cal_dev3.type.name }}</td>
+                </tr>
+            </table>
+            <br>
+
+            <div>
+                <span class="time">2011</span>
+                نسخه
+                <span class="time">EN60601-2-27</span>
+                مراجع: استاندارد
+            </div>
+
+            <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+                طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+                ملي يا بين المللي قابل رديابي است.
+            </div>
+            <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+            <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+                است.
+            </div>
+            <table style="margin: auto;text-align: center;font-weight: bold;">
+                <tr>
+                    <td style="width: 9cm;">مهر آزمايشگاه</td>
+                    <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+                </tr>
+                <tr>
+
+
+                    <td style="height: 3.5cm;">
+                        <!-- <div class="stmp"></div> -->
+                        <img style="width: 4cm; height:4cm; margin-left: 2cm;"
+                             src="https://{{ domain_name }}/static/img/stamp.png">
+                    </td>
+                    <td style="height: 3.5cm;position: relative;">
+                        <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+                        <!-- <div class="signature"></div> -->
+                        <img style="width: 6cm; height:4cm; margin-right: 2cm;"
+                             src="https://{{ domain_name }}/static/img/signature.png">
+                    </td>
+                </tr>
+
+            </table>
+            <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51004</div>
         </div>
-
-        <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد ملي يا بين المللي قابل رديابي است.</div>
-    <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
-    <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار است.</div>
-    <table style="margin: auto;text-align: center;font-weight: bold;">
-        <tr >
-            <td style="width: 9cm;">مهر آزمايشگاه</td>
-            <td style="width: 8cm;">مدير فني آزمايشگاه</td>
-
-        </tr>
-        <tr>
-            
-
-            <td  style="height: 3.5cm;">
-                <!-- <div class="stmp"></div> -->
-            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
-            </td>
-            <td style="height: 3.5cm;position: relative;">
-                <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
-                            <!-- <div class="signature"></div> -->
-            <img style="width: 6cm; height:4cm; margin-right: 2cm;" src="https://{{ domain_name }}/static/img/signature.png">
-            </td>
-        </tr>
-
-    </table>
-<div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51004</div>
-    </div>
     </div>
 
 
@@ -191,7 +166,7 @@
         <div style="text-align: center;width: 100%;height: 5cm;">
             <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
                 <span>
-                <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                <span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>
                 شماره گزارش: 
               </span><br>
                 <span>
@@ -204,472 +179,472 @@
                 شماره مدرک: 
                 
                  </span>
-              </span> 
-    
-              <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+              </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
                   گزارش آزمون کنترل کیفی 
                   <br>
               <span class="time">ECG</span>
                   دستگاه مانيتورينگ 
-              </span>         
+              </span>
         </div>
-    
+
         <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-1.حذف پالس پیس میکر(استاندارد
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-2 time">
-          <thead>
-              <tr>
-                <th rowspan="2">
-                  SETTING
-                </th>
-                <th rowspan="2">Width</th>
-                <th rowspan="2">Amp</th>
-                <th rowspan="2">PACE Mark</th>
-                <th rowspan="2">HR</th>
-                <th colspan="2">Result</th>
-                <th rowspan="2" style="min-width: 5cm;">Comment</th>
-              </tr>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                1.حذف پالس پیس میکر(استاندارد
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-2 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">
+                        SETTING
+                    </th>
+                    <th rowspan="2">Width</th>
+                    <th rowspan="2">Amp</th>
+                    <th rowspan="2">PACE Mark</th>
+                    <th rowspan="2">HR</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
+                </tr>
                 <tr>
                     <th>OK</th>
                     <th>Rej</th>
                 </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="8" style="width: 4cm;">Lead II ASync No Overshoot HR=80bpm</td>
-              <td rowspan="4">0.1ms</td>
-              <td>-700mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e1_hr }}</td>
-            {% if  form.s1_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e1_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e1_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e1_comment }}</td>
-            {% endif %}
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="8" style="width: 4cm;">Lead II ASync No Overshoot HR=80bpm</td>
+                    <td rowspan="4">0.1ms</td>
+                    <td>-700mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e1_hr }}</td>
+                    {% if  form.s1_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e1_comment }}</td>
+                    {% endif %}
 
-            </tr>
-            <tr>
-              <td>-2 mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e2_hr }}</td>
-              {% if  form.s1_e2_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e2_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e2_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e2_comment }}</td>
-            {% endif %}
-            </tr>
-
-
-            <tr>
-              <td>+2 mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e3_hr }}</td>
-              {% if  form.s1_e3_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e3_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e3_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e3_comment }}</td>
-            {% endif %}
-            </tr>
+                </tr>
+                <tr>
+                    <td>-2 mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e2_hr }}</td>
+                    {% if  form.s1_e2_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e2_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e2_comment }}</td>
+                    {% endif %}
+                </tr>
 
 
-            <tr>
-              <td>+700mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e4_hr }}</td>
-              {% if  form.s1_e4_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e4_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e4_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e4_comment }}</td>
-            {% endif %}
-            </tr>
+                <tr>
+                    <td>+2 mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e3_hr }}</td>
+                    {% if  form.s1_e3_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e3_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e3_comment }}</td>
+                    {% endif %}
+                </tr>
 
-            <tr>
-                <td rowspan="4">2 ms</td>
-              <td>-700mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e5_hr }}</td>
-              {% if  form.s1_e5_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e5_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e5_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e5_comment }}</td>
-            {% endif %}
-            </tr>
 
-            <tr>
-              <td>-2 mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e6_hr }}</td>
-              {% if  form.s1_e6_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e6_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e6_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e6_comment }}</td>
-            {% endif %}
-            </tr>
+                <tr>
+                    <td>+700mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e4_hr }}</td>
+                    {% if  form.s1_e4_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e4_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e4_comment }}</td>
+                    {% endif %}
+                </tr>
 
-            <tr>
-              <td>+2 mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e7_hr }}</td>
-              {% if  form.s1_e7_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e7_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e7_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e7_comment }}</td>
-            {% endif %}
-            </tr>
+                <tr>
+                    <td rowspan="4">2 ms</td>
+                    <td>-700mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e5_hr }}</td>
+                    {% if  form.s1_e5_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e5_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e5_comment }}</td>
+                    {% endif %}
+                </tr>
 
-            <tr>
-              <td>+700mv</td>
-              <td>&#10004;</td>
-              <td>{{ form.s1_e8_hr }}</td>
-              {% if  form.s1_e8_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s1_e8_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              {% if form.s1_e8_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s1_e8_comment }}</td>
-            {% endif %}
-            </tr>
-          </tbody>
+                <tr>
+                    <td>-2 mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e6_hr }}</td>
+                    {% if  form.s1_e6_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e6_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e6_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e6_comment }}</td>
+                    {% endif %}
+                </tr>
 
-        </table>
+                <tr>
+                    <td>+2 mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e7_hr }}</td>
+                    {% if  form.s1_e7_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e7_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e7_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e7_comment }}</td>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    <td>+700mv</td>
+                    <td>&#10004;</td>
+                    <td>{{ form.s1_e8_hr }}</td>
+                    {% if  form.s1_e8_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s1_e8_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s1_e8_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s1_e8_comment }}</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+
+            </table>
             <br>
 
             <div style="font-weight: bold;">
                 <span class="time">:(IEC 60601-2-27:2011</span>
-2.گستره و درستی نرخ ضربان قلب(استاندارد
+                2.گستره و درستی نرخ ضربان قلب(استاندارد
             </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Mode</th>
-            <th rowspan="2">Amp (mv)</th>
-              <th rowspan="2">HR</th>
-            <th rowspan="2">Max Error</th>
-            <th rowspan="2">HR</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Mode</th>
+                    <th rowspan="2">Amp (mv)</th>
+                    <th rowspan="2">HR</th>
+                    <th rowspan="2">Max Error</th>
+                    <th rowspan="2">HR</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>Rej</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="5">Adult</td>
-          <td rowspan="5">1</td>
-          <td>30</td>
-          <td>5 bpm</td>
-          <td>{{ form.s2_e1_hr }}</td>
-          {% if  form.s2_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e1_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e1_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e1_comment }}</td>
-            {% endif %}
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>Rej</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="5">Adult</td>
+                    <td rowspan="5">1</td>
+                    <td>30</td>
+                    <td>5 bpm</td>
+                    <td>{{ form.s2_e1_hr }}</td>
+                    {% if  form.s2_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e1_comment }}</td>
+                    {% endif %}
 
-        </tr>
-        <tr>
-          <td>80</td>
-          <td>8 bpm</td>
-          <td>{{ form.s2_e2_hr }}</td>
-          {% if  form.s2_e2_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e2_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e2_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e2_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>120</td>
-          <td>12 bpm</td>
-          <td>{{ form.s2_e3_hr }}</td>
-          {% if  form.s2_e3_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e3_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e3_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e3_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>200</td>
-          <td>20 bpm</td>
-          <td>{{ form.s2_e4_hr }}</td>
-          {% if  form.s2_e4_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e4_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e4_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e4_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>300</td>
-          <td >
-            
-        <div style="font-family: 'B Nazanin';font-size: 12pt; ">
-            نرخ ضربان نباید کمتراز حد بالای ضربان مانيتور یا
-              300
-          باشد
-    </div>
-          </td>
-          <td>{{ form.s2_e5_hr }}</td>
-          {% if  form.s2_e5_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e5_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e5_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e5_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td rowspan="5">Neonate</td>
-          <td rowspan="5">1</td>
-          <td>30</td>
-          <td>5 bpm</td>
-          <td>{{ form.s2_e6_hr }}</td>
-          {% if  form.s2_e6_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e6_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e6_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e6_comment }}</td>
-            {% endif %}
-        </tr>
-        <tr>
-          <td>80</td>
-          <td>8 bpm</td>
-          <td>{{ form.s2_e7_hr }}</td>
-          {% if  form.s2_e7_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e7_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e7_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e7_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>120</td>
-          <td>12 bpm</td>
-          <td>{{ form.s2_e8_hr }}</td>
-          {% if  form.s2_e8_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e8_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e8_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e8_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>200</td>
-          <td>20 bpm</td>
-          <td>{{ form.s2_e9_hr }}</td>
-          {% if  form.s2_e9_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e9_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e9_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e9_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>300</td>
-     <td>
-        <div style="font-family: 'B Nazanin';font-size: 12pt; ">
-                نرخ ضربان نباید کمتراز حد بالای ضربان مانيتور یا
-                  300
-              باشد
+                </tr>
+                <tr>
+                    <td>80</td>
+                    <td>8 bpm</td>
+                    <td>{{ form.s2_e2_hr }}</td>
+                    {% if  form.s2_e2_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e2_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e2_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>120</td>
+                    <td>12 bpm</td>
+                    <td>{{ form.s2_e3_hr }}</td>
+                    {% if  form.s2_e3_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e3_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e3_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>20 bpm</td>
+                    <td>{{ form.s2_e4_hr }}</td>
+                    {% if  form.s2_e4_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e4_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e4_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>300</td>
+                    <td>
+
+                        <div style="font-family: 'B Nazanin';font-size: 12pt; ">
+                            نرخ ضربان نباید کمتراز حد بالای ضربان مانيتور یا
+                            300
+                            باشد
+                        </div>
+                    </td>
+                    <td>{{ form.s2_e5_hr }}</td>
+                    {% if  form.s2_e5_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e5_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e5_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td rowspan="5">Neonate</td>
+                    <td rowspan="5">1</td>
+                    <td>30</td>
+                    <td>5 bpm</td>
+                    <td>{{ form.s2_e6_hr }}</td>
+                    {% if  form.s2_e6_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e6_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e6_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e6_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>80</td>
+                    <td>8 bpm</td>
+                    <td>{{ form.s2_e7_hr }}</td>
+                    {% if  form.s2_e7_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e7_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e7_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e7_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>120</td>
+                    <td>12 bpm</td>
+                    <td>{{ form.s2_e8_hr }}</td>
+                    {% if  form.s2_e8_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e8_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e8_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e8_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>20 bpm</td>
+                    <td>{{ form.s2_e9_hr }}</td>
+                    {% if  form.s2_e9_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e9_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e9_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e9_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>300</td>
+                    <td>
+                        <div style="font-family: 'B Nazanin';font-size: 12pt; ">
+                            نرخ ضربان نباید کمتراز حد بالای ضربان مانيتور یا
+                            300
+                            باشد
+                        </div>
+                    </td>
+                    <td>{{ form.s2_e10_hr }}</td>
+                    {% if  form.s2_e10_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s2_e10_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s2_e10_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s2_e10_comment }}</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+
+            </table>
+            <br>
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 5</div>
+
+
         </div>
-          </td>
-          <td>{{ form.s2_e10_hr }}</td>
-          {% if  form.s2_e10_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s2_e10_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s2_e10_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s2_e10_comment }}</td>
-            {% endif %}
-        </tr>
-      </tbody>
-
-    </table>
-        <br>
-        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 5</div>
-
-
     </div>
-</div>
 
-<div class="page-2 page1" style="font-family:'B Nazanin';">
-    <div style="text-align: center;width: 100%;height: 5cm;">
+    <div class="page-2 page1" style="font-family:'B Nazanin';">
+        <div style="text-align: center;width: 100%;height: 5cm;">
         <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
             <span>
-            <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+            <span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>
             شماره گزارش: 
           </span><br>
             <span>
@@ -682,360 +657,360 @@
             شماره مدرک: 
             
              </span>
-          </span> 
+          </span>
 
-          <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
               گزارش آزمون کنترل کیفی 
               <br>
           <span class="time">ECG</span>
               دستگاه مانيتورينگ 
-          </span>         
-    </div>
-    <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
-      
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-            (استاندارد
-            <span class="time">QRS</span>
-            3.گستره شناسایی
+          </span>
         </div>
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                (استاندارد
+                <span class="time">QRS</span>
+                3.گستره شناسایی
+            </div>
             <br>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Mode</th>
-            <th rowspan="2">HR</th>
-              <th rowspan="2">Amp</th>
-            <th rowspan="2">Width</th>
-            <th rowspan="2">Max Error</th>
-            <th rowspan="2">HR</th>
-            <th colspan="2" >Result</th>
-              <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Mode</th>
+                    <th rowspan="2">HR</th>
+                    <th rowspan="2">Amp</th>
+                    <th rowspan="2">Width</th>
+                    <th rowspan="2">Max Error</th>
+                    <th rowspan="2">HR</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>REJ</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="9">Adult</td>
-          <td rowspan="4">30</td>
-          <td>0.5 mv</td>
-          <td>70 ms</td>
-          <td>5 bpm</td>
-          <td>{{ form.s3_e1_hr }}</td>
-          {% if  form.s3_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e1_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e1_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e1_comment }}</td>
-            {% endif %}
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>REJ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="9">Adult</td>
+                    <td rowspan="4">30</td>
+                    <td>0.5 mv</td>
+                    <td>70 ms</td>
+                    <td>5 bpm</td>
+                    <td>{{ form.s3_e1_hr }}</td>
+                    {% if  form.s3_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e1_comment }}</td>
+                    {% endif %}
 
-        </tr>
-        <tr>
-          <td>1 mv</td>
-          <td>10 ms</td>
-          <td rowspan="3" style="font-family: 'B Nazanin';font-size: 12pt;">دستگاه شمارش کند</td>
-          <td>{{ form.s3_e2_hr }}</td>
-            {% if  form.s3_e2_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e2_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e2_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e2_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td rowspan="2">0.15 mv</td>
-          <td>70 ms</td>
-          <td>{{ form.s3_e3_hr }}</td>
-          {% if  form.s3_e3_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e3_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e3_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e3_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>120 ms</td>
-          <td>{{ form.s3_e4_hr }}</td>
-          {% if  form.s3_e4_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e4_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e4_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e4_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>80</td>
-          <td>2 ms</td>
-          <td>100 ms</td>
-          <td>8 bpm</td>
-          <td>{{ form.s3_e5_hr }}</td>
-          {% if  form.s3_e5_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e5_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e5_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e5_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td rowspan="4">200</td>
-          <td>5 ms</td>
-          <td>120 ms</td>
-          <td>20 bpm</td>
-          <td>{{ form.s3_e6_hr }}</td>
-            {% if  form.s3_e6_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e6_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e6_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e6_comment }}</td>
-            {% endif %}
-        </tr>
-        <tr>
-            <td>1 mv</td>
-          <td>10 ms</td>
-          <td rowspan="3" style="font-family: 'B Nazanin';font-size: 12pt;">دستگاه شمارش کند</td>
-          <td>{{ form.s3_e7_hr }}</td>
-          {% if form.s3_e7_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e7_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e7_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e7_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td rowspan="2">0.15 mv</td>
-          <td>120 ms</td>
-          <td>{{ form.s3_e8_hr }}</td>
-          {% if  form.s3_e8_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e8_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e8_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e8_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>70 ms</td>
-          <td>{{ form.s3_e9_hr }}</td>
-          {% if  form.s3_e9_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e9_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e9_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e9_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td rowspan="3">Neonate</td>
-          <td>30</td>
-          <td>0.5 mv</td>
-          <td>40 ms</td>
-          <td>5 bpm</td>
-          <td>{{ form.s3_e10_hr }}</td>
-          {% if  form.s3_e10_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e10_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e10_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e10_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>100</td>
-          <td>2 mv</td>
-          <td>80 ms</td>
-          <td>10 bpm</td>
-          <td>{{ form.s3_e11_hr }}</td>
-          {% if  form.s3_e11_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e11_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e11_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e11_comment }}</td>
-            {% endif %}
-        </tr>
-      <tr>
-          <td>250</td>
-          <td>5 mv</td>
-          <td>120 ms</td>
-          <td>25 bpm</td>
-          <td>{{ form.s3_e12_hr }}</td>
-          {% if  form.s3_e12_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s3_e12_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s3_e12_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s3_e12_comment }}</td>
-            {% endif %}
-        </tr>
-      </tbody>
-    </table>
+                </tr>
+                <tr>
+                    <td>1 mv</td>
+                    <td>10 ms</td>
+                    <td rowspan="3" style="font-family: 'B Nazanin';font-size: 12pt;">دستگاه شمارش کند</td>
+                    <td>{{ form.s3_e2_hr }}</td>
+                    {% if  form.s3_e2_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e2_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e2_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td rowspan="2">0.15 mv</td>
+                    <td>70 ms</td>
+                    <td>{{ form.s3_e3_hr }}</td>
+                    {% if  form.s3_e3_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e3_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e3_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>120 ms</td>
+                    <td>{{ form.s3_e4_hr }}</td>
+                    {% if  form.s3_e4_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e4_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e4_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>80</td>
+                    <td>2 ms</td>
+                    <td>100 ms</td>
+                    <td>8 bpm</td>
+                    <td>{{ form.s3_e5_hr }}</td>
+                    {% if  form.s3_e5_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e5_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e5_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td rowspan="4">200</td>
+                    <td>5 ms</td>
+                    <td>120 ms</td>
+                    <td>20 bpm</td>
+                    <td>{{ form.s3_e6_hr }}</td>
+                    {% if  form.s3_e6_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e6_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e6_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e6_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>1 mv</td>
+                    <td>10 ms</td>
+                    <td rowspan="3" style="font-family: 'B Nazanin';font-size: 12pt;">دستگاه شمارش کند</td>
+                    <td>{{ form.s3_e7_hr }}</td>
+                    {% if form.s3_e7_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e7_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e7_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e7_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td rowspan="2">0.15 mv</td>
+                    <td>120 ms</td>
+                    <td>{{ form.s3_e8_hr }}</td>
+                    {% if  form.s3_e8_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e8_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e8_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e8_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>70 ms</td>
+                    <td>{{ form.s3_e9_hr }}</td>
+                    {% if  form.s3_e9_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e9_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e9_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e9_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td rowspan="3">Neonate</td>
+                    <td>30</td>
+                    <td>0.5 mv</td>
+                    <td>40 ms</td>
+                    <td>5 bpm</td>
+                    <td>{{ form.s3_e10_hr }}</td>
+                    {% if  form.s3_e10_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e10_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e10_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e10_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td>2 mv</td>
+                    <td>80 ms</td>
+                    <td>10 bpm</td>
+                    <td>{{ form.s3_e11_hr }}</td>
+                    {% if  form.s3_e11_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e11_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e11_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e11_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>250</td>
+                    <td>5 mv</td>
+                    <td>120 ms</td>
+                    <td>25 bpm</td>
+                    <td>{{ form.s3_e12_hr }}</td>
+                    {% if  form.s3_e12_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s3_e12_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s3_e12_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s3_e12_comment }}</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
 
             <br><br>
 
             <div style="font-weight: bold;">
                 <span class="time">:(IEC 60601-2-27:2011</span>
-            4.خطای مجاز ولتاژ برق شهر(استاندارد
+                4.خطای مجاز ولتاژ برق شهر(استاندارد
             </div>
-        <br>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Mode</th>
-            <th rowspan="2">HR</th>
-            <th rowspan="2">Amp</th>
-            <th rowspan="2">ART.Size</th>
-            <th rowspan="2">ARTF</th>
-            <th rowspan="2">Max Error</th>
-            <th rowspan="2">HR</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            <br>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Mode</th>
+                    <th rowspan="2">HR</th>
+                    <th rowspan="2">Amp</th>
+                    <th rowspan="2">ART.Size</th>
+                    <th rowspan="2">ARTF</th>
+                    <th rowspan="2">Max Error</th>
+                    <th rowspan="2">HR</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>REJ</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Adult</td>
-          <td>80</td>
-          <td>0.5 mv</td>
-          <td>0.25</td>
-          <td>50 Hz</td>
-          <td>8 bpm</td>
-          <td>{{ form.s4_e1_hr }}</td>
-          {% if  form.s4_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>  
-              {% elif form.s4_e1_comment.id == 2%}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-          {% if form.s4_e1_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s4_e1_comment }}</td>
-            {% endif %}
-      </tbody>
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>REJ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Adult</td>
+                    <td>80</td>
+                    <td>0.5 mv</td>
+                    <td>0.25</td>
+                    <td>50 Hz</td>
+                    <td>8 bpm</td>
+                    <td>{{ form.s4_e1_hr }}</td>
+                    {% if  form.s4_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s4_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s4_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s4_e1_comment }}</td>
+                    {% endif %}
+                </tbody>
 
-    </table>
-                <br>
-        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 5</div>
+            </table>
+            <br>
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 3 از 5</div>
 
 
-    </div>
+        </div>
 
     </div>
 
@@ -1043,7 +1018,7 @@
         <div style="text-align: center;width: 100%;height: 5cm;">
             <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
                 <span>
-                <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                <span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>
                 شماره گزارش: 
               </span><br>
                 <span>
@@ -1056,278 +1031,278 @@
                 شماره مدرک: 
                 
                  </span>
-              </span> 
-    
-              <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+              </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
                   گزارش آزمون کنترل کیفی 
                   <br>
               <span class="time">ECG</span>
                   دستگاه مانيتورينگ 
-              </span>         
+              </span>
         </div>
         <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
-          
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-5.آلارم (استاندارد
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-          <thead>
-              <tr>
-                <th rowspan="2" style="width: 6cm;">SETTING</th>
-                <th rowspan="2">Indicated on Display</th>
-                <th colspan="2">Result</th>
-                <th rowspan="2" style="min-width: 5cm;">Comment</th>
-              </tr>
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                5.آلارم (استاندارد
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2" style="width: 6cm;">SETTING</th>
+                    <th rowspan="2">Indicated on Display</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
+                </tr>
                 <tr>
                     <th>OK</th>
                     <th>Rej</th>
                 </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Reduces the volume of auditory alarm signals to zero</td>
-              <td>Audio OFF</td>
-                {% if form.s5_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>
-                {% elif form.s5_e1_comment.id == 2 %}
-                <td></td>
-                <td></td>
-                {% else %}
-                <td></td>
-                <td>&#10004;</td>
-                {% endif %}
-              {% if form.s5_e1_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s5_e1_comment }}</td>
-            {% endif %}
-            </tr>
-          </tbody>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Reduces the volume of auditory alarm signals to zero</td>
+                    <td>Audio OFF</td>
+                    {% if form.s5_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s5_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s5_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s5_e1_comment }}</td>
+                    {% endif %}
+                </tr>
+                </tbody>
 
-        </table>
-        <br>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
-      <thead>
-          <tr>
-            <th rowspan="2" colspan="2">Test Condition</th>
-            <th rowspan="2">HR <br> (1)</th>
-              <th rowspan="2">HR <br>(2)</th>
-            <th rowspan="2">Amp <br>(mv)</th>
-            <th rowspan="2">Width <br>(ms)</th>
-            <th rowspan="2">Alarm Delay Time</th>
-            <th rowspan="2">Max Permissible Error</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            </table>
+            <br>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                <tr>
+                    <th rowspan="2" colspan="2">Test Condition</th>
+                    <th rowspan="2">HR <br> (1)</th>
+                    <th rowspan="2">HR <br>(2)</th>
+                    <th rowspan="2">Amp <br>(mv)</th>
+                    <th rowspan="2">Width <br>(ms)</th>
+                    <th rowspan="2">Alarm Delay Time</th>
+                    <th rowspan="2">Max Permissible Error</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>Rej</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Low</td>
-          <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 60 (bpm)</td>
-          <td>80</td>
-          <td>40</td>
-          <td rowspan="3">1</td>
-          <td rowspan="3">70</td>
-          <td>{{ form.s5_e2_delay }}</td>
-          <td rowspan="3">10 s</td>
-          {% if form.s5_e2_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>
-                {% elif form.s5_e2_comment.id == 2 %}
-                <td></td>
-                <td></td>
-                {% else %}
-                <td></td>
-                <td>&#10004;</td>
-                {% endif %}
-          {% if form.s5_e2_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s5_e2_comment }}</td>
-            {% endif %}
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>Rej</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Low</td>
+                    <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 60 (bpm)</td>
+                    <td>80</td>
+                    <td>40</td>
+                    <td rowspan="3">1</td>
+                    <td rowspan="3">70</td>
+                    <td>{{ form.s5_e2_delay }}</td>
+                    <td rowspan="3">10 s</td>
+                    {% if form.s5_e2_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s5_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s5_e2_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s5_e2_comment }}</td>
+                    {% endif %}
 
-        </tr>
-        <tr>
-          <td>High</td>
-          <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 100 (bpm)</td>
-          <td>80</td>
-          <td>120</td>
-          <td>{{ form.s5_e3_delay }}</td>
-          {% if form.s5_e3_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>
-                {% elif form.s5_e3_comment.id == 2 %}
-                <td></td>
-                <td></td>
-                {% else %}
-                <td></td>
-                <td>&#10004;</td>
-                {% endif %}
-          {% if form.s5_e3_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s5_e3_comment }}</td>
-            {% endif %}
+                </tr>
+                <tr>
+                    <td>High</td>
+                    <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 100 (bpm)</td>
+                    <td>80</td>
+                    <td>120</td>
+                    <td>{{ form.s5_e3_delay }}</td>
+                    {% if form.s5_e3_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s5_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s5_e3_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s5_e3_comment }}</td>
+                    {% endif %}
 
-        </tr>
-      <tr>
-          <td>Asystole</td>
-          <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 60 (bpm)</td>
-          <td>80</td>
-          <td>0</td>
-          <td>{{ form.s5_e4_delay }}</td>
-          {% if form.s5_e4_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>
-                {% elif form.s5_e4_comment.id == 2 %}
-                <td></td>
-                <td></td>
-                {% else %}
-                <td></td>
-                <td>&#10004;</td>
-                {% endif %}
-          {% if form.s5_e4_comment.id == 1%}
-          <td></td>
-            {% else %}
-            <td>{{ form.s5_e4_comment }}</td>
-            {% endif %}
+                </tr>
+                <tr>
+                    <td>Asystole</td>
+                    <td style="width: 2.75cm;padding: 0.05cm;font-size: 13pt;">Set Lower Alarm Limit : 60 (bpm)</td>
+                    <td>80</td>
+                    <td>0</td>
+                    <td>{{ form.s5_e4_delay }}</td>
+                    {% if form.s5_e4_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s5_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    {% if form.s5_e4_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s5_e4_comment }}</td>
+                    {% endif %}
 
-        </tr>
-      </tbody>
+                </tr>
+                </tbody>
 
-    </table>
-        <br>
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-        6.پایداری و کنترل بهره (استاندارد
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Wave</th>
-            <th rowspan="2">Amp (mv)</th>
-            <th rowspan="2">Lead</th>
-            <th rowspan="2">Gain <br>(mm/mv)</th>
-            <th rowspan="2">Display Amp (mm)</th>
-            <th rowspan="2">Recorder Amp (mm)</th>
-            <th rowspan="2">Permissible Error</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            </table>
+            <br>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                6.پایداری و کنترل بهره (استاندارد
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-4 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Wave</th>
+                    <th rowspan="2">Amp (mv)</th>
+                    <th rowspan="2">Lead</th>
+                    <th rowspan="2">Gain <br>(mm/mv)</th>
+                    <th rowspan="2">Display Amp (mm)</th>
+                    <th rowspan="2">Recorder Amp (mm)</th>
+                    <th rowspan="2">Permissible Error</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>Rej</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="3">10Hz</td>
-          <td rowspan="3">1</td>
-          <td rowspan="3">II</td>
-          <td>5</td>
-          <td>{{ form.s6_e1_damp }}</td>
-          <td>{{ form.s6_e1_ramp }}</td>
-          <td>0.5 mm</td>
-          {% if form.s6_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s6_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
-          <td>
-          {% if form.s6_e1_comment.id == 1%}
-          {% else %}
-          {{ form.s6_e1_comment }}
-          {% endif %}
-          </td>
-      
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>{{ form.s6_e2_damp }}</td>
-          <td>{{ form.s6_e2_ramp }}</td>
-          <td>1 mm</td>
-          {% if form.s6_e2_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s6_e2_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
-          <td>
-            {% if form.s6_e2_comment.id == 1%}
-            {% else %}
-            {{ form.s6_e2_comment }}
-            {% endif %}
-          </td>
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>Rej</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="3">10Hz</td>
+                    <td rowspan="3">1</td>
+                    <td rowspan="3">II</td>
+                    <td>5</td>
+                    <td>{{ form.s6_e1_damp }}</td>
+                    <td>{{ form.s6_e1_ramp }}</td>
+                    <td>0.5 mm</td>
+                    {% if form.s6_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s6_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    <td>
+                        {% if form.s6_e1_comment.id == 1 %}
+                        {% else %}
+                            {{ form.s6_e1_comment }}
+                        {% endif %}
+                    </td>
 
-        </tr>
-      <tr>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>{{ form.s6_e2_damp }}</td>
+                    <td>{{ form.s6_e2_ramp }}</td>
+                    <td>1 mm</td>
+                    {% if form.s6_e2_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s6_e2_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    <td>
+                        {% if form.s6_e2_comment.id == 1 %}
+                        {% else %}
+                            {{ form.s6_e2_comment }}
+                        {% endif %}
+                    </td>
 
-          <td>20</td>
-          <td>{{ form.s6_e3_damp }}</td>
-          <td>{{ form.s6_e3_ramp }}</td>
-          <td>2 mm</td>
-      
-            {% if form.s6_e3_comment.id == 1 %}
-              <td>&#10004;</td>
-              <td></td>
-            {% elif form.s6_e3_comment.id == 2 %}
-              <td></td>
-              <td></td>
-            {% else %}
-              <td></td>
-              <td>&#10004;</td>
-            {% endif %}
-            <td>
-              {% if form.s6_e3_comment.id == 1%}
-              {% else %}
-              {{ form.s6_e3_comment }}
-              {% endif %}
-            </td>
-  
-        </tr>
-      </tbody>
+                </tr>
+                <tr>
 
-    </table>
+                    <td>20</td>
+                    <td>{{ form.s6_e3_damp }}</td>
+                    <td>{{ form.s6_e3_ramp }}</td>
+                    <td>2 mm</td>
+
+                    {% if form.s6_e3_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s6_e3_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+                    <td>
+                        {% if form.s6_e3_comment.id == 1 %}
+                        {% else %}
+                            {{ form.s6_e3_comment }}
+                        {% endif %}
+                    </td>
+
+                </tr>
+                </tbody>
+
+            </table>
 
 
-        <br>
-        <div style="font-weight: bold;">
-                      نتایج در خروجی پرینتر (10،20،40پیک متوالی) و صفحه نمایش (10پیک متوالی)در گین های تنظیمی بررسی شود
+            <br>
+            <div style="font-weight: bold;">
+                نتایج در خروجی پرینتر (10،20،40پیک متوالی) و صفحه نمایش (10پیک متوالی)در گین های تنظیمی بررسی شود
                 <span style="font-size: 16pt;">•</span>
+            </div>
+
+
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 4 از 5</div>
+
+            <br>
+
+
         </div>
-
-
-        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 4 از 5</div>
-
-        <br>
-
-
-    </div>
     </div>
 
-    
+
     <div class="page-4 page1" style="font-family:'B Nazanin';">
         <div style="text-align: center;width: 100%;height: 5cm;">
             <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
                 <span>
-                <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+                <span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>
                 شماره گزارش: 
               </span><br>
                 <span>
@@ -1340,317 +1315,315 @@
                 شماره مدرک: 
                 
                  </span>
-              </span> 
-    
-              <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
+              </span>
+
+            <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
                   گزارش آزمون کنترل کیفی 
                   <br>
               <span class="time">ECG</span>
                   دستگاه مانيتورينگ 
-              </span>         
+              </span>
         </div>
         <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
-          
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-7.پاسخ فرکانسی(استاندارد
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
-          <thead>
-              <tr>
-                <th rowspan="2" colspan="2" style="width: 6cm;">Setting</th>
-                <th rowspan="2">Wave (Hz)</th>
-                <th rowspan="2">Display Amp (mm)</th>
-                <th rowspan="2">Recorder Amp (mm)</th>
-                <th rowspan="2">Permissible Error</th>
-                <th colspan="2">Result</th>
-                <th rowspan="2" style="min-width: 5cm;">Comment</th>
-              </tr>
+
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                7.پاسخ فرکانسی(استاندارد
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
+                <thead>
+                <tr>
+                    <th rowspan="2" colspan="2" style="width: 6cm;">Setting</th>
+                    <th rowspan="2">Wave (Hz)</th>
+                    <th rowspan="2">Display Amp (mm)</th>
+                    <th rowspan="2">Recorder Amp (mm)</th>
+                    <th rowspan="2">Permissible Error</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
+                </tr>
                 <tr>
                     <th>OK</th>
                     <th>REJ</th>
                 </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Gain (mm/mv)</td>
-              <td>1</td>
-              <td>5</td>
-              <td>{{ form.s7_e1_damp }}</td>
-              <td>{{ form.s7_e1_ramp }}</td>
-              <td style="background-color: grey;"></td>
-              {% if form.s7_e1_comment.id == 1 %}
-                <td>&#10004;</td>
-                <td></td>
-              {% elif form.s7_e1_comment.id == 2 %}
-                <td></td>
-                <td></td>
-              {% else %}
-                <td></td>
-                <td>&#10004;</td>
-              {% endif %}
-              
-              {% if form.s7_e1_comment.id == 1%}
-                <td></td>
-              {% else %}
-                <td>{{ form.s7_e1_comment }}</td>
-              {% endif %}
-            </tr>
-          <tr>
-              <td>Amp(mv)</td>
-              <td>1</td>
-              <td rowspan="2">0.67</td>
-              <td rowspan="2">{{ form.s7_e2_damp }}</td>
-              <td rowspan="2">{{ form.s7_e2_ramp }}</td>
-              <td rowspan="2">71%-110% @5Hz</td>
-              
-              {% if form.s7_e2_comment.id == 1 %}
-                <td rowspan="2">&#10004;</td>
-                <td rowspan="2"></td>
-              {% elif form.s7_e2_comment.id == 2 %}
-                <td rowspan="2"></td>
-                <td rowspan="2"></td>
-              {% else %}
-                <td rowspan="2"></td>
-                <td rowspan="2">&#10004;</td>
-              {% endif %}
-              
-              {% if form.s7_e2_comment.id == 1%}
-                <td rowspan="2"></td>
-              {% else %}
-                <td rowspan="2">{{ form.s7_e2_comment }}</td>
-              {% endif %}
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Gain (mm/mv)</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>{{ form.s7_e1_damp }}</td>
+                    <td>{{ form.s7_e1_ramp }}</td>
+                    <td style="background-color: grey;"></td>
+                    {% if form.s7_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s7_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
 
-            </tr>
-          <tr>
-              <td rowspan="2">Sweep speed <br>(mm/s)</td>
-              <td rowspan="2">25</td>
+                    {% if form.s7_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s7_e1_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Amp(mv)</td>
+                    <td>1</td>
+                    <td rowspan="2">0.67</td>
+                    <td rowspan="2">{{ form.s7_e2_damp }}</td>
+                    <td rowspan="2">{{ form.s7_e2_ramp }}</td>
+                    <td rowspan="2">71%-110% @5Hz</td>
 
-            </tr>
-            <tr>
+                    {% if form.s7_e2_comment.id == 1 %}
+                        <td rowspan="2">&#10004;</td>
+                        <td rowspan="2"></td>
+                    {% elif form.s7_e2_comment.id == 2 %}
+                        <td rowspan="2"></td>
+                        <td rowspan="2"></td>
+                    {% else %}
+                        <td rowspan="2"></td>
+                        <td rowspan="2">&#10004;</td>
+                    {% endif %}
 
-              <td rowspan="2">40</td>
-              <td rowspan="2">{{ form.s7_e3_damp }}</td>
-              <td rowspan="2">{{ form.s7_e3_ramp }}</td>
-              <td rowspan="2">71%-110% @5Hz</td>
-              
-              {% if form.s7_e3_comment.id == 1 %}
-                <td rowspan="2">&#10004;</td>
-                <td rowspan="2"></td>
-              {% elif form.s7_e3_comment.id == 2 %}
-                <td rowspan="2"></td>
-                <td rowspan="2"></td>
-              {% else %}
-                <td rowspan="2"></td>
-                <td rowspan="2">&#10004;</td>
-              {% endif %}
-              
-              {% if form.s7_e3_comment.id == 1%}
-                <td rowspan="2"></td>
-              {% else %}
-                <td rowspan="2">{{ form.s7_e3_comment }}</td>
-              {% endif %}
+                    {% if form.s7_e2_comment.id == 1 %}
+                        <td rowspan="2"></td>
+                    {% else %}
+                        <td rowspan="2">{{ form.s7_e2_comment }}</td>
+                    {% endif %}
 
-            </tr>
-          <tr>
-              <td>Lead</td>
-              <td>II</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Sweep speed <br>(mm/s)</td>
+                    <td rowspan="2">25</td>
+
+                </tr>
+                <tr>
+
+                    <td rowspan="2">40</td>
+                    <td rowspan="2">{{ form.s7_e3_damp }}</td>
+                    <td rowspan="2">{{ form.s7_e3_ramp }}</td>
+                    <td rowspan="2">71%-110% @5Hz</td>
+
+                    {% if form.s7_e3_comment.id == 1 %}
+                        <td rowspan="2">&#10004;</td>
+                        <td rowspan="2"></td>
+                    {% elif form.s7_e3_comment.id == 2 %}
+                        <td rowspan="2"></td>
+                        <td rowspan="2"></td>
+                    {% else %}
+                        <td rowspan="2"></td>
+                        <td rowspan="2">&#10004;</td>
+                    {% endif %}
+
+                    {% if form.s7_e3_comment.id == 1 %}
+                        <td rowspan="2"></td>
+                    {% else %}
+                        <td rowspan="2">{{ form.s7_e3_comment }}</td>
+                    {% endif %}
+
+                </tr>
+                <tr>
+                    <td>Lead</td>
+                    <td>II</td>
 
 
+                </tr>
+                </tbody>
 
-          </tr>
-          </tbody>
+            </table>
+            <br>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Gain (mm/mv)</th>
+                    <th rowspan="2">Amp (mv)</th>
+                    <th rowspan="2">Width (ms)</th>
+                    <th rowspan="2">Display Amp (mm)</th>
+                    <th rowspan="2">Recorder Amp (mm)</th>
+                    <th rowspan="2">Permissible Error</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-        </table>
-        <br>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Gain (mm/mv)</th>
-            <th rowspan="2">Amp (mv)</th>
-            <th rowspan="2">Width (ms)</th>
-            <th rowspan="2">Display Amp (mm)</th>
-            <th rowspan="2">Recorder Amp (mm)</th>
-            <th rowspan="2">Permissible Error</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>REJ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="2">10</td>
+                    <td rowspan="2">2</td>
+                    <td>200</td>
+                    <td>{{ form.s7_e4_damp }}</td>
+                    <td>{{ form.s7_e4_ramp }}</td>
+                    <td style="background-color: grey;"></td>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>REJ</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="2">10</td>
-          <td rowspan="2">2</td>
-          <td>200</td>
-          <td>{{ form.s7_e4_damp }}</td>
-          <td>{{ form.s7_e4_ramp }}</td>
-          <td style="background-color: grey;"></td>
-          
-          {% if form.s7_e4_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s7_e4_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
-          
-          {% if form.s7_e4_comment.id == 1%}
-            <td></td>
-          {% else %}
-            <td>{{ form.s7_e4_comment }}</td>
-          {% endif %}
-        </tr>
-        <tr>
-          <td>20</td>
-          <td>{{ form.s7_e5_damp }}</td>
-          <td>{{ form.s7_e5_ramp }}</td>
-          <td>75%-100% @200ms</td>
-          
-          {% if form.s7_e5_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s7_e5_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
-          
-          {% if form.s7_e5_comment.id == 1%}
-            <td></td>
-          {% else %}
-            <td>{{ form.s7_e5_comment }}</td>
-          {% endif %}
+                    {% if form.s7_e4_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s7_e4_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
 
-        </tr>
-      </tbody>
+                    {% if form.s7_e4_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s7_e4_comment }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>{{ form.s7_e5_damp }}</td>
+                    <td>{{ form.s7_e5_ramp }}</td>
+                    <td>75%-100% @200ms</td>
 
-    </table>
-                <br>
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-(استاندارد
-            <span style="font-weight: bold;">
+                    {% if form.s7_e5_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s7_e5_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+
+                    {% if form.s7_e5_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s7_e5_comment }}</td>
+                    {% endif %}
+
+                </tr>
+                </tbody>
+
+            </table>
+            <br>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                (استاندارد
+                <span style="font-weight: bold;">
             8.پاسخ ضربه</span>
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Wave</th>
-            <th rowspan="2">Baseline Displacement</th>
-            <th rowspan="2">Permissible Range</th>
-            <th rowspan="2">Slope</th>
-            <th rowspan="2">Permissible Range</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Wave</th>
+                    <th rowspan="2">Baseline Displacement</th>
+                    <th rowspan="2">Permissible Range</th>
+                    <th rowspan="2">Slope</th>
+                    <th rowspan="2">Permissible Range</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>REJ</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Impulse 3mv 100ms</td>
-          <td>{{ form.s8_e1_bdisp }}</td>
-          <td>0.1 mv</td>
-          <td>{{ form.s8_e1_slope }}</td>
-          <td>0.3 mv/s</td>
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>REJ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Impulse 3mv 100ms</td>
+                    <td>{{ form.s8_e1_bdisp }}</td>
+                    <td>0.1 mv</td>
+                    <td>{{ form.s8_e1_slope }}</td>
+                    <td>0.3 mv/s</td>
 
-          {% if form.s8_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s8_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
+                    {% if form.s8_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s8_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
 
-          {% if form.s8_e1_comment.id == 1%}
-            <td></td>
-          {% else %}
-            <td>{{ form.s8_e1_comment }}</td>
-          {% endif %}
+                    {% if form.s8_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s8_e1_comment }}</td>
+                    {% endif %}
 
-        </tr>
-      </tbody>
+                </tr>
+                </tbody>
 
-    </table>
+            </table>
 
-        <br>
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 60601-2-27:2011</span>
-9.نشانگر بهره(استاندارد
-        </div>
+            <br>
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 60601-2-27:2011</span>
+                9.نشانگر بهره(استاندارد
+            </div>
 
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
-      <thead>
-          <tr>
-            <th rowspan="2"style="width: 8cm;">Qualitative Compliance</th>
-            <th colspan="2">Result</th>
-            <th rowspan="2" style="min-width: 5cm;">Comment</th>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-5 time">
+                <thead>
+                <tr>
+                    <th rowspan="2" style="width: 8cm;">Qualitative Compliance</th>
+                    <th colspan="2">Result</th>
+                    <th rowspan="2" style="min-width: 5cm;">Comment</th>
 
-          </tr>
-            <tr>
-                <th>OK</th>
-                <th>REJ</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Gain Indicator</td>
-          
-          {% if form.s9_e1_comment.id == 1 %}
-            <td>&#10004;</td>
-            <td></td>
-          {% elif form.s9_e1_comment.id == 2 %}
-            <td></td>
-            <td></td>
-          {% else %}
-            <td></td>
-            <td>&#10004;</td>
-          {% endif %}
-          
-          {% if form.s9_e1_comment.id == 1%}
-            <td></td>
-          {% else %}
-            <td>{{ form.s9_e1_comment }}</td>
-          {% endif %}
-          
-        </tr>
-      </tbody>
+                </tr>
+                <tr>
+                    <th>OK</th>
+                    <th>REJ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Gain Indicator</td>
 
-    </table>
+                    {% if form.s9_e1_comment.id == 1 %}
+                        <td>&#10004;</td>
+                        <td></td>
+                    {% elif form.s9_e1_comment.id == 2 %}
+                        <td></td>
+                        <td></td>
+                    {% else %}
+                        <td></td>
+                        <td>&#10004;</td>
+                    {% endif %}
+
+                    {% if form.s9_e1_comment.id == 1 %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ form.s9_e1_comment }}</td>
+                    {% endif %}
+
+                </tr>
+                </tbody>
+
+            </table>
             <br>
             <div style="width:100%;direction: rtl; text-align: right;">
-                <div style="margin-bottom: -5cm;" class="sign-2"><img src="http://{{domain_name}}{{ user_profile.signature.url }}" alt=""
-            style="height: 6cm;">
-        </div>
+                <div style="margin-bottom: -5cm;" class="sign-2"><img
+                        src="http://{{ domain_name }}{{ user_profile.signature.url }}" alt=""
+                        style="height: 6cm;">
+                </div>
             </div>
             <div style="margin-top: -4.5cm;font-family:'B Zar' ">
                 <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
-                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: {{ user_profile.user.first_name }}</div>
+                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون
+                    کننده: {{ user_profile.user.first_name }}</div>
             </div>
 
 
-
-        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 5 از 5</div>
-
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 5 از 5</div>
 
 
-
-    </div>
+        </div>
     </div>
 
     </body>

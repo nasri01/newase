@@ -8,6 +8,41 @@
 
     <title>PDF Report</title>
 </head>
+<style>
+  @font-face {
+    font-family: "B Zar";
+    src: url("https://{{domain_name}}/static/fonts/B Zar.eot") format("eot"),
+      url("https://{{domain_name}}/static/fonts/B Zar.woff") format("woff"),
+      url("https://{{domain_name}}/static/fonts/B Zar.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Titr";
+    src: url("https://{{domain_name}}/static/fonts/B Titr.eot") format("eot"),
+      url("https://{{domain_name}}/static/fonts/B Titr.woff") format("woff"),
+      url("https://{{domain_name}}/static/fonts/B Titr.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Lotus";
+    src: url("https://{{domain_name}}/static/fonts/B Lotus.eot") format("eot"),
+      url("https://{{domain_name}}/static/fonts/B Lotus.woff") format("woff"),
+      url("https://{{domain_name}}/static/fonts/B Lotus.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "B Nazanin";
+    src: url("https://{{domain_name}}/static/fonts/B Nazanin.eot") format("eot"),
+      url("https://{{domain_name}}/static/fonts/B Nazanin.woff") format("woff"),
+      url("https://{{domain_name}}/static/fonts/B Nazanin.ttf") format("truetype");
+  }
+
+  .time {
+    font-family: "Times New Roman";
+  }
+</style>
+
+
     {% block content %}{% endblock %}
 
 </html>

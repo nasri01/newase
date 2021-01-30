@@ -4,189 +4,173 @@
 
 {% block content %}
     <style>
-
-       @font-face {
-    font-family: "B Zar";
-    src: url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.eot") format("eot"),
-        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.woff") format("woff"),
-        url("http://db.onlinewebfonts.com/t/132c8ef0b48852826caf09a7f53cc9ac.ttf") format("truetype");
-}
-
-       @font-face {
-        font-family: "B Titr";
-        src: url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/a0ea7e7833cd4f7694a4913fccb9aacf.ttf") format("truetype");
-    }
-
-    @font-face {
-        font-family: "B Lotus";
-        src: url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/1605a655ba0a3246ce5eca3eaff6c5c2.ttf") format("truetype");
-    }
-
-    @font-face {
-        font-family: "B Nazanin";
-        src: url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot") format("eot"),
-            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype");
-    }
-        .time{
-            font-family: "Times New Roman";
+        .tb-4 td {
+            padding: 0.08cm 0.1cm;
         }
-    .tb-4 td{
-        padding: 0.08cm 0.1cm;
 
-       }
-    .tb-5 td{
-        padding: 0.02cm 0.1cm;
-
-       }
+        .tb-5 td {
+            padding: 0.02cm 0.1cm;
+        }
 
     </style>
 
     <body style="text-align: right;font-size: 16pt;">
 
 
-            <div class="cover main" style="font-family:'B Lotus';">
-                    <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
-                      
-        <br>
-    <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
-        <span class="time">NIBP</span>
-گواهينامه کنترل کيفي دستگاه مانیتور علائم حیاتی ماژول
-    </h1>
-    <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
-        <tr>
-            <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور: </td>
-            <td class="no-border"><span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>شماره گواهينامه: </td>
+    <div class="cover main" style="font-family:'B Lotus';">
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 42cm;">
 
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }} </span>تاريخ کنترل کيفي: </td>
-            <td class="no-border"><span>{{form.device.name.type.name}}</span>نام دستگاه: </td>
+            <br>
+            <h1 class="header-t" style="font-size: 23pt;font-weight: bold;font-family:'B Titr';">
+                <span class="time">NIBP</span>
+                گواهينامه کنترل کيفي دستگاه مانیتور علائم حیاتی ماژول
+            </h1>
+            <table style="text-align: right;margin: auto;width: 100%;font-weight:bold;" class="tb-2">
+                <tr>
+                    <td class="no-border"><span> {{ time.year }}/{{ time.month }}/{{ time.day }} </span> تاريخ صدور:
+                    </td>
+                    <td class="no-border"><span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>شماره
+                        گواهينامه:
+                    </td>
 
-        </tr>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.date.year }}/{{ form.date.month }}/{{ form.date.day }} </span>تاريخ
+                        کنترل کيفي:
+                    </td>
+                    <td class="no-border"><span>{{ form.device.name.type.name }}</span>نام دستگاه:</td>
 
-        <tr>
-            <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده: </td>
-            <td class="no-border"><span class="time">{{form.device.name.creator.name}}</span>نام سازنده: </td>
+                </tr>
 
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس : </td>
-            <td class="no-border"><span class="time">{{form.device.name.name}}</span>مدل: </td>
-        </tr>
-        <tr>
-            <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست: </td>
-            <td class="no-border"><span class="time">{{form.device.serial_number}}</span>شماره سريال: </td >
-        </tr>
-        <tr>
-            <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام: </td>
-            <td class="no-border"><span class="time">
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.name }}</span>نام درخواست کننده:</td>
+                    <td class="no-border"><span class="time">{{ form.device.name.creator.name }}</span>نام سازنده:</td>
+
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.request.hospital.address }}</span>آدرس :</td>
+                    <td class="no-border"><span class="time">{{ form.device.name.name }}</span>مدل:</td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.request.number }}</span>شماره درخواست:</td>
+                    <td class="no-border"><span class="time">{{ form.device.serial_number }}</span>شماره سريال:</td>
+                </tr>
+                <tr>
+                    <td class="no-border"><span> {{ form.device.section.name }}</span>محل انجام:</td>
+                    <td class="no-border"><span class="time">
             {% if form.device.property_number != None %}
-                {{form.device.property_number}}
+                {{ form.device.property_number }}
             {% endif %}
-            </span>کداموال :</td>
-        </tr>
+            </span>کداموال :
+                    </td>
+                </tr>
 
-        <tr>
-            <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي: </td>
-            <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه کنترل کيفي: </td>
-    
-        </tr>
+                <tr>
+                    <td class="no-border"><span class="time">{{ form.temp }}</span>دماي محيطي:</td>
+                    <td class="no-border" rowspan="2"><span style="font-size:25pt;">{{ form.status.status }}</span>نتيجه
+                        کنترل کيفي:
+                    </td>
 
-        <tr>
-            <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي: </td>
+                </tr>
 
-        </tr>
-    
-    </table>
-    <div style="height:5.85cm;">
+                <tr>
+                    <td class="no-border"><span class="time"> {{ form.humidity }}</span>رطوبت محيطي:</td>
+
+                </tr>
+
+            </table>
+            <div style="height:5.85cm;">
                 <div>موارد عدم شمول:</div>
-        <span>
+                <span>
           {{ form.totalcomment }}
-        </span> 
+        </span>
 
-    </div>
-    <span style="font-weight: bold;">تجهيزات آزمون:</span>
-    <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">
-        <tr>
-            <td>تاريخ انقضاء</td>
-            <td>تاريخ کاليبراسيون</td>
-            <td>شماره سریال</td>
-            <td>مدل</td>
-           <td>نام تجهيز</td>
-            <td>ردیف</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
-            <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
-            <td>{{ form.cal_dev1.serial }}</td>
-            <td>{{ form.cal_dev1.name }}</td>
-            <td>{{ form.cal_dev1.type.name }}</td>
-            <td>1</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
-            <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
-            <td>{{ form.cal_dev2.serial }}</td>
-            <td>{{ form.cal_dev2.name }}</td>
-            <td>{{ form.cal_dev2.type.name }}</td>
-            <td>2</td>
-        </tr>
-        <tr class="time">
-            <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
-            <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
-            <td>{{ form.cal_dev3.serial }}</td>
-            <td>{{ form.cal_dev3.name }}</td>
-            <td>{{ form.cal_dev3.type.name }}</td>
-            <td>3</td>
+            </div>
+            <span style="font-weight: bold;">تجهيزات آزمون:</span>
+            <table style="text-align:center;margin: auto;width: 95%;font-weight: bold;" class="tb-2 tb-4">
+                <tr>
+                    <td>تاريخ انقضاء</td>
+                    <td>تاريخ کاليبراسيون</td>
+                    <td>شماره سریال</td>
+                    <td>مدل</td>
+                    <td>نام تجهيز</td>
+                    <td>ردیف</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_1_xd.year }}/{{ form.cal_dev_1_xd.month }}/{{ form.cal_dev_1_xd.day }}</td>
+                    <td>{{ form.cal_dev_1_cd.year }}/{{ form.cal_dev_1_cd.month }}/{{ form.cal_dev_1_cd.day }}</td>
+                    <td>{{ form.cal_dev1.serial }}</td>
+                    <td>{{ form.cal_dev1.name }}</td>
+                    <td>{{ form.cal_dev1.type.name }}</td>
+                    <td>1</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_2_xd.year }}/{{ form.cal_dev_2_xd.month }}/{{ form.cal_dev_2_xd.day }}</td>
+                    <td>{{ form.cal_dev_2_cd.year }}/{{ form.cal_dev_2_cd.month }}/{{ form.cal_dev_2_cd.day }}</td>
+                    <td>{{ form.cal_dev2.serial }}</td>
+                    <td>{{ form.cal_dev2.name }}</td>
+                    <td>{{ form.cal_dev2.type.name }}</td>
+                    <td>2</td>
+                </tr>
+                <tr class="time">
+                    <td>{{ form.cal_dev_3_xd.year }}/{{ form.cal_dev_3_xd.month }}/{{ form.cal_dev_3_xd.day }}</td>
+                    <td>{{ form.cal_dev_3_cd.year }}/{{ form.cal_dev_3_cd.month }}/{{ form.cal_dev_3_cd.day }}</td>
+                    <td>{{ form.cal_dev3.serial }}</td>
+                    <td>{{ form.cal_dev3.name }}</td>
+                    <td>{{ form.cal_dev3.type.name }}</td>
+                    <td>3</td>
 
-        </tr>
-    </table>
-    <br>
+                </tr>
+            </table>
+            <br>
 
-        <div>
-            <span class="time">IEC 80601-2-30: 2013 , ANSI/AAMI SP10:2006</span>
-            مراجع:
+            <div>
+                <span class="time">IEC 80601-2-30: 2013 , ANSI/AAMI SP10:2006</span>
+                مراجع:
+            </div>
+
+            <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به
+                طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد
+                ملي يا بين المللي قابل رديابي است.
+            </div>
+            <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
+            <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار
+                است.
+            </div>
+            <table style="margin: auto;text-align: center;font-weight: bold;">
+                <tr>
+                    <td style="width: 9cm;">مهر آزمايشگاه</td>
+                    <td style="width: 8cm;">مدير فني آزمايشگاه</td>
+
+                </tr>
+                <tr>
+                    <img src="{% static 'img/spo2/stamp.jpg' %}"
+                         style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
+
+                    <td style="height: 3.5cm;">
+                        <!-- <div class="stmp"></div> -->
+                        <img style="width: 4cm; height:4cm; margin-left: 2cm;"
+                             src="https://{{ domain_name }}/static/img/stamp.png">
+                    </td>
+                    <td style="height: 3.5cm;position: relative;">
+                        <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
+                        <!-- <div class="signature"></div> -->
+                        <img style="width: 6cm; height:4cm; margin-right: 2cm;"
+                             src="https://{{ domain_name }}/static/img/signature.png">
+                    </td>
+                </tr>
+
+            </table>
+            <div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51012</div>
         </div>
-
-        <div>حق چاپ و نشر اين گواهينامه در انحصار شرکت صادرکننده است و نبايد بدون اجازه کتبي شرکت تكثير شود مگر به طور کامل و از تمامي مندرجات آن کاليبراسيون تجهيزات مورد استفاده در اين آزمون به آزمايشگاههاي استاندارد ملي يا بين المللي قابل رديابي است.</div>
-    <div>نتايج بدست آمده تنها مربوط به پارامترها و قسمتهاي آزمون شده مي باشد.</div>
-    <div style="text-align: center;font-weight: bold;">اين گواهينامه بدون مهر آزمايشگاه صادرکننده فاقد اعتبار است.</div>
-    <table style="margin: auto;text-align: center;font-weight: bold;">
-        <tr >
-            <td style="width: 9cm;">مهر آزمايشگاه</td>
-            <td style="width: 8cm;">مدير فني آزمايشگاه</td>
-
-        </tr>
-        <tr>
-            <img src="{% static 'img/spo2/stamp.jpg' %}" style="height: 4cm;width: 4cm;background-color: #00be8a;" alt="">
-
-            <td  style="height: 3.5cm;">
-                <!-- <div class="stmp"></div> -->
-            <img style="width: 4cm; height:4cm; margin-left: 2cm;" src="https://{{ domain_name }}/static/img/stamp.png">
-            </td>
-            <td style="height: 3.5cm;position: relative;">
-                <span style="position: absolute;top: 2cm;right: 3cm;">حمیدرضا رضایتمند</span>
-                            <!-- <div class="signature"></div> -->
-            <img style="width: 6cm; height:4cm; margin-right: 2cm;" src="https://{{ domain_name }}/static/img/signature.png">
-            </td>
-        </tr>
-
-    </table>
-<div style="position: absolute;left: 1cm;color:white;bottom: 0.5cm;" class="time">F51012</div>
-    </div>
     </div>
 
-    
+
     <div class="page-1 page1" style="font-family:'B Nazanin';">
-    <div style="text-align: center;width: 100%;height: 5cm;">
+        <div style="text-align: center;width: 100%;height: 5cm;">
         <span style="display: inline-block;font-size: 14pt;font-weight: bold;position:absolute;left: 4cm;top: 1cm;">
             <span>
-            <span class="time">{{ form.date|date:"y" }}-{{form.licence.number}}</span>
+            <span class="time">{{ form.date|date:"y" }}-{{ form.licence.number }}</span>
             شماره گزارش: 
             </span><br>
             <span>
@@ -199,318 +183,320 @@
             شماره مدرک: 
             
                 </span>
-            </span> 
+            </span>
 
             <span style="padding-top: 1cm; display:inline-block;font-size: 25pt;font-family:'B Titr'; ">
                 گزارش آزمون کنترل کیفی 
                 <br>
             <span class="time">NIBP</span>
                 دستگاه سنجش فشار خون 
-            </span>         
+            </span>
         </div>
-            <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
-        <div style="font-weight: bold;">
-            <span class="time">:(IEC 80601-2-30:2013</span>
-       استاندارد
-            <span class="time">201.12.1.102</span>
-	1. آزمون حدود خطای فشارسنج ناشی از شرایط محیطی (بند
+        <div style="margin-right: 2cm;margin-left: 4cm;height: 35cm;">
+            <div style="font-weight: bold;">
+                <span class="time">:(IEC 80601-2-30:2013</span>
+                استاندارد
+                <span class="time">201.12.1.102</span>
+                1. آزمون حدود خطای فشارسنج ناشی از شرایط محیطی (بند
 
-        </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-          <thead>
-              <tr>
-                <th rowspan="2">Mode</th>
-                <th colspan="2">Setting</th>
-                <th rowspan="2">Setpoint [mmHg]</th>
-                <th rowspan="2">Simulator Pressure [mmHg]</th>
-                <th rowspan="2">NIBP Pressure [mmHg]</th>
-                <th rowspan="2">Permissible Error [mmHg]</th>
-                <th colspan="2">Result</th>
-              </tr>
+            </div>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Mode</th>
+                    <th colspan="2">Setting</th>
+                    <th rowspan="2">Setpoint [mmHg]</th>
+                    <th rowspan="2">Simulator Pressure [mmHg]</th>
+                    <th rowspan="2">NIBP Pressure [mmHg]</th>
+                    <th rowspan="2">Permissible Error [mmHg]</th>
+                    <th colspan="2">Result</th>
+                </tr>
                 <tr>
                     <th>Cuff</th>
                     <th>NIBP</th>
                     <th>OK</th>
                     <th>REJ</th>
                 </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Adult</td>
-              <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Standard</td>
-              <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Manometer</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_simp }}</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_nibpp }}</td>
-              <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">3 mmHg or 3% of reading</td>
-              
-              {% if data.6.0 == 0 %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-              {% else %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-              {% endif %} 
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Adult</td>
+                    <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Standard</td>
+                    <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Manometer</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e1_nibpp }}</td>
+                    <td rowspan="8" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">3 mmHg or 3% of reading</td>
 
-            </tr>
-            <tr>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_simp }}</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_nibpp }}</td>
-              
-              {% if data.6.1 == 0 %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-              {% else %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-              {% endif %} 
+                    {% if data.6.0 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
 
-            </tr>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e2_nibpp }}</td>
 
-            <tr>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_simp }}</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_nibpp }}</td>
+                    {% if data.6.1 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
 
-              {% if data.6.2 == 0 %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-              {% else %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-              {% endif %} 
+                </tr>
 
-            </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e3_nibpp }}</td>
+
+                    {% if data.6.2 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
+
+                </tr>
 
 
-            <tr>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_simp }}</td>
-              <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_nibpp }}</td>
-              
-              {% if data.6.3 == 0 %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-              {% else %}
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-              {% endif %} 
-            </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e4_nibpp }}</td>
 
-            <tr>
-                <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Hospital</td>
-                <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Monometer</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_simp }}</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_nibpp }}</td>
+                    {% if data.6.3 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
+                </tr>
 
-                {% if data.6.4 == 0 %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                {% else %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                {% endif %} 
+                <tr>
+                    <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Hospital</td>
+                    <td rowspan="4" style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Monometer</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">50</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e5_nibpp }}</td>
 
-            </tr>
+                    {% if data.6.4 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
 
-            <tr>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_simp }}</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_nibpp }}</td>
-                
-                {% if data.6.5 == 0 %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                {% else %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                {% endif %} 
+                </tr>
 
-            </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e6_nibpp }}</td>
 
-            <tr>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_simp }}</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_nibpp }}</td>
+                    {% if data.6.5 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
 
-                {% if data.6.6 == 0 %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                {% else %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                {% endif %} 
+                </tr>
 
-            </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e7_nibpp }}</td>
 
-            <tr>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_simp }}</td>
-                <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_nibpp }}</td>
-                
-                {% if data.6.7 == 0 %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                {% else %}
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
-                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
-                {% endif %} 
+                    {% if data.6.6 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
 
-            </tr>
-          </tbody>
+                </tr>
 
-        </table>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_simp }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s1_e8_nibpp }}</td>
 
-        <br>
+                    {% if data.6.7 == 0 %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                    {% else %}
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">&#10004;</td>
+                        <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;"></td>
+                    {% endif %}
+
+                </tr>
+                </tbody>
+
+            </table>
+
+            <br>
             <div style="font-weight: bold;">
                 <span class="time">:(AAMI SP10:2006</span>
                 استاندارد
                 <span class="time">B.4.4.5</span>
-	2. آزمون کارایی کلی سیستم (بند
+                2. آزمون کارایی کلی سیستم (بند
 
             </div>
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Mode</th>
-            <th rowspan="2">Pressure Setting</th>
-            <th>Pressure Reading</th>
-            <th>Pressure Error</th>
-            <th>Pressure Reading</th>
-            <th>Pressure Error</th>
-            <th>Pressure Reading</th>
-            <th>Pressure Error</th>
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Mode</th>
+                    <th rowspan="2">Pressure Setting</th>
+                    <th>Pressure Reading</th>
+                    <th>Pressure Error</th>
+                    <th>Pressure Reading</th>
+                    <th>Pressure Error</th>
+                    <th>Pressure Reading</th>
+                    <th>Pressure Error</th>
 
-          </tr>
-            <tr>
-                <th>1st</th>
-                <th>1st</th>
-                <th>2st</th>
-                <th>2st</th>
-                <th>3st</th>
-                <th>3st</th>
-            </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="4">Adult</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">60/30</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.0 }}/{{ data.8.0 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.1 }}/{{ data.8.1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr3 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.2 }}/{{ data.8.2 }}</td>
+                </tr>
+                <tr>
+                    <th>1st</th>
+                    <th>1st</th>
+                    <th>2st</th>
+                    <th>2st</th>
+                    <th>3st</th>
+                    <th>3st</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="4">Adult</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">60/30</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.0 }}/{{ data.8.0 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.1 }}/{{ data.8.1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e1_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.2 }}/{{ data.8.2 }}</td>
 
-        </tr>
-        <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80/50</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.3 }}/{{ data.8.3 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.4 }}/{{ data.8.4 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr3 }}</td>
-            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.5 }}/{{ data.8.5 }}</td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">80/50</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.3 }}/{{ data.8.3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.4 }}/{{ data.8.4 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e2_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.5 }}/{{ data.8.5 }}</td>
 
-        </tr>
-      <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120/80</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.6 }}/{{ data.8.6 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.7 }}/{{ data.8.7 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr3 }}</td>
-            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.8 }}/{{ data.8.8 }}</td>
-        </tr>
-      <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200/150</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.9 }}/{{ data.8.9 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.10 }}/{{ data.8.10 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr3 }}</td>
-            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.11 }}/{{ data.8.11 }}</td>
-        </tr>
-      <tr>
-          <td rowspan="2">NEO/PED</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">35/15</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.12 }}/{{ data.8.12 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.13 }}/{{ data.8.13 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr3 }}</td>
-            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.14 }}/{{ data.8.14 }}</td>
-        </tr>
-      <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">100/70</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.15 }}/{{ data.8.15 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.16 }}/{{ data.8.16 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr3 }}</td>
-            <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.17 }}/{{ data.8.17 }}</td>
-        </tr>
-      </tbody>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">120/80</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.6 }}/{{ data.8.6 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.7 }}/{{ data.8.7 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e3_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.8 }}/{{ data.8.8 }}</td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">200/150</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.9 }}/{{ data.8.9 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.10 }}/{{ data.8.10 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e4_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.11 }}/{{ data.8.11 }}</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">NEO/PED</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">35/15</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.12 }}/{{ data.8.12 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.13 }}/{{ data.8.13 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e5_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.14 }}/{{ data.8.14 }}</td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">100/70</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.15 }}/{{ data.8.15 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.16 }}/{{ data.8.16 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ form.s2_e6_pr3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.7.17 }}/{{ data.8.17 }}</td>
+                </tr>
+                </tbody>
 
-    </table>
-                <br>
+            </table>
+            <br>
 
 
-        <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
-      <thead>
-          <tr>
-            <th rowspan="2">Pressure</th>
-            <th rowspan="2">Error Sum</th>
-            <th><span style="border-top: 1px solid black;">x</span></th>
-            <th>Permissible Range</th>
-            <th>SD</th>
-            <th>Permissible Range</th>
-            
+            <table style="margin: auto;width: 100%;text-align: center;" class="tb-1 time">
+                <thead>
+                <tr>
+                    <th rowspan="2">Pressure</th>
+                    <th rowspan="2">Error Sum</th>
+                    <th><span style="border-top: 1px solid black;">x</span></th>
+                    <th>Permissible Range</th>
+                    <th>SD</th>
+                    <th>Permissible Range</th>
 
-          </tr>
-      </thead>
-      <tbody>
-        <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Systolic</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.0 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.2 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 5 mmHg</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.4 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 8 mmHg</td>
-             
 
-        </tr>
-        <tr>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Diastolic</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.1 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.3 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 5 mmHg</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.5 }}</td>
-           <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤8 mmHg</td>
-             
-        </tr>
-      </tbody>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Systolic</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.0 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.2 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 5 mmHg</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.4 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 8 mmHg</td>
 
-    </table>
 
-    <div style="width:100%;direction: rtl; text-align: right;">
-            <div style="margin-bottom: -5cm;" class="sign-2"><img src="http://{{domain_name}}{{ user_profile.signature.url }}" alt=""
-            style="height: 6cm;">
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">Diastolic</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.1 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.3 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤ 5 mmHg</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">{{ data.5 }}</td>
+                    <td style="padding-bottom: 0.03cm;padding-top: 0.03cm;">≤8 mmHg</td>
+
+                </tr>
+                </tbody>
+
+            </table>
+
+            <div style="width:100%;direction: rtl; text-align: right;">
+                <div style="margin-bottom: -5cm;" class="sign-2"><img
+                        src="http://{{ domain_name }}{{ user_profile.signature.url }}" alt=""
+                        style="height: 6cm;">
+                </div>
+            </div>
+            <div style="margin-top: -4.5cm;font-family:'B Zar' ">
+                <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
+                <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون
+                    کننده: {{ user_profile.user.first_name }}</div>
+            </div>
+
+
+            <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 2</div>
+
+
         </div>
-        </div>
-        <div style="margin-top: -4.5cm;font-family:'B Zar' ">
-            <div style="display: inline-block;">سمت:{{ user_profile.status.status }}</div>
-            <div style="display: inline-block;margin-left: 9cm;z-index: 1;">آزمون کننده: {{ user_profile.user.first_name }}</div>
-        </div>
-
-
-        <div style="position: absolute;left: 4cm;bottom: 2cm;">صفحه 2 از 2</div>
-
-
     </div>
-</div>
 
     </body>
 {% endblock %}
