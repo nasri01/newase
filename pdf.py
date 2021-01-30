@@ -27,7 +27,7 @@ def send_file_ftp(ftp_obj, filename, report_name):
 for t, model_hist in model_dict.items():
     for item in model_hist:
         query = item[0].objects.filter(has_pdf=False).filter(
-            date__gte=(jdatetime.datetime.today()-jdatetime.timedelta(days=60)).astimezone(pytz.timezone('Asia/Tehran')))
+            date__gte=(jdatetime.datetime.today()-jdatetime.timedelta(days=365)).astimezone(pytz.timezone('Asia/Tehran')))
         for idx, obj in enumerate(query):
             print('[{}/{}] -> Start'.format(idx, len(query)))
             data = []
@@ -437,7 +437,8 @@ for t, model_hist in model_dict.items():
                         #====================================/ Start Making PDF /======================
                         print('getready{}'.format(obj.licence.number))
                         user_profile = UserProfile.objects.get(user=obj.user)
-                        today_datetime = jdatetime.datetime.today()
+                        today_datetime = obj.date
+                        # today_datetime = jdatetime.datetime.today()
                         font_config = FontConfiguration()
                         html = render_to_string(template_name, {
                             'form': obj, 'time': today_datetime, 'user_profile': user_profile, 'data': data,
