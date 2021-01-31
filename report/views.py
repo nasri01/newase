@@ -111,8 +111,8 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
                 encode_obj = Encode.objects.get(
                     hospital=obj.device.hospital)
 
-                row['url'] = 'https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/\
-                {section}/{device_type}/{licence}.pdf'.format(
+                row['url'] = 'https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/'
+                '{section}/{device_type}/{licence}.pdf'.format(
                     dl_domain=dl_domain_name,
                     state=obj.device.hospital.city.state.eng_name,
                     city=obj.device.hospital.city.eng_name,
