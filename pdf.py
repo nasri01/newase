@@ -29,7 +29,7 @@ for t, model_hist in model_dict.items():
         query = item[0].objects.filter(has_pdf=False).filter(
             date__gte=(jdatetime.datetime.today()-jdatetime.timedelta(days=365)).astimezone(pytz.timezone('Asia/Tehran')))
         for idx, obj in enumerate(query):
-            print('[{}/{}] -> Start'.format(idx, len(query)))
+            print('[{}/{}] -> (l:{}, r:{})'.format(idx, len(query), obj.licence.number, obj.record.number))
             data = []
             if item[0] != CantTest:
 
@@ -148,8 +148,7 @@ for t, model_hist in model_dict.items():
                         data1[id] = abs(data1[id] - 100)
                         data2[id] = abs(data2[id] - 70)
 
-                    print(data1)
-                    print(data2)
+
                     data.append(sum(data1))  # 0
                     data.append(sum(data2))  # 1
                     data.append(round(mean(data1), 2))  # 2
@@ -408,7 +407,6 @@ for t, model_hist in model_dict.items():
                     filename = encode_query[0].name
 
                 with FTP(host=DL_FTP_HOST, user=DL_FTP_USER, passwd=DL_FTP_PASSWD) as ftp:
-                    print('[{}/{}] -> FTP in!'.format(idx, len(query)))
                     ftp.cwd('pdf')
                     if not obj.device.hospital.city.state.eng_name in ftp.nlst():
                         ftp.mkd(obj.device.hospital.city.state.eng_name)
@@ -435,7 +433,6 @@ for t, model_hist in model_dict.items():
 
                     if not '{}.pdf'.format(obj.licence.number) in ftp.nlst():
                         #====================================/ Start Making PDF /======================
-                        print('getready{}'.format(obj.licence.number))
                         user_profile = UserProfile.objects.get(user=obj.user)
                         today_datetime = obj.date
                         # today_datetime = jdatetime.datetime.today()
