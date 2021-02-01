@@ -444,10 +444,10 @@
                     {% elif test_form_type == 'ElectroCauter' %}
                         {% include 'form/ElectroCauter/form1.html' %}
 
-                    {% elif form_type == 'AutoClave' %}
+                    {% elif test_form_type == 'AutoClave' %}
                         {% include 'form/AutoClave/form1.html' %}
 
-                    {% elif form_type == 'CantTest' %}
+                    {% elif test_form_type == 'CantTest' %}
                         {% include 'form/CantTest.html' %}
                     {% endif %}
                 </div>
