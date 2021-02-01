@@ -43,8 +43,8 @@ model_dict = {'MonitorSpo2': [[MonitorSpo2_1, MonitorSpo2_1_Form, 3]],
               'ManoMeter': [[ManoMeter_1, ManoMeter_1_Form, 3]],
               # 'AutoClave': [[AutoClave_1, AutoClave_1]], #TODO AutoClave form
               'ElectroCauter': [[ElectroCauter_1, ElectroCauter_1_Form, 5]],
-            #   'CantTest': [[CantTest, CantTest_Form]],
-            #   'Report': [[Report]],
+              'CantTest': [[CantTest, CantTest_Form]],
+              'Report': [[Report]],
               }  # Order the same by AdTestType0
 
 
