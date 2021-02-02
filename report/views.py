@@ -111,20 +111,23 @@ def xlsx(request, filtering, query_start_year, query_start_month, query_start_da
 
                     row['test_status_id'] = obj.status.id  # dor excel row color
 
-                    encode_obj = Encode.objects.get(
-                        hospital=obj.device.hospital)
+                    try:
+                        encode_obj = Encode.objects.get(
+                            hospital=obj.device.hospital)
 
-                    row['url'] = 'https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{' \
-                                 'licence}.pdf'.format(
-                        dl_domain=dl_domain_name,
-                        state=obj.device.hospital.city.state.eng_name,
-                        city=obj.device.hospital.city.eng_name,
-                        hosp=str(obj.device.hospital.user.id) + '_' + encode_obj.name,
-                        req=obj.request.number,
-                        section=obj.device.section.eng_name,
-                        device_type=t,
-                        licence=obj.licence.number,
-                    )
+                        row['url'] = 'https://{dl_domain}/reports/pdf/{state}/{city}/{hosp}/{req}/{section}/{device_type}/{' \
+                                     'licence}.pdf'.format(
+                            dl_domain=dl_domain_name,
+                            state=obj.device.hospital.city.state.eng_name,
+                            city=obj.device.hospital.city.eng_name,
+                            hosp=str(obj.device.hospital.user.id) + '_' + encode_obj.name,
+                            req=obj.request.number,
+                            section=obj.device.section.eng_name,
+                            device_type=t,
+                            licence=obj.licence.number,
+                        )
+                    except:
+                        row['url'] = 'https://panel.azmasaba.ir'
                     table_rows.append(row)
 
         table_header_list = AdExcelArg.objects.all().order_by('id')
