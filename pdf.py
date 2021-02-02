@@ -25,6 +25,8 @@ def send_file_ftp(ftp_obj, filename, report_name):
 
 
 for t, model_hist in model_dict.items():
+    if t in ['Report', 'CantTest']:
+        continue
     for item in model_hist:
         query = item[0].objects.filter(has_pdf=False).filter(
             date__gte=(jdatetime.datetime.today()-jdatetime.timedelta(days=365)).astimezone(pytz.timezone('Asia/Tehran')))
